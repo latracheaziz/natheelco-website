@@ -5,12 +5,10 @@ import TiltCard from './fx/TiltCard';
 import { useMediaQuery } from './fx/useCanHover';
 
 const CARD_W = 340;
-const GAP = 32;
-const GROUP_W = (CARD_W * 2) + GAP;
-const RADIUS = 650;
+const RADIUS = 400; // Reduced radius brings cards much closer together
 const AUTO_SPEED = 0.012; // degrees per ms
 
-const RingCardGroup = ({ group, index, count, rotation, onOpen, dragMoved }) => {
+const RingCard = ({ project, index, count, rotation, onOpen, dragMoved }) => {
   const base = (360 / count) * index;
   const facing = useTransform(rotation, (r) => Math.cos(((base - r) * Math.PI) / 180));
   const opacity = useTransform(facing, [-1, 0, 1], [0.06, 0.3, 1]);
@@ -20,28 +18,22 @@ const RingCardGroup = ({ group, index, count, rotation, onOpen, dragMoved }) => 
     <motion.div
       className="ring-card group absolute top-0"
       style={{
-        width: GROUP_W,
+        width: CARD_W,
         left: '50%',
-        marginLeft: -GROUP_W / 2,
+        marginLeft: -CARD_W / 2,
         transform: `rotateY(${base}deg) translateZ(${RADIUS}px)`,
         opacity,
         pointerEvents,
       }}
     >
-      <div className="flex justify-center gap-8 h-full">
-        {group.map((project, i) => (
-          <motion.div
-            key={project.id || i}
-            whileHover={{ y: -14, z: 40 }}
-            transition={{ type: 'spring', stiffness: 260, damping: 22 }}
-            className="preserve-3d h-full cursor-pointer shrink-0"
-            style={{ width: CARD_W }}
-            onClick={() => !dragMoved.current && onOpen(project)}
-          >
-            <ProjectCard project={project} index={index * 2 + i} />
-          </motion.div>
-        ))}
-      </div>
+      <motion.div
+        whileHover={{ y: -14, z: 40 }}
+        transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+        className="preserve-3d h-full cursor-pointer"
+        onClick={() => !dragMoved.current && onOpen(project)}
+      >
+        <ProjectCard project={project} index={index} />
+      </motion.div>
     </motion.div>
   );
 };
@@ -55,23 +47,13 @@ const ProjectRing = ({ projects, onOpen }) => {
   const drag = useRef({ active: false, startX: 0, startRot: 0 });
   const dragMoved = useRef(false);
 
-  // Create pairs of projects
-  const pairedProjects = useMemo(() => {
-    const pairs = [];
-    // If we only have a few projects, repeat them to make a smooth ring
-    const extendedProjects = projects.length <= 4 
-      ? [...projects, ...projects, ...projects, ...projects].slice(0, 8) 
-      : projects;
-      
-    for (let i = 0; i < extendedProjects.length; i += 2) {
-      const pair = extendedProjects.slice(i, i + 2);
-      if (pair.length === 2) {
-        pairs.push(pair);
-      } else {
-        pairs.push([pair[0], extendedProjects[0]]); // fill the last pair if odd
-      }
+  // Extend projects to make the ring fuller
+  const extendedProjects = useMemo(() => {
+    if (projects.length <= 4) {
+      // If 3 projects, doubling them gives 6, which forms a nice ring
+      return [...projects, ...projects];
     }
-    return pairs;
+    return projects;
   }, [projects]);
 
   useAnimationFrame((_, delta) => {
@@ -131,12 +113,12 @@ const ProjectRing = ({ projects, onOpen }) => {
         className="ring absolute left-1/2 top-8 h-[500px] w-full"
         style={{ rotateX: -6, rotateY: ringRotate, z: -RADIUS }}
       >
-        {pairedProjects.map((group, index) => (
-          <RingCardGroup
+        {extendedProjects.map((project, index) => (
+          <RingCard
             key={index}
-            group={group}
+            project={project}
             index={index}
-            count={pairedProjects.length}
+            count={extendedProjects.length}
             rotation={rotation}
             onOpen={onOpen}
             dragMoved={dragMoved}
