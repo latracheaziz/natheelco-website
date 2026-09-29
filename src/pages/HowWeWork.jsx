@@ -10,6 +10,7 @@ const HowWeWork = () => {
         subtitle="نعمل بخطوات واضحة، تبدأ بدراسة الفكرة وتنتهي ببناء مشروع منظم ومستدام."
         variant={1}
         showHeritageMark
+        heritageMarkClassName="spinning-heritage-mark"
       />
 
       <HowWeWorkProcess />

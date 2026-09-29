@@ -19,8 +19,8 @@ const Ring = ({ size }) => (
   </div>
 );
 
-const HeritageMark = () => (
-  <svg className="heritage-mark" viewBox="0 0 240 270" fill="none" aria-hidden="true">
+const HeritageMark = ({ className = '' }) => (
+  <svg className={`heritage-mark ${className}`} viewBox="0 0 240 270" fill="none" aria-hidden="true">
     <defs>
       <linearGradient id="heritage-glass" x1="28" y1="30" x2="207" y2="244" gradientUnits="userSpaceOnUse">
         <stop stopColor="#B8F7FF" />
@@ -53,7 +53,7 @@ const HeritageMark = () => (
   </svg>
 );
 
-const FloatingShapes = ({ variant = 0, showHeritageMark = false }) => {
+const FloatingShapes = ({ variant = 0, showHeritageMark = false, heritageMarkClassName = '' }) => {
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 600], [0, 120]);
   const y2 = useTransform(scrollY, [0, 600], [0, -80]);
@@ -63,7 +63,7 @@ const FloatingShapes = ({ variant = 0, showHeritageMark = false }) => {
     <div className="absolute inset-0 pointer-events-none hidden md:block" aria-hidden="true" style={{ perspective: 900 }}>
       {showHeritageMark && l.mark && (
         <motion.div className={`absolute ${l.mark}`} style={{ y: y1 }}>
-          <div className="float-y" style={{ animationDelay: '-4s' }}><HeritageMark /></div>
+          <div className="float-y" style={{ animationDelay: '-4s' }}><HeritageMark className={heritageMarkClassName} /></div>
         </motion.div>
       )}
     </div>

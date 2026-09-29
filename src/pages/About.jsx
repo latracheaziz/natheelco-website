@@ -11,6 +11,7 @@ const About = () => {
         subtitle="نطوّر الأفكار الواعدة ونحولها إلى مشاريع منظّمة قابلة للتوسع والنمو المستدام."
         variant={0}
         showHeritageMark
+        heritageMarkClassName="spinning-heritage-mark"
       />
 
       <AboutIdentity />

@@ -11,6 +11,7 @@ const PageHero = ({
   subtitleClassName = 'text-lg text-white/50 mt-6 max-w-xl leading-relaxed font-light',
   variant = 0,
   showHeritageMark = false,
+  heritageMarkClassName = '',
 }) => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
@@ -24,7 +25,7 @@ const PageHero = ({
       <div className="perspective-grid" />
       <div className="grain" />
       <Spotlight />
-      <FloatingShapes variant={variant} showHeritageMark={showHeritageMark} />
+      <FloatingShapes variant={variant} showHeritageMark={showHeritageMark} heritageMarkClassName={heritageMarkClassName} />
 
       <motion.div
         style={{ rotateX, y, opacity, transformPerspective: 1200, transformOrigin: '50% 0%' }}

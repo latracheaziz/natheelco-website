@@ -303,6 +303,15 @@
   filter: drop-shadow(0 0 8px rgba(95, 212, 230, 0.34)) drop-shadow(0 0 24px rgba(58, 168, 188, 0.2));
   animation: heritage-glow 7s ease-in-out infinite;
 }
+.spinning-heritage-mark {
+  width: clamp(200px, 22vw, 320px);
+  transform-style: preserve-3d;
+  animation: heritage-glow 7s ease-in-out infinite, roots-mark-spin 18s linear infinite;
+}
+@keyframes roots-mark-spin {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+}
 @keyframes heritage-glow {
   0%, 100% { opacity: 0.72; }
   50% { opacity: 1; }

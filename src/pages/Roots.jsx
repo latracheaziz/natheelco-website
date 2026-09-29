@@ -14,6 +14,7 @@ const Roots = () => {
         subtitleClassName="text-2xl md:text-3xl text-white/40 mt-6 font-heading font-bold"
         variant={2}
         showHeritageMark
+        heritageMarkClassName="spinning-heritage-mark"
       />
 
       {/* Intro Section */}
