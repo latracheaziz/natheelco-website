@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
 import { useState, useCallback, useRef, useEffect } from 'react';
 import ProjectModal from '../components/ProjectModal';
 import ProjectRing from '../components/ProjectRing';
@@ -22,6 +22,45 @@ const heroSlides = [
 
 const SLIDE_MS = 7000;
 
+const aboutTabs = [
+  {
+    id: 'who-we-are',
+    label: 'من نحن؟',
+    eyebrow: 'من نحن',
+    titleLine1: 'نبني مشاريع منظّمة',
+    titleLine2: 'قابلة للتوسع والنمو',
+    text: (
+      <>
+        <strong className="font-semibold text-primary">نثيل</strong> تطوّر الأفكار الواعدة وتحولها إلى مشاريع منظّمة قابلة للتوسع، مستندين على خبرات تمتد لأكثر من 30 عاماً وشركاء ذو اختصاصات مكملة.
+      </>
+    ),
+  },
+  {
+    id: 'what-we-do',
+    label: 'ماذا نعمل؟',
+    eyebrow: 'ماذا نعمل؟',
+    titleLine1: 'نحوّل الأفكار التجارية',
+    titleLine2: 'إلى مشاريع عاملة',
+    text: (
+      <>
+        <strong className="font-semibold text-primary">نحّول</strong> الأفكار التجارية إلى مشاريع عاملة، من خلال تطوير المفهوم ونموذج العمل، وبناء الفريق والأنظمة، وإدارة التمويل والتنفيذ والتسويق.
+      </>
+    ),
+  },
+  {
+    id: 'how-we-work',
+    label: 'كيف نعمل؟',
+    eyebrow: 'كيف نعمل؟',
+    titleLine1: 'منهجية واضحة ومدروسة',
+    titleLine2: 'من الفكرة حتى الإطلاق',
+    text: (
+      <>
+        <strong className="font-semibold text-primary">نعمل</strong> بخطوات واضحة تبدأ بدراسة الفكرة والجدوى وتنتهي ببناء مشروع منظم ومستدام، مدعوم بأحدث الأنظمة الإدارية والتشغيلية.
+      </>
+    ),
+  },
+];
+
 const Eyebrow = ({ children, center = false, light = false }) => (
   <motion.span
     initial={{ opacity: 0, y: 12 }}
@@ -40,7 +79,7 @@ const Home = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [hoverTab, setHoverTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(0);
   const heroRef = useRef(null);
   const officeRef = useRef(null);
 
@@ -321,50 +360,56 @@ const Home = () => {
         <Reveal3D className="container-premium section-padding relative">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center" dir="rtl">
 
-            {/* Right: Text */}
-            <div className="lg:col-span-5">
-              <div className="mb-6"><Eyebrow>من نحن</Eyebrow></div>
+            {/* Right: Text & Tab Switcher */}
+            <div className="lg:col-span-5 min-h-[380px] flex flex-col justify-between">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={aboutTabs[activeTab].id}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.3, ease }}
+                >
+                  <div className="mb-6">
+                    <Eyebrow>{aboutTabs[activeTab].eyebrow}</Eyebrow>
+                  </div>
 
-              <h2 className="text-3xl md:text-4xl lg:text-[46px] font-heading font-[800] text-primary leading-[1.25] mb-8">
-                <RevealText text="نبني مشاريع منظّمة" />
-                <br />
-                <RevealText text="قابلة للتوسع والنمو" delay={0.2} wordClassName="text-text-muted" />
-              </h2>
+                  <h2 className="text-3xl md:text-4xl lg:text-[46px] font-heading font-[800] text-primary leading-[1.25] mb-8">
+                    <span>{aboutTabs[activeTab].titleLine1}</span>
+                    <br />
+                    <span className="text-text-muted">{aboutTabs[activeTab].titleLine2}</span>
+                  </h2>
 
-              <motion.p
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.9, delay: 0.3, ease }}
-                className="text-text-secondary text-lg leading-[1.8] mb-10 max-w-lg"
-              >
-                <strong className="font-semibold text-primary">نثيل</strong> تطوّر الأفكار الواعدة وتحولها إلى مشاريع منظّمة قابلة للتوسع، مستندين على خبرات تمتد لأكثر من 30 عاماً وشركاء ذو اختصاصات مكملة.
-              </motion.p>
+                  <p className="text-text-secondary text-lg leading-[1.8] mb-10 max-w-lg">
+                    {aboutTabs[activeTab].text}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.45, ease }}
-                className="inline-flex flex-wrap gap-1 p-1.5 rounded-full bg-surface-warm border border-border-light"
-                onMouseLeave={() => setHoverTab(0)}
+                className="inline-flex flex-wrap gap-1 p-1.5 rounded-full bg-surface-warm border border-border-light self-start"
               >
-                {['من نحن؟', 'ماذا نعمل؟', 'كيف نعمل؟'].map((tab, i) => (
+                {aboutTabs.map((tab, i) => (
                   <button
-                    key={tab}
-                    onMouseEnter={() => setHoverTab(i)}
+                    key={tab.id}
+                    onClick={() => setActiveTab(i)}
+                    onMouseEnter={() => setActiveTab(i)}
                     className={`relative px-6 py-2.5 rounded-full text-sm font-semibold transition-colors duration-300 ${
-                      hoverTab === i ? 'text-white' : 'text-text-secondary'
+                      activeTab === i ? 'text-white' : 'text-text-secondary'
                     }`}
                   >
-                    {hoverTab === i && (
+                    {activeTab === i && (
                       <motion.span
                         layoutId="about-tab"
                         className="absolute inset-0 rounded-full bg-primary shadow-[0_10px_25px_-10px_rgba(10,22,40,0.6)]"
                         transition={{ type: 'spring', stiffness: 400, damping: 32 }}
                       />
                     )}
-                    <span className="relative z-10">{tab}</span>
+                    <span className="relative z-10">{tab.label}</span>
                   </button>
                 ))}
               </motion.div>
