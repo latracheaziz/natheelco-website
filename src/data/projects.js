@@ -1,0 +1,70 @@
+// `pos` is a percentage position on the Hail map plane; `icon` maps to a lucide icon in MapPin.
+export const projects = [
+  {
+    id: 1,
+    nameAr: 'أودن فرني',
+    nameEn: 'ÖDÜN',
+    logo: 'ÖDÜN',
+    logoSize: 'text-2xl',
+    category: 'الأغذية والمشروبات',
+    shortDesc: 'معجنات تركية أصيلة ومشروبات فاخرة',
+    description: 'علامة رائدة في تقديم أشهى المعجنات التركية والمشروبات التقليدية بنكهات أصيلة وجودة عالية. نقدم تجربة فريدة تجمع بين الوصفات التركية الأصيلة والابتكار في التقديم.',
+    year: '2026',
+    status: 'نشط',
+    location: 'حائل',
+    image: '/slides/odun.jpg',
+    pos: { x: 38, y: 58 },
+    icon: 'croissant',
+    color: '#ffc9b9',
+  },
+  {
+    id: 2,
+    nameAr: 'هاجس',
+    nameEn: 'HAJISS',
+    logo: 'HAJISS',
+    logoSize: 'text-xl',
+    category: 'مقهى متخصص',
+    shortDesc: 'مقهى متخصص يقدم أجود أنواع القهوة',
+    description: 'مقهى متخصص يقدم أجود أنواع القهوة المختصة من أرقى المحامص العالمية. تجربة قهوة استثنائية في أجواء مميزة تجمع بين الأصالة والحداثة.',
+    year: '2026',
+    status: 'نشط',
+    location: 'حائل',
+    image: '/slides/hajiss.jpg',
+    pos: { x: 62, y: 44 },
+    icon: 'coffee',
+    color: '#588157',
+  },
+
+  {
+    id: 6,
+    nameAr: 'غالية',
+    nameEn: 'GHALIA',
+    logo: 'GHALIA',
+    logoSize: 'text-sm',
+    category: 'حلويات فاخرة',
+    shortDesc: 'تشكيلة فريدة من الحلويات الفاخرة.',
+    description: 'تشكيلة فريدة من الحلويات الفاخرة المصنوعة بأجود المكونات الطبيعية. نقدم إبداعات حلوة تمزج بين النكهات العربية الأصيلة واللمسات العصرية.',
+    year: '2026',
+    status: 'قيد التطوير',
+    location: 'حائل',
+    pos: { x: 80, y: 62 },
+    icon: 'cake',
+    color: '#a98467',
+  },
+];
+
+export const hq = {
+  id: 'hq',
+  nameAr: 'نثيل',
+  nameEn: 'NATHEEL',
+  category: 'حائل، المملكة العربية السعودية',
+  pos: { x: 48, y: 26 },
+  icon: 'landmark',
+};
+
+export const heroStats = [
+  { value: '+250', label: 'إجمالي المتابعين' },
+  { value: '+45', label: 'المنشورات والتفاعلات' },
+  { value: '04', label: 'منصات التواصل' },
+  { value: '+1200', label: 'وصول الصفحة' },
+];
