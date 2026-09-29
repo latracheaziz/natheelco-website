@@ -110,7 +110,7 @@ const ProjectRing = ({ projects, onOpen }) => {
       />
 
       <motion.div
-        className="ring absolute left-1/2 top-8 h-[500px] w-full"
+        className="ring absolute left-1/2 top-8 h-[500px]"
         style={{ rotateX: -6, rotateY: ringRotate, z: -RADIUS }}
       >
         {extendedProjects.map((project, index) => (
