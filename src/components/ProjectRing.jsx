@@ -38,83 +38,18 @@ const RingCard = ({ project, index, count, rotation, onOpen, dragMoved }) => {
 };
 
 const ProjectRing = ({ projects, onOpen }) => {
-  const reduce = useReducedMotion();
-  const isWide = useMediaQuery('(min-width: 900px)');
-  const rotation = useMotionValue(0);
-  const ringRotate = useTransform(rotation, (r) => -r);
-  const [paused, setPaused] = useState(false);
-  const drag = useRef({ active: false, startX: 0, startRot: 0 });
-  const dragMoved = useRef(false);
-
-  useAnimationFrame((_, delta) => {
-    if (paused || drag.current.active || reduce || !isWide) return;
-    rotation.set(rotation.get() + AUTO_SPEED * delta);
-  });
-
-  if (!isWide || reduce) {
-    return (
-      <div className="flex gap-5 overflow-x-auto snap-x snap-mandatory no-scrollbar px-6 py-6" dir="rtl">
-        {projects.map((project, index) => (
-          <TiltCard
-            key={project.id}
-            max={6}
-            className="snap-center shrink-0 w-[300px] sm:w-[340px] group cursor-pointer rounded-[24px]"
-            onClick={() => onOpen(project)}
-          >
-            <ProjectCard project={project} index={index} />
-          </TiltCard>
-        ))}
-      </div>
-    );
-  }
-
-  const onPointerDown = (e) => {
-    drag.current = { active: true, startX: e.clientX, startRot: rotation.get() };
-    dragMoved.current = false;
-  };
-  const onPointerMove = (e) => {
-    if (!drag.current.active) return;
-    const dx = e.clientX - drag.current.startX;
-    if (Math.abs(dx) > 5) dragMoved.current = true;
-    rotation.set(drag.current.startRot - dx * 0.25);
-  };
-  const endDrag = () => {
-    drag.current.active = false;
-    setTimeout(() => { dragMoved.current = false; }, 0);
-  };
-
   return (
-    <div
-      className="ring-stage relative h-[640px] select-none cursor-grab active:cursor-grabbing"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => { setPaused(false); endDrag(); }}
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={endDrag}
-    >
-      {/* Floor reflection */}
-      <div className="absolute left-1/2 bottom-6 -translate-x-1/2 w-[900px] h-[140px] rounded-[50%] bg-[radial-gradient(ellipse_at_center,rgba(46,139,156,0.22),transparent_70%)] blur-xl" />
-      <div
-        className="absolute left-1/2 bottom-10 w-[1000px] h-[260px] rounded-[50%] border border-accent/15"
-        style={{ transform: 'translateX(-50%) rotateX(78deg)' }}
-      />
-
-      <motion.div
-        className="ring absolute left-1/2 top-8 h-[500px]"
-        style={{ rotateX: -6, rotateY: ringRotate, z: -RADIUS }}
-      >
-        {projects.map((project, index) => (
-          <RingCard
-            key={project.id}
-            project={project}
-            index={index}
-            count={projects.length}
-            rotation={rotation}
-            onOpen={onOpen}
-            dragMoved={dragMoved}
-          />
-        ))}
-      </motion.div>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 px-6" dir="rtl">
+      {projects.map((project, index) => (
+        <TiltCard
+          key={project.id}
+          max={6}
+          className="group cursor-pointer rounded-[24px] overflow-hidden"
+          onClick={() => onOpen(project)}
+        >
+          <ProjectCard project={project} index={index} />
+        </TiltCard>
+      ))}
     </div>
   );
 };

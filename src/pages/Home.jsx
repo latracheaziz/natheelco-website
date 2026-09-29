@@ -107,6 +107,14 @@ const Home = () => {
   const bgRotateY = useTransform(smx, [-0.5, 0.5], [3, -3]);
   const bgRotateX = useTransform(smy, [-0.5, 0.5], [-2.5, 2.5]);
   const bgX = useTransform(smx, [-0.5, 0.5], [18, -18]);
+  const atmosphereX = useTransform(smx, [-0.5, 0.5], [14, -14]);
+  const atmosphereY = useTransform(smy, [-0.5, 0.5], [9, -9]);
+  const leftFacetX = useTransform(smx, [-0.5, 0.5], [24, -24]);
+  const leftFacetY = useTransform(smy, [-0.5, 0.5], [15, -15]);
+  const centerFacetX = useTransform(smx, [-0.5, 0.5], [42, -42]);
+  const centerFacetY = useTransform(smy, [-0.5, 0.5], [26, -26]);
+  const rightFacetX = useTransform(smx, [-0.5, 0.5], [58, -58]);
+  const rightFacetY = useTransform(smy, [-0.5, 0.5], [36, -36]);
   const deckRotateY = useTransform(smx, [-0.5, 0.5], [-28, -8]);
   const deckRotateX = useTransform(smy, [-0.5, 0.5], [14, 2]);
 
@@ -114,6 +122,11 @@ const Home = () => {
     const rect = e.currentTarget.getBoundingClientRect();
     mx.set((e.clientX - rect.left) / rect.width - 0.5);
     my.set((e.clientY - rect.top) / rect.height - 0.5);
+  };
+
+  const handleHeroLeave = () => {
+    mx.set(0);
+    my.set(0);
   };
 
   // Office editorial unfold
@@ -152,12 +165,13 @@ const Home = () => {
       <section
         ref={heroRef}
         onMouseMove={handleHeroMove}
-        className="relative min-h-screen flex items-center overflow-hidden bg-primary"
+        onMouseLeave={handleHeroLeave}
+        className="home-hero relative min-h-screen flex items-center overflow-hidden bg-primary"
         style={{ perspective: 1600 }}
       >
         {/* Background slideshow — depth plane */}
         <motion.div
-          className="absolute inset-[-4%]"
+          className="home-hero-photo-backdrop absolute inset-[-4%]"
           style={{ rotateX: bgRotateX, rotateY: bgRotateY, x: bgX, y: heroY }}
         >
           {heroSlides.map((src, i) => (
@@ -180,11 +194,23 @@ const Home = () => {
         </motion.div>
 
         {/* Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/80 to-primary/50" />
-        <div className="absolute inset-0 bg-gradient-to-l from-primary/70 via-transparent to-transparent" />
-        <div className="aurora opacity-40" />
-        <div className="perspective-grid opacity-60" />
-        <div className="grain" />
+        <div className="home-hero-shade absolute inset-0" />
+        <motion.div
+          className="home-tech-atmosphere absolute inset-0"
+          style={{ x: atmosphereX, y: atmosphereY, scale: 1.035 }}
+          aria-hidden="true"
+        >
+          <motion.div className="home-tech-depth" style={{ x: leftFacetX, y: leftFacetY }}>
+            <div className="home-tech-plane home-tech-plane--left" />
+          </motion.div>
+          <motion.div className="home-tech-depth" style={{ x: centerFacetX, y: centerFacetY }}>
+            <div className="home-tech-plane home-tech-plane--center" />
+          </motion.div>
+          <motion.div className="home-tech-depth" style={{ x: rightFacetX, y: rightFacetY }}>
+            <div className="home-tech-plane home-tech-plane--right" />
+          </motion.div>
+        </motion.div>
+        <div className="aurora home-hero-aurora" />
         <Spotlight />
 
         {/* Floating slide deck (3D) */}

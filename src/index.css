@@ -205,6 +205,130 @@
   to   { background-position: 0 64px; }
 }
 
+/* Homepage hero: faceted pastel light inspired by the supplied reference. */
+.home-hero {
+  isolation: isolate;
+  background: #0a1c34;
+}
+.home-hero-photo-backdrop {
+  opacity: 0.055;
+  filter: saturate(0.28) brightness(0.7);
+}
+.home-hero-shade {
+  background:
+    linear-gradient(180deg, rgba(9, 20, 39, 0.12), transparent 38%, rgba(9, 22, 38, 0.26)),
+    linear-gradient(100deg, rgba(9, 22, 38, 0.08), transparent 70%);
+}
+.home-tech-atmosphere {
+  inset: -2%;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  will-change: transform;
+  background:
+    radial-gradient(ellipse 43% 58% at 12% 88%, rgba(107, 183, 228, 0.55), transparent 100%),
+    radial-gradient(ellipse 55% 76% at 48% 94%, rgba(47, 118, 183, 0.48), transparent 76%),
+    radial-gradient(ellipse 34% 68% at 100% 44%, rgba(155, 220, 244, 0.52), transparent 82%),
+    linear-gradient(110deg, #102746 0%, #174878 34%, #205f91 58%, #12365f 100%);
+}
+.home-tech-depth {
+  position: absolute;
+  inset: -2%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.home-tech-atmosphere::before,
+.home-tech-atmosphere::after {
+  content: '';
+  position: absolute;
+  width: min(74vw, 1080px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(58px);
+  will-change: transform;
+}
+.home-tech-atmosphere::before {
+  top: -73%;
+  left: -24%;
+  background: radial-gradient(circle, rgba(177, 226, 245, 0.48), rgba(91, 158, 208, 0.18) 48%, transparent 74%);
+  animation: home-light-drift 32s ease-in-out infinite alternate;
+}
+.home-tech-atmosphere::after {
+  right: -34%;
+  bottom: -91%;
+  background: radial-gradient(circle, rgba(147, 218, 243, 0.58), rgba(61, 128, 183, 0.18) 48%, transparent 74%);
+  animation: home-light-drift 38s ease-in-out infinite alternate-reverse;
+}
+.home-tech-plane {
+  position: absolute;
+  inset: -8%;
+  pointer-events: none;
+  will-change: transform;
+}
+.home-tech-plane--left {
+  clip-path: polygon(34% 0, 53% 0, 28% 100%, 4% 100%);
+  background: linear-gradient(132deg, rgba(102, 172, 218, 0.28), rgba(35, 93, 149, 0.08) 72%);
+  animation: home-plane-left 38s ease-in-out infinite alternate;
+}
+.home-tech-plane--center {
+  clip-path: polygon(39% 0, 58% 0, 76% 100%, 16% 100%);
+  background: linear-gradient(110deg, rgba(119, 181, 221, 0.07), rgba(177, 225, 245, 0.16) 52%, rgba(78, 147, 196, 0.08));
+  animation: home-plane-center 44s ease-in-out infinite alternate;
+}
+.home-tech-plane--right {
+  clip-path: polygon(77% 0, 100% 0, 100% 100%, 92% 100%);
+  background: linear-gradient(120deg, rgba(104, 177, 221, 0.08), rgba(157, 220, 245, 0.24));
+  animation: home-plane-right 42s ease-in-out infinite alternate;
+}
+.home-tech-plane--left,
+.home-tech-plane--center,
+.home-tech-plane--right {
+  will-change: transform;
+}
+.home-hero .aurora {
+  opacity: 0.34;
+  background:
+    radial-gradient(42% 42% at 20% 32%, rgba(90, 157, 207, 0.38), transparent 72%),
+    radial-gradient(40% 38% at 76% 28%, rgba(169, 226, 245, 0.34), transparent 72%),
+    radial-gradient(42% 34% at 51% 82%, rgba(55, 123, 183, 0.3), transparent 72%);
+  animation-duration: 34s;
+}
+.home-hero .spotlight {
+  background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.48), rgba(160, 228, 242, 0.28) 18%, rgba(255, 255, 255, 0.1) 36%, transparent 66%);
+  mix-blend-mode: screen;
+  opacity: 0;
+}
+.home-hero:hover .spotlight {
+  opacity: 0.82;
+}
+@keyframes home-light-drift {
+  from { transform: translate3d(-1.5%, -1%, 0) scale(0.96); }
+  to { transform: translate3d(2.5%, 2%, 0) scale(1.04); }
+}
+@keyframes home-plane-left {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(1.2%, -0.4%, 0); }
+}
+@keyframes home-plane-center {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-0.8%, 0.6%, 0); }
+}
+@keyframes home-plane-right {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-1%, -0.5%, 0); }
+}
+@media (max-width: 640px) {
+  .home-hero-photo-backdrop { opacity: 0.045; }
+  .home-tech-atmosphere::before,
+  .home-tech-atmosphere::after { filter: blur(42px); }
+  .home-tech-plane--left,
+  .home-tech-plane--center,
+  .home-tech-plane--right { opacity: 0.68; }
+}
+@media (hover: none) {
+  .home-hero .spotlight { display: none; }
+}
+
 .dot-field {
   position: absolute;
   inset: 0;
