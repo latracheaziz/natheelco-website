@@ -50,61 +50,55 @@ const icons = {
   ),
 };
 
-const SVGIcon = ({ type, className = 'w-full h-full' }) => (
-  <svg viewBox="0 0 24 24" fill="none" className={className} stroke="currentColor" strokeWidth="1.5">
-    {icons[type]}
-  </svg>
-);
-
 /* ─── Data ───────────────────────────────────────────────── */
 const pillars = [
   {
     id: 'team', index: '01', title: 'فريق متمكن',
     text: 'بناء فريق متمكن وكفء لكل مشروع لضمان أعلى أداء.',
     detail: 'نوظّف ونؤهّل الكفاءات التي تناسب طبيعة كل مشروع، ونبني ثقافة أداء عالية تدفع الفريق نحو التميز في كل مرحلة من مراحل العمل.',
-    accent: '#5FD4E6',
+    accent: '#3AA8BC',
     tags: ['توظيف', 'تأهيل', 'أداء'],
   },
   {
     id: 'brand', index: '02', title: 'العلامة التجارية والنمو',
     text: 'بناء العلامة التجارية ودعم التسويق والنمو.',
     detail: 'نطوّر هوية بصرية متكاملة لكل مشروع وندعمه بخطط تسويقية ذكية تضمن حضوراً سوقياً قوياً وقاعدة عملاء وفية.',
-    accent: '#3AA8BC',
+    accent: '#2E8B9C',
     tags: ['هوية بصرية', 'تسويق', 'نمو'],
   },
   {
     id: 'operation', index: '03', title: 'تشغيل مجدي',
     text: 'المشاريع ذات التشغيل المجدي وعالي الكفاءة.',
     detail: 'نختار المشاريع ذات الهامش الصحي ونُحسّن عمليات التشغيل باستمرار لتحقيق أقصى كفاءة بأدنى تكلفة ممكنة.',
-    accent: '#5FD4E6',
+    accent: '#3AA8BC',
     tags: ['كفاءة', 'هامش ربح', 'تحسين'],
   },
   {
     id: 'performance', index: '04', title: 'قياس الأداء والتطوير',
     text: 'قياس الأداء والتطوير المستمر المرتبط بحوافز مجزية.',
     detail: 'نعتمد مؤشرات قياس واضحة ونربطها بحوافز حقيقية تحفّز الفريق على التطوير الذاتي المستمر وتجاوز الأهداف المرسومة.',
-    accent: '#3AA8BC',
+    accent: '#2E8B9C',
     tags: ['مؤشرات', 'حوافز', 'تطوير'],
   },
   {
     id: 'execution', index: '05', title: 'تنفيذ دقيق',
     text: 'تنفيذ متوافق مع الأنظمة واللوائح بدقة واحترافية.',
     detail: 'نضمن أن كل خطوة تنفيذية تسير وفق أعلى معايير الجودة والامتثال، مع مرونة كافية للتكيّف مع التحولات الميدانية.',
-    accent: '#5FD4E6',
+    accent: '#3AA8BC',
     tags: ['امتثال', 'جودة', 'احترافية'],
   },
   {
     id: 'systems', index: '06', title: 'أنظمة آلية متطورة',
     text: 'الاعتماد على أنظمة آلية متطورة لتسهيل العمليات.',
     detail: 'نوظّف أدوات رقمية وأتمتة ذكية لتقليل الأخطاء البشرية وتسريع العمليات وتوفير بيانات دقيقة تدعم القرار.',
-    accent: '#3AA8BC',
+    accent: '#2E8B9C',
     tags: ['أتمتة', 'ذكاء اصطناعي', 'بيانات'],
   },
   {
     id: 'success', index: '07', title: 'مشاركة النجاح',
     text: 'مشاركة النجاح والمكاسب مع فرق المشاريع.',
     detail: 'نؤمن بأن نجاح المشروع ملك للجميع. نُشرك الفرق في ثمار النجاح لبناء بيئة عمل محفزة وشراكة حقيقية طويلة الأمد.',
-    accent: '#5FD4E6',
+    accent: '#3AA8BC',
     tags: ['شراكة', 'تحفيز', 'استدامة'],
   },
 ];
@@ -134,7 +128,7 @@ const use3DMouse = () => {
 /* ─── Orbiting ring decoration ───────────────────────────── */
 const OrbitRing = ({ radius, duration, opacity, reversed = false }) => (
   <motion.div
-    className="absolute rounded-full border border-cyan-400/20"
+    className="absolute rounded-full border border-accent/25"
     style={{
       width: radius * 2, height: radius * 2,
       top: '50%', left: '50%',
@@ -145,7 +139,7 @@ const OrbitRing = ({ radius, duration, opacity, reversed = false }) => (
     transition={{ duration, repeat: Infinity, ease: 'linear' }}
   >
     <div
-      className="absolute w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_12px_#5FD4E6]"
+      className="absolute w-2 h-2 rounded-full bg-accent shadow-[0_0_12px_#3AA8BC]"
       style={{ top: -4, left: '50%', translateX: '-50%' }}
     />
   </motion.div>
@@ -169,17 +163,17 @@ const DetailPanel = ({ pillar }) => {
         {/* Floating icon orb */}
         <div className="relative flex justify-center mb-10" style={{ height: 160 }}>
           {/* Orbit rings */}
-          <OrbitRing radius={80} duration={12} opacity={0.5} />
-          <OrbitRing radius={110} duration={18} opacity={0.3} reversed />
-          <OrbitRing radius={140} duration={26} opacity={0.15} />
+          <OrbitRing radius={80} duration={12} opacity={0.6} />
+          <OrbitRing radius={110} duration={18} opacity={0.35} reversed />
+          <OrbitRing radius={140} duration={26} opacity={0.2} />
 
           {/* Central icon */}
           <motion.div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-[24px] flex items-center justify-center"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-[24px] flex items-center justify-center bg-white shadow-xl"
             style={{
-              background: `radial-gradient(135deg at 30% 30%, ${pillar.accent}40, ${pillar.accent}10)`,
-              border: `1.5px solid ${pillar.accent}60`,
-              boxShadow: `0 0 40px ${pillar.accent}40, 0 0 80px ${pillar.accent}10`,
+              background: `radial-gradient(135deg at 30% 30%, ${pillar.accent}20, #ffffff)`,
+              border: `1.5px solid ${pillar.accent}45`,
+              boxShadow: `0 12px 35px ${pillar.accent}25, 0 4px 12px rgba(10,22,40,0.06)`,
               transform: 'translateZ(50px)',
             }}
             animate={{ scale: [1, 1.06, 1] }}
@@ -199,7 +193,7 @@ const DetailPanel = ({ pillar }) => {
           <span
             className="font-mono text-[80px] font-black leading-none select-none"
             style={{
-              background: `linear-gradient(135deg, ${pillar.accent}30, ${pillar.accent}06)`,
+              background: `linear-gradient(135deg, ${pillar.accent}35, ${pillar.accent}10)`,
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
             }}
@@ -210,10 +204,7 @@ const DetailPanel = ({ pillar }) => {
 
         {/* Title */}
         <div className="text-center mb-5" dir="rtl" style={{ transform: 'translateZ(40px)' }}>
-          <h3
-            className="text-3xl md:text-4xl font-heading font-[900] leading-tight"
-            style={{ color: '#ffffff' }}
-          >
+          <h3 className="text-3xl md:text-4xl font-heading font-[900] leading-tight text-primary">
             {pillar.title}
           </h3>
         </div>
@@ -240,7 +231,7 @@ const DetailPanel = ({ pillar }) => {
 
         {/* Short text */}
         <p
-          className="text-center text-white/50 text-base leading-[1.8] mb-5 max-w-xs mx-auto"
+          className="text-center text-text-secondary text-base leading-[1.8] mb-5 max-w-xs mx-auto"
           dir="rtl"
           style={{ transform: 'translateZ(20px)' }}
         >
@@ -251,7 +242,7 @@ const DetailPanel = ({ pillar }) => {
         <motion.div
           className="mx-auto mb-5 h-px"
           style={{
-            background: `linear-gradient(90deg, transparent, ${pillar.accent}50, transparent)`,
+            background: `linear-gradient(90deg, transparent, ${pillar.accent}40, transparent)`,
             width: '60%',
           }}
           initial={{ scaleX: 0 }}
@@ -261,17 +252,17 @@ const DetailPanel = ({ pillar }) => {
 
         {/* Detail */}
         <p
-          className="text-center text-white/35 text-sm leading-[2] max-w-xs mx-auto"
+          className="text-center text-text-muted text-sm leading-[2] max-w-xs mx-auto"
           dir="rtl"
           style={{ transform: 'translateZ(10px)' }}
         >
           {pillar.detail}
         </p>
 
-        {/* Bottom glow */}
+        {/* Bottom subtle glow */}
         <div
           className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-48 h-24 rounded-full blur-[60px] pointer-events-none"
-          style={{ backgroundColor: `${pillar.accent}25` }}
+          style={{ backgroundColor: `${pillar.accent}15` }}
         />
       </motion.div>
     </motion.div>
@@ -279,13 +270,13 @@ const DetailPanel = ({ pillar }) => {
 };
 
 /* ─── List item (left side) ──────────────────────────────── */
-const PillarListItem = ({ pillar, isActive, isPrev, index, onHover, onClick }) => (
+const PillarListItem = ({ pillar, isActive, index, onHover, onClick }) => (
   <motion.button
     type="button"
     onClick={onClick}
     onMouseEnter={onHover}
     aria-pressed={isActive}
-    className="group relative w-full text-right focus:outline-none focus-visible:ring-1 focus-visible:ring-cyan-400/60 focus-visible:ring-offset-0 rounded-2xl"
+    className="group relative w-full text-right focus:outline-none focus-visible:ring-1 focus-visible:ring-accent/60 focus-visible:ring-offset-0 rounded-2xl"
     dir="rtl"
     initial={{ opacity: 0, x: 30 }}
     whileInView={{ opacity: 1, x: 0 }}
@@ -296,8 +287,9 @@ const PillarListItem = ({ pillar, isActive, isPrev, index, onHover, onClick }) =
     <motion.div
       className="absolute inset-0 rounded-2xl"
       animate={{
-        backgroundColor: isActive ? 'rgba(95,212,230,0.07)' : 'rgba(255,255,255,0)',
-        borderColor: isActive ? 'rgba(95,212,230,0.3)' : 'rgba(255,255,255,0.05)',
+        backgroundColor: isActive ? 'rgba(58,168,188,0.08)' : 'rgba(255,255,255,0.7)',
+        borderColor: isActive ? 'rgba(58,168,188,0.35)' : 'rgba(10,22,40,0.06)',
+        boxShadow: isActive ? '0 10px 25px -5px rgba(58,168,188,0.12)' : 'none',
       }}
       style={{ border: '1px solid' }}
       transition={{ duration: 0.35, ease }}
@@ -307,7 +299,7 @@ const PillarListItem = ({ pillar, isActive, isPrev, index, onHover, onClick }) =
     <motion.div
       className="absolute top-3 bottom-3 left-0 w-[3px] rounded-full"
       animate={{
-        backgroundColor: isActive ? '#5FD4E6' : 'rgba(255,255,255,0)',
+        backgroundColor: isActive ? '#3AA8BC' : 'transparent',
         scaleY: isActive ? 1 : 0.3,
         opacity: isActive ? 1 : 0,
       }}
@@ -319,8 +311,8 @@ const PillarListItem = ({ pillar, isActive, isPrev, index, onHover, onClick }) =
       <motion.div
         className="shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
         animate={{
-          backgroundColor: isActive ? 'rgba(95,212,230,0.15)' : 'rgba(255,255,255,0.04)',
-          color: isActive ? '#5FD4E6' : 'rgba(255,255,255,0.25)',
+          backgroundColor: isActive ? 'rgba(58,168,188,0.14)' : 'rgba(10,22,40,0.04)',
+          color: isActive ? '#3AA8BC' : 'rgba(10,22,40,0.4)',
           scale: isActive ? 1.05 : 1,
         }}
         transition={{ duration: 0.35, ease }}
@@ -334,14 +326,14 @@ const PillarListItem = ({ pillar, isActive, isPrev, index, onHover, onClick }) =
       <div className="flex-1 min-w-0 text-right">
         <motion.p
           className="font-heading font-bold text-sm md:text-base leading-tight"
-          animate={{ color: isActive ? '#ffffff' : 'rgba(255,255,255,0.4)' }}
+          animate={{ color: isActive ? '#0A1628' : 'rgba(10,22,40,0.75)' }}
           transition={{ duration: 0.3 }}
         >
           {pillar.title}
         </motion.p>
         <motion.p
           className="text-xs mt-0.5 truncate"
-          animate={{ color: isActive ? 'rgba(95,212,230,0.7)' : 'rgba(255,255,255,0.2)' }}
+          animate={{ color: isActive ? '#3AA8BC' : 'rgba(10,22,40,0.45)' }}
           transition={{ duration: 0.3 }}
         >
           {pillar.text}
@@ -350,8 +342,8 @@ const PillarListItem = ({ pillar, isActive, isPrev, index, onHover, onClick }) =
 
       {/* Index */}
       <motion.span
-        className="shrink-0 font-mono text-[11px] tracking-widest"
-        animate={{ color: isActive ? '#5FD4E6' : 'rgba(255,255,255,0.15)' }}
+        className="shrink-0 font-mono text-[11px] font-bold tracking-widest"
+        animate={{ color: isActive ? '#3AA8BC' : 'rgba(10,22,40,0.25)' }}
         transition={{ duration: 0.3 }}
       >
         {pillar.index}
@@ -362,12 +354,12 @@ const PillarListItem = ({ pillar, isActive, isPrev, index, onHover, onClick }) =
 
 /* ─── Progress bar ────────────────────────────────────────── */
 const AutoProgress = ({ isRunning, duration }) => (
-  <div className="h-[2px] bg-white/5 rounded-full overflow-hidden">
+  <div className="h-[2px] bg-slate-100 rounded-full overflow-hidden">
     <AnimatePresence>
       {isRunning && (
         <motion.div
           key="bar"
-          className="h-full rounded-full bg-gradient-to-r from-cyan-500 to-cyan-300"
+          className="h-full rounded-full bg-gradient-to-r from-accent to-accent-light"
           initial={{ width: '0%' }}
           animate={{ width: '100%' }}
           exit={{ width: '100%', opacity: 0 }}
@@ -401,7 +393,6 @@ const CoreFocus = () => {
     setDirection(idx > activeIdx ? 1 : -1);
     setActiveIdx(idx);
     setIsAuto(false);
-    // resume auto after 12s of no interaction
     clearTimeout(window._cfResume);
     window._cfResume = setTimeout(() => setIsAuto(true), 12000);
   }, [activeIdx]);
@@ -413,22 +404,22 @@ const CoreFocus = () => {
   };
 
   return (
-    <section className="relative py-20 lg:py-32 overflow-hidden" style={{ backgroundColor: '#060e1a' }}>
+    <section className="relative py-20 lg:py-32 bg-white overflow-hidden">
 
       {/* Ambient background */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div
           className="absolute inset-0"
           animate={{
-            background: `radial-gradient(ellipse 60% 60% at 70% 50%, ${activePillar.accent}12, transparent)`,
+            background: `radial-gradient(ellipse 60% 60% at 70% 50%, ${activePillar.accent}0d, transparent)`,
           }}
           transition={{ duration: 1.2, ease }}
         />
         <div
-          className="absolute inset-0 opacity-20"
+          className="absolute inset-0 opacity-40"
           style={{
-            backgroundImage: 'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)',
-            backgroundSize: '60px 60px',
+            backgroundImage: 'linear-gradient(rgba(10,22,40,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(10,22,40,0.03) 1px, transparent 1px)',
+            backgroundSize: '48px 48px',
           }}
         />
       </div>
@@ -442,14 +433,14 @@ const CoreFocus = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease }}
-            className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.2em] uppercase text-cyan-400 mb-5"
+            className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-5"
           >
-            <span className="w-8 h-px bg-cyan-400" />
+            <span className="w-8 h-px bg-accent" />
             ركائزنا الإستراتيجية
-            <span className="w-8 h-px bg-cyan-400" />
+            <span className="w-8 h-px bg-accent" />
           </motion.span>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-[900] text-white mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-[900] text-primary mb-4">
             <RevealText text="تركيزنا الأساسي" />
           </h2>
 
@@ -458,7 +449,7 @@ const CoreFocus = () => {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.25, ease }}
-            className="text-white/35 text-base max-w-md mx-auto"
+            className="text-text-secondary text-base max-w-md mx-auto"
           >
             مرّر على أي ركيزة أو انقر عليها لاستكشاف تفاصيلها
           </motion.p>
@@ -483,12 +474,12 @@ const CoreFocus = () => {
             {/* Auto-progress bar */}
             <div className="mt-4 px-5">
               <div className="flex items-center gap-3 mb-2">
-                <span className="text-[10px] text-white/20 font-mono tracking-widest uppercase">
+                <span className="text-[10px] text-text-muted font-mono tracking-widest uppercase">
                   {isAuto ? 'تشغيل تلقائي' : 'يدوي'}
                 </span>
                 <button
                   onClick={() => setIsAuto((v) => !v)}
-                  className="w-5 h-5 rounded-full border border-white/10 flex items-center justify-center text-white/25 hover:text-cyan-400 hover:border-cyan-400/40 transition-all duration-200"
+                  className="w-5 h-5 rounded-full border border-border-light bg-white shadow-sm flex items-center justify-center text-text-muted hover:text-accent hover:border-accent/40 transition-all duration-200"
                 >
                   {isAuto ? (
                     <svg viewBox="0 0 24 24" fill="currentColor" className="w-2.5 h-2.5"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" /></svg>
@@ -503,17 +494,16 @@ const CoreFocus = () => {
 
           {/* RIGHT — detail panel */}
           <div
-            className="relative lg:sticky lg:top-28 h-[480px] md:h-[540px] rounded-3xl overflow-hidden"
+            className="relative lg:sticky lg:top-28 h-[480px] md:h-[540px] rounded-3xl overflow-hidden bg-white shadow-[0_20px_50px_-15px_rgba(10,22,40,0.08)]"
             style={{
-              border: `1px solid ${activePillar.accent}25`,
-              background: 'rgba(255,255,255,0.02)',
+              border: `1px solid ${activePillar.accent}30`,
             }}
           >
             {/* Animated background glow */}
             <motion.div
               className="absolute inset-0 pointer-events-none"
               animate={{
-                background: `radial-gradient(ellipse 80% 80% at 50% 30%, ${activePillar.accent}15, transparent 70%)`,
+                background: `radial-gradient(ellipse 80% 80% at 50% 30%, ${activePillar.accent}10, transparent 70%)`,
               }}
               transition={{ duration: 0.8, ease }}
             />
@@ -527,7 +517,7 @@ const CoreFocus = () => {
                   onClick={() => selectIdx(i)}
                   className="w-1.5 h-1.5 rounded-full focus:outline-none"
                   animate={{
-                    backgroundColor: activeIdx === i ? activePillar.accent : 'rgba(255,255,255,0.15)',
+                    backgroundColor: activeIdx === i ? activePillar.accent : 'rgba(10,22,40,0.15)',
                     scale: activeIdx === i ? 1.4 : 1,
                   }}
                   transition={{ duration: 0.3, ease }}
@@ -542,7 +532,7 @@ const CoreFocus = () => {
                   key={i}
                   type="button"
                   onClick={() => selectIdx((activeIdx + pillars.length + dir) % pillars.length)}
-                  className="pointer-events-auto w-9 h-9 rounded-full border border-white/8 bg-black/20 backdrop-blur-sm flex items-center justify-center text-white/30 hover:text-cyan-400 hover:border-cyan-400/40 transition-all duration-200"
+                  className="pointer-events-auto w-9 h-9 rounded-full border border-border-light bg-white/90 backdrop-blur-sm shadow-sm flex items-center justify-center text-text-secondary hover:text-accent hover:border-accent/40 transition-all duration-200"
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -582,7 +572,7 @@ const CoreFocus = () => {
               style={{
                 width: activeIdx === i ? 24 : 8,
                 height: 8,
-                backgroundColor: activeIdx === i ? activePillar.accent : 'rgba(255,255,255,0.2)',
+                backgroundColor: activeIdx === i ? activePillar.accent : 'rgba(10,22,40,0.15)',
               }}
             />
           ))}
