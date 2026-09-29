@@ -61,6 +61,14 @@ const aboutTabs = [
   },
 ];
 
+const howWeWorkSteps = [
+  { number: '01', title: 'فكرة واعدة' },
+  { number: '02', title: 'خطة واضحة' },
+  { number: '03', title: 'فريق مؤهل من الشباب' },
+  { number: '04', title: 'تنفيذ منضبط' },
+  { number: '05', title: 'نمو مستدام', isHighlight: true },
+];
+
 const Eyebrow = ({ children, center = false, light = false }) => (
   <motion.span
     initial={{ opacity: 0, y: 12 }}
@@ -358,18 +366,116 @@ const Home = () => {
         <div className="absolute top-20 -right-40 w-[500px] h-[500px] rounded-full bg-accent/10 blur-[120px]" />
 
         <Reveal3D className="container-premium section-padding relative">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center" dir="rtl">
-
-            {/* Right: Text & Tab Switcher */}
-            <div className="lg:col-span-5 min-h-[380px] flex flex-col justify-between">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={aboutTabs[activeTab].id}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.3, ease }}
+          {/* Centered Tab Switcher */}
+          <div className="flex justify-center mb-12 lg:mb-16">
+            <div className="inline-flex flex-wrap gap-1.5 p-1.5 rounded-full bg-surface-warm border border-border-light shadow-sm">
+              {aboutTabs.map((tab, i) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(i)}
+                  className={`relative px-6 py-2.5 rounded-full text-sm font-semibold transition-colors duration-300 ${
+                    activeTab === i ? 'text-white' : 'text-text-secondary hover:text-primary'
+                  }`}
                 >
+                  {activeTab === i && (
+                    <motion.span
+                      layoutId="about-tab"
+                      className="absolute inset-0 rounded-full bg-primary shadow-[0_10px_25px_-10px_rgba(10,22,40,0.6)]"
+                      transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+                    />
+                  )}
+                  <span className="relative z-10">{tab.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <AnimatePresence mode="wait">
+            {activeTab === 2 ? (
+              <motion.div
+                key="tab-how-we-work-flow"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.35, ease }}
+                className="w-full text-center py-4"
+                dir="rtl"
+              >
+                <h2 className="text-3xl md:text-4xl lg:text-[44px] font-heading font-extrabold text-primary mb-12">
+                  كيف نعمل؟
+                </h2>
+
+                <div className="flex flex-col lg:flex-row items-center justify-center gap-3 lg:gap-2 max-w-6xl mx-auto px-4">
+                  {howWeWorkSteps.map((step, index) => (
+                    <div key={step.number} className="flex flex-col lg:flex-row items-center gap-3 lg:gap-2 w-full lg:w-auto">
+                      <motion.div
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.35, delay: index * 0.08, ease }}
+                        className={`w-full lg:w-48 xl:w-52 h-28 sm:h-32 rounded-2xl flex flex-col items-center justify-center p-4 transition-all duration-300 ${
+                          step.isHighlight
+                            ? 'bg-primary text-white shadow-[0_16px_36px_-10px_rgba(10,22,40,0.5)] border border-primary'
+                            : 'bg-white text-primary border border-border-light shadow-sm hover:shadow-md hover:border-accent/40'
+                        }`}
+                      >
+                        <span className="text-sm sm:text-base font-bold font-latin mb-1.5 text-accent">
+                          {step.number}
+                        </span>
+                        <span
+                          className={`text-base sm:text-lg font-heading font-bold text-center leading-snug ${
+                            step.isHighlight ? 'text-white' : 'text-primary'
+                          }`}
+                        >
+                          {step.title}
+                        </span>
+                      </motion.div>
+
+                      {index < howWeWorkSteps.length - 1 && (
+                        <div className="text-accent flex items-center justify-center py-1 lg:py-0 px-1">
+                          {/* Desktop: Arrow pointing left in RTL */}
+                          <svg
+                            className="w-6 h-6 hidden lg:block text-accent"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <line x1="19" y1="12" x2="5" y2="12" />
+                            <polyline points="12 19 5 12 12 5" />
+                          </svg>
+                          {/* Mobile: Arrow pointing down */}
+                          <svg
+                            className="w-6 h-6 lg:hidden text-accent"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <polyline points="19 12 12 19 5 12" />
+                          </svg>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key={`tab-content-${activeTab}`}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.35, ease }}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center"
+                dir="rtl"
+              >
+                {/* Right: Text */}
+                <div className="lg:col-span-5 min-h-[300px] flex flex-col justify-center">
                   <div className="mb-6">
                     <Eyebrow>{aboutTabs[activeTab].eyebrow}</Eyebrow>
                   </div>
@@ -380,81 +486,53 @@ const Home = () => {
                     <span className="text-text-muted">{aboutTabs[activeTab].titleLine2}</span>
                   </h2>
 
-                  <p className="text-text-secondary text-lg leading-[1.8] mb-10 max-w-lg">
+                  <p className="text-text-secondary text-lg leading-[1.8] max-w-lg">
                     {aboutTabs[activeTab].text}
                   </p>
-                </motion.div>
-              </AnimatePresence>
+                </div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.45, ease }}
-                className="inline-flex flex-wrap gap-1 p-1.5 rounded-full bg-surface-warm border border-border-light self-start"
-              >
-                {aboutTabs.map((tab, i) => (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(i)}
-                    onMouseEnter={() => setActiveTab(i)}
-                    className={`relative px-6 py-2.5 rounded-full text-sm font-semibold transition-colors duration-300 ${
-                      activeTab === i ? 'text-white' : 'text-text-secondary'
-                    }`}
-                  >
-                    {activeTab === i && (
-                      <motion.span
-                        layoutId="about-tab"
-                        className="absolute inset-0 rounded-full bg-primary shadow-[0_10px_25px_-10px_rgba(10,22,40,0.6)]"
-                        transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+                {/* Left: Visual element */}
+                <div className="lg:col-span-7" style={{ perspective: 1400 }}>
+                  <TiltCard max={8} hoverScale={1.01} className="rounded-[32px]">
+                    <div className="aspect-[4/3] rounded-[32px] overflow-hidden bg-surface-warm relative shadow-[var(--shadow-depth)]">
+                      <motion.img
+                        src="/office.jpg"
+                        alt="بيئة العمل في نثيل"
+                        className="w-full h-full object-cover"
+                        initial={{ scale: 1.2 }}
+                        whileInView={{ scale: 1.05 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1.8, ease }}
                       />
-                    )}
-                    <span className="relative z-10">{tab.label}</span>
-                  </button>
-                ))}
-              </motion.div>
-            </div>
-
-            {/* Left: Visual element */}
-            <div className="lg:col-span-7" style={{ perspective: 1400 }}>
-              <TiltCard max={8} hoverScale={1.01} className="rounded-[32px]">
-                <div className="aspect-[4/3] rounded-[32px] overflow-hidden bg-surface-warm relative shadow-[var(--shadow-depth)]">
-                  <motion.img
-                    src="/office.jpg"
-                    alt="بيئة العمل في نثيل"
-                    className="w-full h-full object-cover"
-                    initial={{ scale: 1.2 }}
-                    whileInView={{ scale: 1.05 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1.8, ease }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/40 via-transparent to-transparent" />
-                </div>
-
-                {/* Floating depth card */}
-                <div
-                  className="absolute -bottom-8 right-6 left-6 md:left-auto md:w-[78%] glass-light rounded-2xl p-6"
-                  style={{ transform: 'translateZ(70px)' }}
-                  dir="rtl"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-accent to-primary-medium flex items-center justify-center text-white font-latin font-black shadow-[var(--shadow-glow)]">
-                      30
+                      <div className="absolute inset-0 bg-gradient-to-t from-primary/40 via-transparent to-transparent" />
                     </div>
-                    <p className="text-sm text-text-secondary font-medium leading-relaxed">
-                      خبرة <span className="text-primary font-bold">+30 عاماً</span> في تطوير الأعمال والمشاريع في المملكة العربية السعودية
-                    </p>
-                  </div>
-                </div>
 
-                {/* Orbit ring */}
-                <div
-                  className="absolute -top-6 -left-6 w-28 h-28 rounded-full border border-dashed border-accent/40 hidden md:block"
-                  style={{ transform: 'translateZ(40px)', animation: 'spin-flat 20s linear infinite' }}
-                />
-              </TiltCard>
-            </div>
-          </div>
+                    {/* Floating depth card */}
+                    <div
+                      className="absolute -bottom-8 right-6 left-6 md:left-auto md:w-[78%] glass-light rounded-2xl p-6"
+                      style={{ transform: 'translateZ(70px)' }}
+                      dir="rtl"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-accent to-primary-medium flex items-center justify-center text-white font-latin font-black shadow-[var(--shadow-glow)]">
+                          30
+                        </div>
+                        <p className="text-sm text-text-secondary font-medium leading-relaxed">
+                          خبرة <span className="text-primary font-bold">+30 عاماً</span> في تطوير الأعمال والمشاريع في المملكة العربية السعودية
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Orbit ring */}
+                    <div
+                      className="absolute -top-6 -left-6 w-28 h-28 rounded-full border border-dashed border-accent/40 hidden md:block"
+                      style={{ transform: 'translateZ(40px)', animation: 'spin-flat 20s linear infinite' }}
+                    />
+                  </TiltCard>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </Reveal3D>
       </section>
 
