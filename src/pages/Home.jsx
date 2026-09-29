@@ -2,6 +2,7 @@ import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSp
 import { useState, useCallback, useRef, useEffect } from 'react';
 import ProjectModal from '../components/ProjectModal';
 import ProjectRing from '../components/ProjectRing';
+import HailMap from '../components/map/HailMap';
 import RevealText from '../components/fx/RevealText';
 import Magnetic from '../components/fx/Magnetic';
 import TiltCard from '../components/fx/TiltCard';
@@ -600,6 +601,8 @@ const Home = () => {
         </motion.div>
       </section>
 
+      {/* Hail Interactive Map */}
+      <HailMap />
 
       {/* Project Modal */}
       <ProjectModal

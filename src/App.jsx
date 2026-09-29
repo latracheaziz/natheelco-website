@@ -3,7 +3,6 @@ import { AnimatePresence, MotionConfig, motion, useScroll, useSpring } from 'fra
 import Header from './components/Header';
 import Footer from './components/Footer';
 import BrandMarquee from './components/BrandMarquee';
-import HailMap from './components/map/HailMap';
 import Home from './pages/Home';
 import About from './pages/About';
 import HowWeWork from './pages/HowWeWork';
@@ -91,7 +90,6 @@ function App() {
             <AnimatedRoutes />
           </main>
           <BrandMarquee />
-          <HailMap />
           <Footer />
         </div>
       </Router>
