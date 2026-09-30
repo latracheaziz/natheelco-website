@@ -12,7 +12,6 @@ import MapTerrain from './MapTerrain';
 import MapPin, { PinGround } from './MapPin';
 import { Compass, FilterPills, GrowthPanel, StatusPanel, Toolbar, TopPills, VenturesPanel } from './MapHUD';
 import ProjectModal from '../ProjectModal';
-import Spotlight from '../fx/Spotlight';
 import { useMediaQuery } from '../fx/useCanHover';
 import { projects, hq } from '../../data/projects';
 
@@ -185,7 +184,6 @@ const HailMap = () => {
         >
           {/* Stars / sky haze */}
           <div className="absolute inset-x-0 top-0 h-1/3 bg-[radial-gradient(ellipse_at_50%_0%,rgba(46,139,156,0.25),transparent_70%)]" />
-          <Spotlight />
 
           {/* 3D scene */}
           <div className="map-stage absolute inset-0" dir="ltr">

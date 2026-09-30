@@ -2,7 +2,6 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import RevealText from './RevealText';
 import FloatingShapes from './FloatingShapes';
-import Spotlight from './Spotlight';
 
 const PageHero = ({
   eyebrow,
@@ -24,7 +23,6 @@ const PageHero = ({
       <div className="aurora" />
       <div className="perspective-grid" />
       <div className="grain" />
-      <Spotlight />
       <FloatingShapes variant={variant} showHeritageMark={showHeritageMark} heritageMarkClassName={heritageMarkClassName} />
 
       <motion.div

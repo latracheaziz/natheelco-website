@@ -3,8 +3,6 @@ import { useState, useCallback, useEffect } from 'react';
 import Reveal3D from './fx/Reveal3D';
 import RevealText from './fx/RevealText';
 import TiltCard from './fx/TiltCard';
-import Spotlight from './fx/Spotlight';
-
 const ease = [0.16, 1, 0.3, 1];
 
 const Eyebrow = ({ children, center = false, light = false }) => (
@@ -82,7 +80,6 @@ const AboutIdentity = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary to-primary-light/30 pointer-events-none" />
         <div className="aurora opacity-20" />
         <div className="grain" />
-        <Spotlight />
 
         <div className="container-premium section-padding relative z-10 py-24 lg:py-32" dir="rtl">
           <Reveal3D rotateX={14} distance={60}>
