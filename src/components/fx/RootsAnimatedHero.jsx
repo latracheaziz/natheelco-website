@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import RevealText from './RevealText';
+import RootsWindScene from './RootsWindScene';
 
 const RootsAnimatedHero = ({ title, subtitle }) => {
   const ref = useRef(null);
@@ -39,101 +40,28 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
       onMouseMove={handleMouseMove}
       className="relative min-h-[75vh] md:min-h-[85vh] flex items-center justify-center overflow-hidden bg-[#0a111a]"
     >
-      {/* SVG Filters for Wind Effects */}
-      <svg className="hidden w-0 h-0 absolute">
-        <defs>
-          <filter id="wind-palms">
-            <feTurbulence type="fractalNoise" baseFrequency="0.015 0.02" numOctaves="3" seed="5">
-              <animate attributeName="baseFrequency" values="0.015 0.02;0.018 0.025;0.015 0.02" dur="12s" repeatCount="indefinite" />
-            </feTurbulence>
-            <feDisplacementMap in="SourceGraphic" scale={reduceMotion ? 0 : 4} xChannelSelector="R" yChannelSelector="G" />
-          </filter>
-          <filter id="wind-foreground">
-            <feTurbulence type="fractalNoise" baseFrequency="0.02 0.05" numOctaves="2" seed="2">
-              <animate attributeName="baseFrequency" values="0.02 0.05;0.03 0.06;0.02 0.05" dur="8s" repeatCount="indefinite" />
-            </feTurbulence>
-            <feDisplacementMap in="SourceGraphic" scale={reduceMotion ? 0 : 3} xChannelSelector="R" yChannelSelector="G" />
-          </filter>
-        </defs>
-      </svg>
-
       {/* BACKGROUND LAYERS */}
       <motion.div 
         className="absolute inset-0 w-full h-full pointer-events-none origin-center"
         style={{ y: yBase, scale: 1.05 }} // Slight scale to hide edges during parallax
       >
         
-        {/* Layer 1: Base Landscape Image */}
+        {/* Layer 1: Landscape with wind (clouds drifting, palms swaying, water rippling) */}
         <motion.div 
           className="absolute inset-0"
           animate={!reduceMotion && !isMobile ? { x: mousePos.x * -10, y: mousePos.y * -10 } : {}}
           transition={{ type: "tween", ease: "easeOut", duration: 0.5 }}
         >
-          <img src={bgSrc} alt="" className="w-full h-full object-cover" />
+          <RootsWindScene src={bgSrc} />
         </motion.div>
 
-        {/* Layer 2: Slow Cloud Movement (Overlaying Noise) */}
-        {!reduceMotion && (
-          <motion.div 
-            className="absolute inset-0 mix-blend-overlay opacity-60 pointer-events-none"
-            style={{ 
-              maskImage: 'linear-gradient(to bottom, black 0%, black 35%, transparent 55%)',
-              WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 35%, transparent 55%)'
-            }}
-            animate={{ x: mousePos.x * -15, y: mousePos.y * -15 }}
-            transition={{ type: "tween", ease: "easeOut", duration: 0.5 }}
-          >
-            {/* Extremely slow drifting large cloud-like noise */}
-            <motion.div 
-              className="absolute top-0 left-[-50%] w-[200%] h-full bg-[url('/noise.png')] bg-repeat opacity-40 mix-blend-screen"
-              animate={{ x: ["0%", "20%"] }}
-              transition={{ duration: 100, repeat: Infinity, ease: "linear" }}
-              style={{ backgroundSize: '150px' }}
-            />
-          </motion.div>
-        )}
-
-        {/* Layer 3: Subtle Palm Tree Movement (using SVG Filter) */}
-        {!reduceMotion && (
-          <motion.div 
-            className="absolute inset-0 pointer-events-none"
-            style={{ 
-              // Mask out only the middle section where palm trees are (approx 30% to 70% height)
-              maskImage: 'linear-gradient(to bottom, transparent 20%, black 40%, black 65%, transparent 75%)',
-              WebkitMaskImage: 'linear-gradient(to bottom, transparent 20%, black 40%, black 65%, transparent 75%)',
-              filter: 'url(#wind-palms)'
-            }}
-            animate={!isMobile ? { x: mousePos.x * -12, y: mousePos.y * -12 } : {}}
-            transition={{ type: "tween", ease: "easeOut", duration: 0.5 }}
-          >
-            <img src={bgSrc} alt="" className="w-full h-full object-cover" />
-          </motion.div>
-        )}
-
-        {/* Layer 4: Foreground Vegetation Movement */}
-        {!reduceMotion && (
-          <motion.div 
-            className="absolute inset-0 pointer-events-none"
-            style={{ 
-              // Mask only the bottom 25% where dark bushes are
-              maskImage: 'linear-gradient(to bottom, transparent 75%, black 85%, black 100%)',
-              WebkitMaskImage: 'linear-gradient(to bottom, transparent 75%, black 85%, black 100%)',
-              filter: 'url(#wind-foreground)'
-            }}
-            animate={!isMobile ? { x: mousePos.x * -25, y: mousePos.y * -25 } : {}}
-            transition={{ type: "tween", ease: "easeOut", duration: 0.5 }}
-          >
-            <img src={bgSrc} alt="" className="w-full h-full object-cover" />
-          </motion.div>
-        )}
-
-        {/* Layer 5: Cinematic Cinematic Dark Gradient & Treatment */}
+        {/* Layer 2: Cinematic Dark Gradient & Treatment */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/40 to-[#020617]/10 opacity-90 mix-blend-multiply pointer-events-none" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#06152F]/20 to-transparent opacity-60 mix-blend-color-burn pointer-events-none" />
 
       </motion.div>
 
-      {/* Layer 6: Hero Text & Content */}
+      {/* Layer 3: Hero Text & Content */}
       <motion.div
         style={{ opacity, y: yText }}
         className="container-premium relative z-10 w-full pt-40 pb-24 lg:pt-48 lg:pb-32 flex flex-col justify-end min-h-full"

@@ -13,10 +13,12 @@ const navLinks = [
 const isActivePath = (pathname, href) => pathname === href || pathname === encodeURI(href);
 
 const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [scrolledPast, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hovered, setHovered] = useState(null);
   const location = useLocation();
+  // The About hero is too dark for the black wordmark, so the header stays in its compact frosted form there.
+  const isScrolled = scrolledPast || isActivePath(location.pathname, '/عن-نثيل');
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
