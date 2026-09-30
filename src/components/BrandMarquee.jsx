@@ -21,7 +21,7 @@ const wrap = (min, max, v) => {
 
 const Row = ({ lit = false }) => (
   <div className="flex w-max" aria-hidden={lit || undefined}>
-    {[0, 1].map((g) => (
+    {Array.from({ length: 16 }).map((_, g) => (
       <div key={g} className="mq-group">
         {brands.map((name) => (
           <div key={`${g}-${name}`} className="flex items-center">
