@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import Spotlight from './fx/Spotlight';
 import TiltCard from './fx/TiltCard';
 import Magnetic from './fx/Magnetic';
 import RevealText from './fx/RevealText';
@@ -42,7 +41,6 @@ const Footer = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary to-primary-light/30 pointer-events-none" />
       <div className="aurora opacity-25" />
       <div className="grain" />
-      <Spotlight />
 
       <div className="relative z-10">
         {/* Main Footer Content */}

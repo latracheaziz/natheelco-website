@@ -7,7 +7,6 @@ import RevealText from '../components/fx/RevealText';
 import Magnetic from '../components/fx/Magnetic';
 import TiltCard from '../components/fx/TiltCard';
 import Counter from '../components/fx/Counter';
-import Spotlight from '../components/fx/Spotlight';
 import Reveal3D from '../components/fx/Reveal3D';
 import { projects, heroStats } from '../data/projects';
 
@@ -211,7 +210,6 @@ const Home = () => {
           </motion.div>
         </motion.div>
         <div className="aurora home-hero-aurora" />
-        <Spotlight />
 
         {/* Floating slide deck (3D) */}
         <motion.div
