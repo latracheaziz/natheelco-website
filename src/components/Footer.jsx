@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useRef } from 'react';
 import TiltCard from './fx/TiltCard';
 import Magnetic from './fx/Magnetic';
@@ -31,9 +31,6 @@ const colVariants = {
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end end'] });
-  const wordmarkY = useTransform(scrollYProgress, [0, 1], ['40%', '0%']);
-  const wordmarkOpacity = useTransform(scrollYProgress, [0.3, 1], [0, 1]);
 
   return (
     <footer ref={ref} className="bg-primary text-white relative overflow-hidden">
@@ -153,14 +150,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Giant wordmark */}
-        <motion.div
-          className="pointer-events-none select-none text-center font-latin font-black leading-[0.8] tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white/[0.09] to-transparent text-[22vw] -mb-[4vw]"
-          style={{ y: wordmarkY, opacity: wordmarkOpacity }}
-          aria-hidden="true"
-        >
-          NATHEEL
-        </motion.div>
       </div>
     </footer>
   );
