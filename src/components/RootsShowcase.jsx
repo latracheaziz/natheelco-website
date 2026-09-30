@@ -57,7 +57,7 @@ const RootsShowcase = () => {
   };
 
   useEffect(() => {
-    if (!isPlaying || isHovered || isFocused) return undefined;
+    if (!isPlaying || isFocused) return undefined;
 
     let previousTime = performance.now();
     const timer = window.setInterval(() => {
@@ -77,7 +77,7 @@ const RootsShowcase = () => {
     }, 80);
 
     return () => window.clearInterval(timer);
-  }, [isPlaying, isHovered, isFocused]);
+  }, [isPlaying, isFocused]);
 
   const handleThumbnailKeyDown = (event, index) => {
     if (event.key === 'ArrowLeft') {
@@ -161,29 +161,29 @@ const RootsShowcase = () => {
                   src={activeSlide.src}
                   alt={activeSlide.alt}
                   draggable="false"
-                  className="absolute inset-0 h-full w-full select-none object-cover"
+                  className="absolute inset-0 h-full w-full select-none object-cover origin-center"
                   initial={reduceMotion
                     ? { opacity: 0 }
-                    : { opacity: 0, scale: 1.14, rotateY: direction * 9, x: direction * 48, filter: 'blur(10px)' }}
-                  animate={{ opacity: 1, scale: reduceMotion ? 1 : 1.055, rotateY: 0, x: 0, filter: 'blur(0px)' }}
+                    : { opacity: 0, scale: 0.85, rotateY: direction * 90, z: -200, filter: 'blur(20px)' }}
+                  animate={{ opacity: 1, scale: 1, rotateY: 0, z: 0, filter: 'blur(0px)' }}
                   exit={reduceMotion
                     ? { opacity: 0 }
                     : {
                         opacity: 0,
-                        scale: 0.94,
-                        rotateY: direction * -8,
-                        x: direction * -36,
-                        filter: 'blur(8px)',
-                        transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+                        scale: 0.85,
+                        rotateY: direction * -90,
+                        z: -200,
+                        filter: 'blur(20px)',
+                        transition: { duration: 1.1, ease: [0.22, 1, 0.36, 1] },
                       }}
                   transition={reduceMotion
                     ? { opacity: { duration: 0.35 } }
                     : {
-                        opacity: { duration: 0.85, ease: [0.16, 1, 0.3, 1] },
-                        scale: { duration: SLIDE_DURATION / 1000, ease: 'linear' },
-                        rotateY: { duration: 0.95, ease: [0.16, 1, 0.3, 1] },
-                        x: { duration: 0.95, ease: [0.16, 1, 0.3, 1] },
-                        filter: { duration: 0.8 },
+                        opacity: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
+                        scale: { duration: 1.1, ease: [0.22, 1, 0.36, 1] },
+                        rotateY: { duration: 1.1, ease: [0.22, 1, 0.36, 1] },
+                        z: { duration: 1.1, ease: [0.22, 1, 0.36, 1] },
+                        filter: { duration: 0.9 },
                       }}
                   style={{ transformStyle: 'preserve-3d', backfaceVisibility: 'hidden' }}
                 />
