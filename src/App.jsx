@@ -84,9 +84,9 @@ function App() {
     <MotionConfig reducedMotion="user">
       <Router>
         <ScrollProgress />
-        <div className="font-sans text-text-primary bg-white min-h-screen flex flex-col">
+        <div className="font-sans text-text-primary bg-white min-h-screen flex flex-col overflow-x-hidden relative w-full">
           <Header />
-          <main className="flex-grow">
+          <main className="flex-grow w-full">
             <AnimatedRoutes />
           </main>
           <BrandMarquee />
