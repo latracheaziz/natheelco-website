@@ -71,7 +71,7 @@ const Header = () => {
               {/* Logo */}
               <Link to="/" className="flex items-center group relative z-10">
                 <motion.img
-                  src="/logo.png"
+                  src="/logo-black-wordmark.png"
                   alt="نثيل Natheel"
                   className="h-10 md:h-12 w-auto object-contain transition-all duration-500"
                   whileHover={{ scale: 1.05 }}

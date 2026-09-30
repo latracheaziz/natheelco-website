@@ -103,7 +103,7 @@ const Footer = () => {
               <h3 className="text-[11px] font-latin font-semibold tracking-[0.2em] uppercase text-white/30 mb-6">تابعنا</h3>
               <TiltCard max={14} className="w-44 glass-panel rounded-2xl">
                 <div className="p-3 pb-2" style={{ transform: 'translateZ(30px)' }}>
-                  <img src="/qr.png" alt="QR Code - Natheel" className="w-full h-auto rounded-lg" />
+                  <img src="/qr.jpg" alt="QR Code - Natheel" className="w-full h-auto rounded-lg" />
                 </div>
                 {/* Social Icons */}
                 <div className="flex items-center justify-center gap-5 pb-4 pt-1" style={{ transform: 'translateZ(20px)' }}>
