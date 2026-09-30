@@ -58,22 +58,9 @@ const BrandMarquee = () => {
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-l from-transparent via-accent-light/40 to-transparent" />
 
       <div className="mq-band relative" dir="ltr">
-        {/* Outline layer */}
         <motion.div style={{ x }}>
-          <Row />
+          <Row lit />
         </motion.div>
-        {/* Lit layer — revealed only around the center */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            maskImage: 'linear-gradient(to right, transparent 30%, #000 45%, #000 55%, transparent 70%)',
-            WebkitMaskImage: 'linear-gradient(to right, transparent 30%, #000 45%, #000 55%, transparent 70%)',
-          }}
-        >
-          <motion.div style={{ x }}>
-            <Row lit />
-          </motion.div>
-        </div>
       </div>
 
       {/* Edge fades */}
