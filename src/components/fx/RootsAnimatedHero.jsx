@@ -55,9 +55,8 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
           <RootsWindScene src={bgSrc} />
         </motion.div>
 
-        {/* Layer 2: Cinematic Dark Gradient & Treatment */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/40 to-[#020617]/10 opacity-90 mix-blend-multiply pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#06152F]/20 to-transparent opacity-60 mix-blend-color-burn pointer-events-none" />
+        {/* Layer 2: Solid Dark Color Treatment */}
+        <div className="absolute inset-0 bg-[#020617]/50 mix-blend-multiply pointer-events-none" />
 
       </motion.div>
 
@@ -95,8 +94,8 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
         </motion.div>
       </motion.div>
       
-      {/* Edge blend to body content */}
-      <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none z-10" />
+      {/* Cover baked-in image gradient with a solid color matching the section below */}
+      <div className="absolute bottom-0 inset-x-0 h-40 bg-surface-warm z-10 pointer-events-none" />
     </section>
   );
 };

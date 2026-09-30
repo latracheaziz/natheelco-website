@@ -47,8 +47,6 @@ const HowWeWorkHero = () => {
         </motion.div>
       </div>
 
-      {/* Fade out to white for the section transition */}
-      <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none z-10" />
     </section>
   );
 };
