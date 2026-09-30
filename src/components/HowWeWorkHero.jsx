@@ -23,11 +23,9 @@ const HowWeWorkHero = () => {
           className="max-w-4xl"
         >
           {/* Eyebrow / Label */}
-          <div className="mb-8 inline-flex items-center gap-4">
-            <span className="w-12 h-px bg-gradient-to-l from-[#38BDF8] to-transparent opacity-80" />
-            <span className="text-[#38BDF8] font-medium tracking-wide text-sm md:text-base font-latin">
-              01 &nbsp;→&nbsp; 02 &nbsp;→&nbsp; 03 &nbsp;→&nbsp; 04
-            </span>
+          <div className="mb-6 inline-flex items-center gap-3">
+            <span className="w-8 h-px bg-white/40" />
+            <span className="text-white/70 font-medium tracking-wide text-sm md:text-base">منهجيتنا</span>
           </div>
 
           {/* Main Title */}
