@@ -4,8 +4,8 @@ import Reveal3D from './fx/Reveal3D';
 import TiltCard from './fx/TiltCard';
 import { useMediaQuery } from './fx/useCanHover';
 
-const CARD_W = 420;
-const RADIUS = 480;
+const CARD_W = 600; // Increased card width
+const RADIUS = 640; // Increased radius to fit larger cards
 const AUTO_SPEED = 0.012; // degrees per ms
 
 const slides = [
@@ -44,7 +44,7 @@ const RingCard = ({ slide, index, originalIndex, count, rotation, dragMoved }) =
       <motion.div
         whileHover={{ y: -14, z: 40 }}
         transition={{ type: 'spring', stiffness: 260, damping: 22 }}
-        className="preserve-3d h-full relative isolate aspect-[4/3] sm:aspect-[16/9] overflow-hidden rounded-[24px] sm:rounded-[32px] border border-white/15 bg-primary-light shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)] cursor-grab active:cursor-grabbing"
+        className="preserve-3d h-full relative isolate aspect-[4/3] sm:aspect-[16/9] overflow-hidden rounded-[24px] sm:rounded-[36px] border border-white/15 bg-primary-light shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)] cursor-grab active:cursor-grabbing"
       >
         <img
           src={slide.src}
@@ -55,14 +55,14 @@ const RingCard = ({ slide, index, originalIndex, count, rotation, dragMoved }) =
         <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/5 to-primary/10 pointer-events-none" />
         <div className="absolute inset-0 bg-gradient-to-l from-primary/25 via-transparent to-transparent pointer-events-none" />
 
-        <div className="absolute right-4 top-4 flex items-center gap-2 rounded-full border border-white/20 bg-primary/35 px-3 py-1.5 text-[9px] font-semibold tracking-[0.14em] text-white/85 backdrop-blur-xl sm:right-6 sm:top-6 sm:px-4 sm:text-[10px]">
+        <div className="absolute right-4 top-4 flex items-center gap-2 rounded-full border border-white/20 bg-primary/35 px-4 py-2 text-[10px] font-semibold tracking-[0.14em] text-white/85 backdrop-blur-xl sm:right-6 sm:top-6 sm:px-5 sm:text-[11px]">
           <span className="h-1.5 w-1.5 rounded-full bg-accent-glow shadow-[0_0_10px_#5FD4E6]" />
           <span>جذور نثيل</span>
         </div>
 
-        <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7 pointer-events-none">
+        <div className="absolute inset-x-0 bottom-0 p-6 sm:p-9 pointer-events-none">
           <span
-            className="font-latin text-4xl font-black leading-none text-white/30 sm:text-6xl"
+            className="font-latin text-5xl font-black leading-none text-white/30 sm:text-7xl"
             aria-hidden="true"
           >
             {String(originalIndex + 1).padStart(2, '0')}
@@ -150,7 +150,7 @@ const RootsShowcase = () => {
         ) : (
           // Desktop: 3D Spinning Ring
           <div
-            className="ring-stage relative h-[560px] select-none mt-16"
+            className="ring-stage relative h-[700px] select-none mt-16"
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => { setPaused(false); endDrag(); }}
             onPointerDown={onPointerDown}
@@ -158,10 +158,10 @@ const RootsShowcase = () => {
             onPointerUp={endDrag}
           >
             {/* Floor reflection */}
-            <div className="absolute left-1/2 bottom-0 -translate-x-1/2 w-[800px] h-[120px] rounded-[50%] bg-[radial-gradient(ellipse_at_center,rgba(46,139,156,0.18),transparent_70%)] blur-xl pointer-events-none" />
+            <div className="absolute left-1/2 bottom-0 -translate-x-1/2 w-[900px] h-[140px] rounded-[50%] bg-[radial-gradient(ellipse_at_center,rgba(46,139,156,0.18),transparent_70%)] blur-xl pointer-events-none" />
             
             <motion.div
-              className="ring absolute left-1/2 top-4 h-[300px]"
+              className="ring absolute left-1/2 top-4 h-[440px]"
               style={{ rotateX: -8, rotateY: ringRotate, z: -RADIUS }}
             >
               {extendedSlides.map((slide, index) => (
