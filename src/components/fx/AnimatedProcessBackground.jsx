@@ -17,9 +17,9 @@ const AnimatedProcessBackground = () => {
   });
 
   return (
-    <div className="absolute inset-0 overflow-hidden bg-black z-0 pointer-events-none">
+    <div className="absolute inset-0 overflow-hidden bg-gradient-to-b from-[#89CFF0]/30 via-[#00102A] to-black z-0 pointer-events-none">
       {/* Subtle deep blue radial glow in the center */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_50%,rgba(0,30,80,0.6),transparent_70%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_50%,rgba(0,40,100,0.4),transparent_70%)]" />
 
       {/* SVG Canvas for Lines */}
       <svg
