@@ -164,28 +164,32 @@ const RootsShowcase = () => {
                   className="absolute inset-0 h-full w-full select-none object-cover origin-center"
                   initial={reduceMotion
                     ? { opacity: 0 }
-                    : { opacity: 0, scale: 0.85, rotateY: direction * 90, z: -200, filter: 'blur(20px)' }}
-                  animate={{ opacity: 1, scale: 1, rotateY: 0, z: 0, filter: 'blur(0px)' }}
+                    : { opacity: 0, scale: 0.88, rotateY: direction * 45, rotateX: 8, x: direction * 120, z: -150, filter: 'blur(12px)' }}
+                  animate={{ opacity: 1, scale: 1, rotateY: 0, rotateX: 0, x: 0, z: 0, filter: 'blur(0px)' }}
                   exit={reduceMotion
                     ? { opacity: 0 }
                     : {
                         opacity: 0,
-                        scale: 0.85,
-                        rotateY: direction * -90,
-                        z: -200,
-                        filter: 'blur(20px)',
-                        transition: { duration: 1.1, ease: [0.22, 1, 0.36, 1] },
+                        scale: 0.88,
+                        rotateY: direction * -45,
+                        rotateX: -8,
+                        x: direction * -120,
+                        z: -150,
+                        filter: 'blur(12px)',
+                        transition: { duration: 0.85, ease: [0.25, 1, 0.35, 1] },
                       }}
                   transition={reduceMotion
                     ? { opacity: { duration: 0.35 } }
                     : {
-                        opacity: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
-                        scale: { duration: 1.1, ease: [0.22, 1, 0.36, 1] },
-                        rotateY: { duration: 1.1, ease: [0.22, 1, 0.36, 1] },
-                        z: { duration: 1.1, ease: [0.22, 1, 0.36, 1] },
-                        filter: { duration: 0.9 },
+                        opacity: { duration: 0.8, ease: [0.25, 1, 0.35, 1] },
+                        scale: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
+                        rotateY: { duration: 1.1, ease: [0.16, 1, 0.3, 1] },
+                        rotateX: { duration: 1.1, ease: [0.16, 1, 0.3, 1] },
+                        x: { duration: 1, ease: [0.16, 1, 0.3, 1] },
+                        z: { duration: 1.1, ease: [0.16, 1, 0.3, 1] },
+                        filter: { duration: 0.8 },
                       }}
-                  style={{ transformStyle: 'preserve-3d', backfaceVisibility: 'hidden' }}
+                  style={{ transformStyle: 'preserve-3d', backfaceVisibility: 'hidden', transformOrigin: 'center center' }}
                 />
               </AnimatePresence>
 
