@@ -298,7 +298,7 @@ const Home = () => {
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-[900] text-white leading-[1.15] mb-8 text-balance">
                 <RevealText text="نحوّل الأفكار إلى" immediate delay={0.35} stagger={0.09} />
                 <br />
-                <RevealText text="مشاريع قابلة للنمو" immediate delay={0.65} stagger={0.09} wordClassName="text-white/30" />
+                <RevealText text="مشاريع قابلة للنمو" immediate delay={0.65} stagger={0.09} wordClassName="text-white" />
               </h1>
 
               {/* Sub text */}
