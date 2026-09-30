@@ -21,10 +21,10 @@ const wrap = (min, max, v) => {
 
 const Row = ({ lit = false }) => (
   <div className="flex w-max" aria-hidden={lit || undefined}>
-    {Array.from({ length: 16 }).map((_, g) => (
-      <div key={g} className="mq-group">
+    {[0, 1].map((g) => (
+      <div key={g} className="mq-group flex min-w-[100vw] justify-around px-8 md:px-16">
         {brands.map((name) => (
-          <div key={`${g}-${name}`} className="flex items-center">
+          <div key={`${g}-${name}`} className="flex items-center gap-8 md:gap-16">
             <span className={`mq-brand ${lit ? 'is-lit' : ''}`}>{name}</span>
             <span className="mq-dot" />
           </div>
