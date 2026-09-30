@@ -1,4 +1,4 @@
-import PageHero from '../components/fx/PageHero';
+import RootsAnimatedHero from '../components/fx/RootsAnimatedHero';
 import Reveal3D from '../components/fx/Reveal3D';
 import RevealText from '../components/fx/RevealText';
 import TiltCard from '../components/fx/TiltCard';
@@ -7,12 +7,9 @@ import RootsShowcase from '../components/RootsShowcase';
 const Roots = () => {
   return (
     <div className="bg-white">
-      <PageHero
-        eyebrow="قصتنا"
+      <RootsAnimatedHero
         title="جذورنا"
         subtitle="ياهلا والله يحييكم"
-        subtitleClassName="text-2xl md:text-3xl text-white/40 mt-6 font-heading font-bold"
-        backgroundImage="/roots-hero.jpeg"
       />
 
       {/* Intro Section */}
