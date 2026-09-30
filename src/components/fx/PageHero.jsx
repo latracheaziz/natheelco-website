@@ -2,6 +2,23 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import RevealText from './RevealText';
 import FloatingShapes from './FloatingShapes';
+import WaveLinesBackground from './WaveLinesBackground';
+
+const ScenicHeroBackground = ({ src, scrollProgress }) => {
+  const parallaxY = useTransform(scrollProgress, [0, 1], [0, 54]);
+
+  return (
+    <motion.div className="roots-hero-scene absolute inset-0" style={{ y: parallaxY }} aria-hidden="true">
+      <div className="roots-hero-camera">
+        <img className="roots-hero-photo" src={src} alt="" fetchPriority="high" />
+      </div>
+      <div className="roots-cloud-drift roots-cloud-drift--high" />
+      <div className="roots-cloud-drift roots-cloud-drift--low" />
+      <div className="roots-palm-breeze" />
+      <div className="roots-hero-shade" />
+    </motion.div>
+  );
+};
 
 const PageHero = ({
   eyebrow,
@@ -11,6 +28,8 @@ const PageHero = ({
   variant = 0,
   showHeritageMark = false,
   heritageMarkClassName = '',
+  backgroundImage = '',
+  useWaveLines = false,
 }) => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
@@ -18,12 +37,39 @@ const PageHero = ({
   const y = useTransform(scrollYProgress, [0, 1], [0, 120]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
+  const handleScenicMove = (event) => {
+    if (!backgroundImage) return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const horizontal = (event.clientX - bounds.left) / bounds.width - 0.5;
+    const vertical = (event.clientY - bounds.top) / bounds.height - 0.5;
+    event.currentTarget.style.setProperty('--roots-pointer-x', `${horizontal * -18}px`);
+    event.currentTarget.style.setProperty('--roots-pointer-y', `${vertical * -12}px`);
+  };
+
+  const handleScenicLeave = (event) => {
+    event.currentTarget.style.setProperty('--roots-pointer-x', '0px');
+    event.currentTarget.style.setProperty('--roots-pointer-y', '0px');
+  };
+
   return (
-    <section ref={ref} className="bg-primary relative overflow-hidden min-h-[70vh] flex items-end">
-      <div className="aurora" />
-      <div className="perspective-grid" />
-      <div className="grain" />
-      <FloatingShapes variant={variant} showHeritageMark={showHeritageMark} heritageMarkClassName={heritageMarkClassName} />
+    <section
+      ref={ref}
+      onMouseMove={backgroundImage ? handleScenicMove : undefined}
+      onMouseLeave={backgroundImage ? handleScenicLeave : undefined}
+      className={`bg-primary relative overflow-hidden min-h-[70vh] flex items-end ${backgroundImage ? 'roots-photo-hero' : ''}`}
+    >
+      {backgroundImage ? (
+        <ScenicHeroBackground src={backgroundImage} scrollProgress={scrollYProgress} />
+      ) : useWaveLines ? (
+        <WaveLinesBackground />
+      ) : (
+        <>
+          <div className="aurora" />
+          <div className="perspective-grid" />
+          <div className="grain" />
+          <FloatingShapes variant={variant} showHeritageMark={showHeritageMark} heritageMarkClassName={heritageMarkClassName} />
+        </>
+      )}
 
       <motion.div
         style={{ rotateX, y, opacity, transformPerspective: 1200, transformOrigin: '50% 0%' }}

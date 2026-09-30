@@ -11,6 +11,7 @@ const HowWeWork = () => {
         variant={1}
         showHeritageMark
         heritageMarkClassName="spinning-heritage-mark"
+        useWaveLines
       />
 
       <HowWeWorkProcess />
