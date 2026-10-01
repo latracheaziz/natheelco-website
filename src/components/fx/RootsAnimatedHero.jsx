@@ -7,7 +7,17 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
   const ref = useRef(null);
   const reduceMotion = useReducedMotion();
   const [isMobile, setIsMobile] = useState(false);
-  const { scrollY } = useScroll();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  });
+  // The route wrapper is transformed, which breaks position: fixed, so the image is counter-translated to stay pinned to the viewport.
+  const y = useTransform(scrollYProgress, (p) => {
+    const el = ref.current;
+    if (!el) return 0;
+    const vh = window.innerHeight;
+    return -vh + p * (vh + el.offsetHeight);
+  });
 
   useEffect(() => {
     setIsMobile(window.innerWidth < 768);
@@ -26,10 +36,6 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
     setMousePos({ x, y });
   };
 
-  // Scroll Parallax for sticky hero text
-  const yText = useTransform(scrollY, [0, 500], [0, 150]);
-  const textOpacity = useTransform(scrollY, [0, 300], [1, 0]);
-
   // Image Source
   const bgSrc = "/roots-hero.jpeg";
 
@@ -37,12 +43,12 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
     <section
       ref={ref}
       onMouseMove={handleMouseMove}
-      className="relative h-screen flex items-center justify-center"
+      className="relative flex h-screen items-center justify-center overflow-hidden"
     >
       {/* BACKGROUND LAYERS */}
-      <motion.div 
-        className="absolute inset-0 w-full h-full pointer-events-none origin-center"
-        style={{ scale: 1.05 }}
+      <motion.div
+        className="pointer-events-none absolute inset-x-0 top-0 h-screen w-full origin-center will-change-transform"
+        style={{ y, scale: 1.05 }}
       >
         
         {/* Layer 1: Landscape with wind */}
@@ -60,9 +66,8 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
       </motion.div>
 
       {/* Hero Text & Content */}
-      <motion.div
-        style={{ opacity: textOpacity, y: yText }}
-        className="container-premium relative z-10 w-full pt-40 pb-24 lg:pt-48 lg:pb-32 flex flex-col justify-end min-h-full"
+      <div
+        className="container-premium relative z-10 flex min-h-full w-full flex-col justify-end pb-24 pt-40 lg:pb-32 lg:pt-48"
         dir="rtl"
       >
         <motion.div
@@ -91,7 +96,7 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
             </motion.p>
           )}
         </motion.div>
-      </motion.div>
+      </div>
       
     </section>
   );
