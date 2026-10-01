@@ -24,7 +24,7 @@ const slides = [
 const COPIES = 3;
 const cards = Array.from({ length: slides.length * COPIES }, (_, i) => ({ ...slides[i % slides.length], original: i % slides.length }));
 const N = cards.length;
-const CRUISE = 0.34;
+const CRUISE = 0;
 const ease = [0.16, 1, 0.3, 1];
 
 const wrap = (d) => {
@@ -34,54 +34,45 @@ const wrap = (d) => {
 const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
 const originalAt = (p) => (((Math.round(p) % N) + N) % N) % slides.length;
 
-const WheelCard = ({ card, index, progress, swing, speed, intro, geo, onPick }) => {
+const WheelCard = ({ card, index, progress, intro, geo, onPick }) => {
   const d = useTransform(progress, (p) => wrap(p - index));
-  const x = useTransform(d, (v) => v * 40);
-  const y = useTransform([intro, d], ([i, dv]) => (1 - i) * 320 + Math.abs(dv) * 30);
-  const rotateZ = useTransform([swing, intro, d], ([s, i, dv]) => clamp(-s * 7, -16, 16) + dv * 3 + (1 - i) * dv * 10);
-  const rotateY = 0;
-  const scale = useTransform(d, (v) => 1.06 - Math.abs(v) * 0.06);
-  const opacity = useTransform([d, intro], ([v, i]) => clamp(1 - Math.abs(v) * 0.4, 0, 1) * i);
+  const x = useTransform(d, (v) => v * (geo.cardW + geo.gap));
+  
+  // Keep opacity 1 until v > 0.3 to prevent dimming both during transition
+  const opacity = useTransform([d, intro], ([v, i]) => {
+    const val = Math.abs(v);
+    return (val < 0.3 ? 1 : Math.max(0.4, 1 - (val - 0.3) * 0.8)) * i;
+  });
+  
+  // Keep blur 0 until v > 0.3 so there's always a clear image
+  const filter = useTransform(d, (v) => {
+    const val = Math.abs(v);
+    return `blur(${val < 0.3 ? 0 : Math.min((val - 0.3) * 20, 20)}px)`;
+  });
+
+  const scale = useTransform(d, (v) => {
+    const val = Math.abs(v);
+    return val < 0.2 ? 1 : 1 - (val - 0.2) * 0.08;
+  });
   const zIndex = useTransform(d, (v) => Math.round(100 - Math.abs(v) * 10));
-  const focus = useTransform(d, (v) => Math.max(0, 1 - Math.abs(v) * 2.2));
-  const shade = useTransform(d, (v) => Math.min(Math.abs(v), 1.5) * 0.42);
-  const imgX = useTransform(d, (v) => `${clamp(v * -5, -15, 15)}%`);
-  const skewX = useTransform(speed, (v) => clamp(v * 4.5, -12, 12));
-  const scaleX = useTransform(speed, (v) => 1 + Math.min(Math.abs(v) * 0.05, 0.1));
-  const sweep = useTransform(focus, [0.4, 1], ['-130%', '130%']);
-  const pointerEvents = useTransform(d, (v) => (Math.abs(v) < 1.2 ? 'auto' : 'none'));
+  const pointerEvents = useTransform(d, (v) => (Math.abs(v) < 0.8 ? 'auto' : 'none'));
 
   return (
     <motion.div
-      className="absolute top-12 left-1/2"
-      style={{ width: geo.cardW, marginLeft: -geo.cardW / 2, x, y, rotateZ, rotateY: 0, scale, opacity, zIndex, pointerEvents, transformOrigin: '50% 50%' }}
+      className="absolute top-0 left-1/2"
+      style={{ width: geo.cardW, marginLeft: -geo.cardW / 2, x, scale, opacity, filter, zIndex, pointerEvents, transformOrigin: '50% 50%' }}
       onClick={() => onPick(d.get())}
     >
-      <motion.div style={{ skewX, scaleX }} className="cursor-pointer">
-        <div className="relative isolate aspect-[16/10] overflow-hidden rounded-[22px] border border-white/15 bg-primary-light shadow-[0_40px_70px_-28px_rgba(0,0,0,0.75)] sm:rounded-[32px]">
-          <motion.img
+      <div className="cursor-pointer">
+        <div className="relative isolate aspect-[16/10] overflow-hidden rounded-[22px] sm:rounded-[32px] shadow-2xl bg-primary-light">
+          <img
             src={card.src}
             alt={card.alt}
             draggable="false"
             className="absolute inset-0 h-full w-full select-none object-cover"
-            style={{ x: imgX, scale: 1.34 }}
-          />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/85 via-transparent to-primary/10" />
-          <motion.div className="pointer-events-none absolute inset-0 bg-[#050d18]" style={{ opacity: shade }} />
-          <motion.div
-            className="pointer-events-none absolute inset-y-0 w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-white/25 to-transparent mix-blend-soft-light"
-            style={{ x: sweep }}
-          />
-          <motion.div
-            className="pointer-events-none absolute inset-0 rounded-[inherit] shadow-[inset_0_0_0_1.5px_rgba(95,212,230,0.9),inset_0_0_40px_rgba(95,212,230,0.25)]"
-            style={{ opacity: focus }}
-          />
-          <motion.div
-            className="pointer-events-none absolute inset-0 rounded-[inherit] shadow-[inset_0_0_0_1.5px_rgba(95,212,230,0.9),inset_0_0_40px_rgba(95,212,230,0.25)]"
-            style={{ opacity: focus }}
           />
         </div>
-      </motion.div>
+      </div>
     </motion.div>
   );
 };
@@ -90,24 +81,29 @@ const RootsShowcase = () => {
   const reduce = useReducedMotion();
   const isWide = useMediaQuery('(min-width: 900px)');
   const geo = isWide
-    ? { cardW: 760, radius: 1500, step: 21, stage: 720 }
-    : { cardW: 320, radius: 760, step: 24, stage: 380 };
-
+    ? { cardW: 1000, gap: 50, stage: 700 }
+    : { cardW: 340, gap: 24, stage: 280 };
   const stageRef = useRef(null);
   const inView = useInView(stageRef, { amount: 0.15 });
   const inViewRef = useRef(false);
   inViewRef.current = inView;
   const progress = useMotionValue(0);
-  const velocity = useVelocity(progress);
-  const excess = useTransform(velocity, (v) => v - CRUISE);
-  const speed = useSpring(excess, { stiffness: 320, damping: 40 });
-  const swing = useSpring(excess, { stiffness: 90, damping: 7, mass: 1.2 });
   const intro = useMotionValue(reduce ? 1 : 0);
 
   const [active, setActive] = useState(0);
   const pending = useRef(0);
   const drag = useRef({ active: false, moved: false, startX: 0, startP: 0 });
   const introStarted = useRef(false);
+  const isHovered = useRef(false);
+  const interactTimeout = useRef(null);
+
+  const handleManualAction = () => {
+    isHovered.current = true;
+    clearTimeout(interactTimeout.current);
+    interactTimeout.current = setTimeout(() => {
+      isHovered.current = false;
+    }, 4000);
+  };
 
   useMotionValueEvent(progress, 'change', (p) => {
     const next = originalAt(p);
@@ -121,15 +117,23 @@ const RootsShowcase = () => {
   }, [inView, reduce, intro]);
 
   useAnimationFrame((_, delta) => {
-    if (reduce || drag.current.active || !inViewRef.current) return;
+    if (reduce || !inViewRef.current) return;
     const dt = Math.min(delta, 40) / 1000;
-    let move = CRUISE * dt;
+    
+    let move = 0;
+    if (!drag.current.active && !isHovered.current) {
+      move = CRUISE * dt;
+    }
+    
     if (pending.current !== 0) {
       const catchup = Math.min(Math.abs(pending.current), 2.2 * dt) * Math.sign(pending.current);
       pending.current -= catchup;
       move += catchup;
     }
-    progress.set(progress.get() + move);
+    
+    if (move !== 0) {
+      progress.set(progress.get() + move);
+    }
   });
 
   const nudge = (delta) => {
@@ -138,10 +142,12 @@ const RootsShowcase = () => {
       return;
     }
     pending.current += delta;
+    handleManualAction();
   };
 
   const onPointerDown = (e) => {
     drag.current = { active: true, moved: false, startX: e.clientX, startP: progress.get() };
+    handleManualAction();
   };
   const onPointerMove = (e) => {
     if (!drag.current.active) return;
@@ -199,7 +205,8 @@ const RootsShowcase = () => {
         ref={stageRef}
         className="relative mt-10 select-none touch-pan-y"
         style={{ height: geo.stage, perspective: 1800 }}
-        onMouseLeave={onPointerUp}
+        onMouseEnter={() => { isHovered.current = true; clearTimeout(interactTimeout.current); }}
+        onMouseLeave={() => { isHovered.current = false; onPointerUp(); }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
@@ -215,8 +222,6 @@ const RootsShowcase = () => {
             card={card}
             index={index}
             progress={progress}
-            swing={swing}
-            speed={speed}
             intro={intro}
             geo={geo}
             onPick={pick}

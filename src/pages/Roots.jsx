@@ -6,11 +6,18 @@ import RootsShowcase from '../components/RootsShowcase';
 
 const Roots = () => {
   return (
-    <div className="bg-white">
-      <RootsAnimatedHero
-        title="جذورنا"
-        subtitle="ياهلا والله يحييكم"
-      />
+    <div className="bg-transparent relative z-0">
+      
+      {/* 1. Sticky Hero acts as the global background */}
+      <div className="sticky top-0 w-full h-screen z-0">
+        <RootsAnimatedHero
+          title="جذورنا"
+          subtitle="ياهلا والله يحييكم"
+        />
+      </div>
+
+      {/* 2. Content Container scrolls over the Hero */}
+      <div className="relative z-10">
 
       {/* Intro Section */}
       <section className="relative py-20 lg:py-28 bg-surface-warm overflow-hidden" dir="rtl">
@@ -58,6 +65,40 @@ const Roots = () => {
 
       <RootsShowcase />
 
+      {/* Vision Section (Khajoor-style Parallax with pic1.jpg) */}
+      <section 
+        className="relative py-32 md:py-48 flex flex-col items-center justify-center overflow-hidden bg-fixed bg-center bg-cover bg-no-repeat" 
+        style={{ backgroundImage: `url('/pic1.jpg')` }}
+        dir="rtl"
+      >
+        {/* Low opacity overlay so the image is clearly visible like the Khajoor example */}
+        <div className="absolute inset-0 bg-primary/40 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-primary/20" />
+        
+        {/* Content moving on top */}
+        <div className="container-premium relative z-10 text-center">
+           <Reveal3D>
+             <span className="mb-5 inline-flex items-center gap-3 text-[12px] font-semibold tracking-[0.15em] text-accent-light">
+                <span className="h-px w-8 bg-accent-light" />
+                رؤيتنا
+                <span className="h-1.5 w-1.5 rounded-full bg-accent-glow shadow-[0_0_10px_#5FD4E6]" />
+             </span>
+           </Reveal3D>
+           
+           <Reveal3D delay={0.2}>
+             <h2 className="text-3xl md:text-5xl font-heading font-bold text-white mb-6 drop-shadow-lg">
+               نبني المستقبل بأصالة الماضي
+             </h2>
+           </Reveal3D>
+           
+           <Reveal3D delay={0.4}>
+             <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed drop-shadow-md">
+               كما النخيل يضرب بجذوره في الأرض، نثيل تبني مشاريعها على أسس متينة من الجودة والثقة لنعكس طموحنا نحو التطور المستمر.
+             </p>
+           </Reveal3D>
+        </div>
+      </section>
+
       <section className="relative overflow-hidden bg-surface py-20 lg:py-28" dir="rtl">
         <div className="dot-field" />
         <div className="absolute -left-32 top-1/4 h-[360px] w-[360px] rounded-full bg-accent/10 blur-[110px]" />
@@ -81,6 +122,7 @@ const Roots = () => {
           </Reveal3D>
         </div>
       </section>
+      </div> {/* End Content Container */}
     </div>
   );
 };

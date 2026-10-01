@@ -37,10 +37,10 @@ const Footer = () => {
   const ref = useRef(null);
 
   return (
-    <footer ref={ref} className="bg-primary-medium text-white relative overflow-hidden">
+    <footer ref={ref} className="bg-primary text-white relative overflow-hidden">
       {/* Subtle gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-primary-medium via-primary-medium to-accent/20 pointer-events-none" />
-      <div className="aurora opacity-25" />
+      <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary to-accent/20 pointer-events-none" />
+      <div className="aurora opacity-30" />
       <div className="grain" />
 
       <div className="relative z-10">
@@ -55,22 +55,22 @@ const Footer = () => {
             {/* Col 1: About */}
             <motion.div className="lg:col-span-1" variants={colVariants} custom={0} initial="hidden" whileInView="visible" viewport={{ once: true }}>
               <div className="mb-6">
-                <img src="/logo.png" alt="نثيل Natheel" className="h-12 w-auto object-contain" />
+                <img src="/logo.png" alt="نثيل Natheel" className="h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.9)]" />
               </div>
-              <p className="text-white/50 text-sm leading-relaxed max-w-xs">
+              <p className="text-white/90 text-sm leading-relaxed max-w-xs font-medium">
                 تطوّر الأفكار الواعدة وتحولها إلى مشاريع منظّمة قابلة للتوسع، مستندين على خبرات تمتد لأكثر من 30 عاماً.
               </p>
             </motion.div>
 
             {/* Col 2: Navigation */}
             <motion.div variants={colVariants} custom={1} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-              <h3 className="text-[11px] font-latin font-semibold tracking-[0.2em] uppercase text-white/30 mb-6">التنقل</h3>
+              <h3 className="text-[11px] font-latin font-bold tracking-[0.2em] uppercase text-white/70 mb-6">التنقل</h3>
               <ul className="space-y-3.5">
                 {navItems.map((item) => (
                   <li key={item.name}>
                     <Link
                       to={item.link}
-                      className="group inline-flex items-center gap-2 text-white/60 hover:text-white text-sm font-medium transition-colors duration-300"
+                      className="group inline-flex items-center gap-2 text-white/90 hover:text-white text-sm font-medium transition-colors duration-300"
                     >
                       <span className="w-0 group-hover:w-4 h-px bg-accent-light transition-all duration-500" />
                       {item.name}
@@ -82,15 +82,15 @@ const Footer = () => {
 
             {/* Col 3: Contact */}
             <motion.div variants={colVariants} custom={2} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-              <h3 className="text-[11px] font-latin font-semibold tracking-[0.2em] uppercase text-white/30 mb-6">التواصل</h3>
+              <h3 className="text-[11px] font-latin font-bold tracking-[0.2em] uppercase text-white/70 mb-6">التواصل</h3>
               <div className="space-y-5">
                 <div>
-                  <p className="text-white/40 text-xs mb-1">الموقع</p>
-                  <p className="text-white/80 text-sm font-medium">حائل، المملكة العربية السعودية</p>
+                  <p className="text-white/80 text-xs mb-1">الموقع</p>
+                  <p className="text-white text-sm font-medium">حائل، المملكة العربية السعودية</p>
                 </div>
                 <div>
-                  <p className="text-white/40 text-xs mb-1">البريد الإلكتروني</p>
-                  <a href="mailto:contact@natheelco.com" className="text-white/80 text-sm font-latin font-medium hover:text-accent-light transition-colors" dir="ltr">
+                  <p className="text-white/80 text-xs mb-1">البريد الإلكتروني</p>
+                  <a href="mailto:contact@natheelco.com" className="text-white text-sm font-latin font-medium hover:text-accent-light transition-colors" dir="ltr">
                     contact@natheelco.com
                   </a>
                 </div>
@@ -99,7 +99,7 @@ const Footer = () => {
 
             {/* Col 4: QR Code */}
             <motion.div className="flex flex-col items-start" variants={colVariants} custom={3} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-              <h3 className="text-[11px] font-latin font-semibold tracking-[0.2em] uppercase text-white/30 mb-6">تابعنا</h3>
+              <h3 className="text-[11px] font-latin font-bold tracking-[0.2em] uppercase text-white/70 mb-6">تابعنا</h3>
               <TiltCard max={14} className="w-44 glass-panel rounded-2xl">
                 <div className="p-3 pb-2" style={{ transform: 'translateZ(30px)' }}>
                   <img src="/qr.jpg" alt="QR Code - Natheel" className="w-full h-auto rounded-lg" />
@@ -112,7 +112,7 @@ const Footer = () => {
                       href={s.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-white/40 hover:text-accent-glow hover:-translate-y-0.5 transition-all duration-300"
+                      className="text-white/80 hover:text-accent-glow hover:-translate-y-0.5 transition-all duration-300"
                       aria-label={s.name}
                     >
                       <SocialIcon name={s.name} />
@@ -126,7 +126,7 @@ const Footer = () => {
 
           {/* Divider */}
           <motion.div
-            className="h-px bg-gradient-to-l from-transparent via-white/15 to-transparent mb-8 origin-center"
+            className="h-px bg-gradient-to-l from-transparent via-white/30 to-transparent mb-8 origin-center"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
@@ -135,14 +135,14 @@ const Footer = () => {
 
           {/* Bottom Bar */}
           <div className="flex flex-col md:flex-row justify-between items-center gap-4" dir="rtl">
-            <p className="text-white/30 text-xs font-medium">
+            <p className="text-white/70 text-xs font-medium">
               © {currentYear} نثيل. جميع الحقوق محفوظة.
             </p>
 
             <Magnetic strength={0.4}>
               <button
                 onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                className="flex items-center gap-2 text-white/40 hover:text-white transition-colors duration-300 text-xs font-medium group px-4 py-2 rounded-full border border-white/10 hover:border-accent-light/50 hover:shadow-[var(--shadow-glow)]"
+                className="flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-300 text-xs font-medium group px-4 py-2 rounded-full border border-white/20 hover:border-accent-light/50 hover:shadow-[var(--shadow-glow)]"
                 aria-label="العودة للأعلى"
               >
                 <span>العودة للأعلى</span>

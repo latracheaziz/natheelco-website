@@ -7,7 +7,7 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
   const ref = useRef(null);
   const reduceMotion = useReducedMotion();
   const [isMobile, setIsMobile] = useState(false);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
+  const { scrollY } = useScroll();
 
   useEffect(() => {
     setIsMobile(window.innerWidth < 768);
@@ -26,10 +26,9 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
     setMousePos({ x, y });
   };
 
-  // Scroll Parallax 
-  const yBase = useTransform(scrollYProgress, [0, 1], [0, 100]);
-  const yText = useTransform(scrollYProgress, [0, 1], [0, 150]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  // Scroll Parallax for sticky hero text
+  const yText = useTransform(scrollY, [0, 500], [0, 150]);
+  const textOpacity = useTransform(scrollY, [0, 300], [1, 0]);
 
   // Image Source
   const bgSrc = "/roots-hero.jpeg";
@@ -38,15 +37,15 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
     <section
       ref={ref}
       onMouseMove={handleMouseMove}
-      className="relative min-h-[75vh] md:min-h-[85vh] flex items-center justify-center overflow-hidden bg-[#0a111a]"
+      className="relative h-screen flex items-center justify-center"
     >
       {/* BACKGROUND LAYERS */}
       <motion.div 
         className="absolute inset-0 w-full h-full pointer-events-none origin-center"
-        style={{ y: yBase, scale: 1.05 }} // Slight scale to hide edges during parallax
+        style={{ scale: 1.05 }}
       >
         
-        {/* Layer 1: Landscape with wind (clouds drifting, palms swaying, water rippling) */}
+        {/* Layer 1: Landscape with wind */}
         <motion.div 
           className="absolute inset-0"
           animate={!reduceMotion && !isMobile ? { x: mousePos.x * -10, y: mousePos.y * -10 } : {}}
@@ -56,13 +55,13 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
         </motion.div>
 
         {/* Layer 2: Solid Dark Color Treatment */}
-        <div className="absolute inset-0 bg-[#020617]/50 mix-blend-multiply pointer-events-none" />
+        <div className="absolute inset-0 bg-[#020617]/40 mix-blend-multiply pointer-events-none" />
 
       </motion.div>
 
-      {/* Layer 3: Hero Text & Content */}
+      {/* Hero Text & Content */}
       <motion.div
-        style={{ opacity, y: yText }}
+        style={{ opacity: textOpacity, y: yText }}
         className="container-premium relative z-10 w-full pt-40 pb-24 lg:pt-48 lg:pb-32 flex flex-col justify-end min-h-full"
         dir="rtl"
       >
@@ -94,8 +93,6 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
         </motion.div>
       </motion.div>
       
-      {/* Cover baked-in image gradient with a solid color matching the section below */}
-      <div className="absolute bottom-0 inset-x-0 h-40 bg-surface-warm z-10 pointer-events-none" />
     </section>
   );
 };
