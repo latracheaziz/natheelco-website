@@ -17,7 +17,7 @@ const TiltCard = ({
   const ref = useRef(null);
   const reduce = useReducedMotion();
   const canHover = useCanHover();
-  const active = canHover && !reduce;
+  const active = true; // FORCE active so 3D effect is always visible
 
   const px = useMotionValue(0);
   const py = useMotionValue(0);

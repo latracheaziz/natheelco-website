@@ -19,8 +19,12 @@ const navItems = [
 const socials = [
   { name: 'Instagram', url: 'https://instagram.com' },
   { name: 'Snapchat', url: 'https://snapchat.com' },
-  { name: 'LinkedIn', url: 'https://linkedin.com' },
-  { name: 'TikTok', url: 'https://tiktok.com' },
+  { name: 'LinkedIn', url: 'https://www.linkedin.com/company/natheel-s/about/' },
+  { name: 'TikTok', url: 'https://www.tiktok.com/@natheels' },
+  { name: 'YouTube', url: 'https://www.youtube.com/@Natheels' },
+  { name: 'Facebook', url: 'https://www.facebook.com/profile.php?id=61588825941973#' },
+  { name: 'X', url: 'https://x.com/Natheel2030' },
+  { name: 'Pinterest', url: 'https://www.pinterest.com/natheels/' },
 ];
 
 const colVariants = {
@@ -33,9 +37,9 @@ const Footer = () => {
   const ref = useRef(null);
 
   return (
-    <footer ref={ref} className="bg-primary text-white relative overflow-hidden">
+    <footer ref={ref} className="bg-primary-medium text-white relative overflow-hidden">
       {/* Subtle gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary to-primary-light/30 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-primary-medium via-primary-medium to-accent/20 pointer-events-none" />
       <div className="aurora opacity-25" />
       <div className="grain" />
 

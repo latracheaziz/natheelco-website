@@ -17,8 +17,8 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hovered, setHovered] = useState(null);
   const location = useLocation();
-  // The About hero is too dark for the black wordmark, so the header stays in its compact frosted form there.
-  const isScrolled = scrolledPast || isActivePath(location.pathname, '/عن-نثيل');
+  // The About and Contact heroes are too dark for the black wordmark, so the header stays in its compact frosted form there.
+  const isScrolled = scrolledPast || isActivePath(location.pathname, '/عن-نثيل') || isActivePath(location.pathname, '/اتصل-بنا');
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
