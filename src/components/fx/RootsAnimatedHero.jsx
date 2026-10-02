@@ -43,11 +43,11 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
     <section
       ref={ref}
       onMouseMove={handleMouseMove}
-      className="relative flex h-screen items-center justify-center overflow-hidden"
+      className="relative flex h-[100dvh] items-center justify-center overflow-hidden"
     >
       {/* BACKGROUND LAYERS */}
       <motion.div
-        className="pointer-events-none absolute inset-x-0 top-0 h-screen w-full origin-center will-change-transform"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[100dvh] w-full origin-center will-change-transform"
         style={{ y, scale: 1.05 }}
       >
         
@@ -67,7 +67,7 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
 
       {/* Hero Text & Content */}
       <div
-        className="container-premium relative z-10 flex min-h-full w-full flex-col justify-end pb-24 pt-40 lg:pb-32 lg:pt-48"
+        className="container-premium relative z-10 flex min-h-full w-full flex-col justify-end pb-16 pt-32 lg:pb-32 lg:pt-48"
         dir="rtl"
       >
         <motion.div
@@ -76,12 +76,12 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
           transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="mb-8"
         >
-          <div className="mb-6 inline-flex items-center gap-3">
-            <span className="w-10 h-px bg-white/60" />
-            <span className="text-white/80 font-medium tracking-wide text-sm md:text-base">قصتنا</span>
+          <div className="mb-4 inline-flex items-center gap-3 md:mb-6">
+            <span className="w-8 h-px bg-white/60 md:w-10" />
+            <span className="text-white/80 font-medium tracking-wide text-xs sm:text-sm md:text-base">قصتنا</span>
           </div>
 
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[84px] font-heading font-[900] leading-none mb-6 text-white drop-shadow-xl">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[84px] font-heading font-[900] leading-tight md:leading-none mb-4 md:mb-6 text-white drop-shadow-xl">
             <RevealText text={title} immediate delay={0.4} stagger={0.1} />
           </h1>
 
@@ -90,7 +90,7 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="text-2xl md:text-3xl text-white/60 font-heading font-bold max-w-2xl drop-shadow-md"
+              className="text-lg sm:text-xl md:text-3xl text-white/60 font-heading font-bold max-w-2xl drop-shadow-md leading-relaxed"
             >
               {subtitle}
             </motion.p>

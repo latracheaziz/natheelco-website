@@ -165,7 +165,7 @@ const Home = () => {
         ref={heroRef}
         onMouseMove={handleHeroMove}
         onMouseLeave={handleHeroLeave}
-        className="home-hero relative min-h-screen flex items-center overflow-hidden bg-primary"
+        className="home-hero relative min-h-[100dvh] flex items-center overflow-hidden bg-primary"
         style={{ perspective: 1600 }}
       >
         {/* Background slideshow — depth plane */}

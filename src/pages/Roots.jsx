@@ -27,7 +27,7 @@ const VisionSection = () => {
       dir="rtl"
     >
       <motion.div
-        className="absolute inset-x-0 top-0 h-screen w-full will-change-transform"
+        className="absolute inset-x-0 top-0 h-[100dvh] w-full will-change-transform"
         style={{ y }}
         aria-hidden="true"
       >

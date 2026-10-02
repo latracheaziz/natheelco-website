@@ -129,7 +129,7 @@ const HowWeWorkProcess = () => {
   const { rotateX, rotateY, lightBg, onMove, onLeave } = use3DCard();
 
   return (
-    <section className="relative overflow-hidden bg-white py-24 lg:py-36 min-h-screen flex flex-col justify-center">
+    <section className="relative overflow-hidden bg-white py-24 lg:py-36 min-h-[100dvh] flex flex-col justify-center">
       
       {/* ── Background Effects ── */}
       <div className="absolute inset-0 pointer-events-none">
