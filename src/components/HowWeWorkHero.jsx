@@ -15,7 +15,7 @@ const HowWeWorkHero = () => {
       <AnimatedProcessBackground />
 
       {/* Hero Content */}
-      <div className="container-premium relative z-10 w-full pt-32 pb-24 md:pt-40 md:pb-32 flex flex-col justify-center" dir="rtl">
+      <div className="container-premium section-padding relative z-10 w-full pt-32 pb-24 md:pt-40 md:pb-32 flex flex-col justify-center" dir="rtl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

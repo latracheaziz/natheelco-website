@@ -37,7 +37,7 @@ const VisionSection = () => {
       <div className="absolute inset-0 bg-primary/40 mix-blend-multiply" />
       <div className="absolute inset-0 bg-primary/20" />
 
-      <div className="container-premium relative z-10 text-center">
+      <div className="container-premium section-padding relative z-10 text-center">
         <Reveal3D>
           <span className="mb-5 inline-flex items-center gap-3 text-[12px] font-semibold tracking-[0.15em] text-accent-light">
             <span className="h-px w-8 bg-accent-light" />

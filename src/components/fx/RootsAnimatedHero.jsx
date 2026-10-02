@@ -67,7 +67,7 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
 
       {/* Hero Text & Content */}
       <div
-        className="container-premium relative z-10 flex min-h-full w-full flex-col justify-end pb-16 pt-32 lg:pb-32 lg:pt-48"
+        className="container-premium section-padding relative z-10 flex min-h-full w-full flex-col justify-end pb-16 pt-32 lg:pb-32 lg:pt-48"
         dir="rtl"
       >
         <motion.div
