@@ -185,7 +185,7 @@ const HowWeWorkProcess = () => {
           </div>
 
           {/* Timeline Nodes */}
-          <div className="relative flex justify-start md:justify-between items-center z-10 gap-6 md:gap-0 overflow-x-auto md:overflow-visible pb-6 md:pb-0 hide-scrollbar scroll-smooth snap-x snap-mandatory px-4 md:px-0">
+          <div className="relative grid grid-cols-3 md:flex md:justify-between items-start z-10 gap-y-8 gap-x-2 md:gap-0 pb-6 md:pb-0 px-2 md:px-0 mx-auto max-w-sm sm:max-w-lg md:max-w-none w-full">
             {stages.map((stage, idx) => {
               const isActive = activeIdx === idx;
               const isPast = activeIdx > idx;
@@ -194,7 +194,7 @@ const HowWeWorkProcess = () => {
                 <button
                   key={stage.id}
                   onClick={() => selectStage(idx)}
-                  className="group relative flex flex-col items-center gap-3 sm:gap-4 min-w-[90px] sm:min-w-[100px] md:min-w-0 focus:outline-none shrink-0 snap-center"
+                  className="group relative flex flex-col items-center gap-3 sm:gap-4 focus:outline-none"
                 >
                   {/* Orb */}
                   <div className="relative w-12 h-12 md:w-16 md:h-16 flex items-center justify-center">
@@ -280,12 +280,12 @@ const HowWeWorkProcess = () => {
                 animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
                 exit={{ opacity: 0, scale: 1.05, y: -20, filter: 'blur(8px)' }}
                 transition={{ duration: 0.5, ease }}
-                className="relative p-6 sm:p-8 md:p-14 grid md:grid-cols-[1fr_2fr] gap-6 sm:gap-8 md:gap-12 items-center"
+                className="relative px-5 py-8 sm:p-8 md:p-14 grid md:grid-cols-[1fr_2fr] gap-6 sm:gap-8 md:gap-12 items-center"
               >
                 
                 {/* Left side: Holographic Icon */}
-                <div className="flex justify-center" style={{ transform: 'translateZ(60px)' }}>
-                  <div className="relative w-40 h-40 md:w-56 md:h-56 flex items-center justify-center">
+                <div className="flex justify-center mb-2 md:mb-0" style={{ transform: 'translateZ(60px)' }}>
+                  <div className="relative w-28 h-28 sm:w-36 sm:h-36 md:w-56 md:h-56 flex items-center justify-center">
                     {/* Rotating Rings */}
                     <motion.div 
                       className="absolute inset-0 rounded-full border border-dashed border-accent/30"
@@ -300,12 +300,12 @@ const HowWeWorkProcess = () => {
                     
                     {/* Inner Glowing Core */}
                     <motion.div 
-                      className="absolute w-24 h-24 md:w-32 md:h-32 rounded-full bg-accent/15 blur-xl"
+                      className="absolute w-16 h-16 sm:w-20 sm:h-20 md:w-32 md:h-32 rounded-full bg-accent/15 blur-xl"
                       animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
                       transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
                     />
 
-                    <div className="relative text-accent w-16 h-16 md:w-20 md:h-20 drop-shadow-[0_4px_12px_rgba(58,168,188,0.3)]">
+                    <div className="relative text-accent w-12 h-12 sm:w-14 sm:h-14 md:w-20 md:h-20 drop-shadow-[0_4px_12px_rgba(58,168,188,0.3)]">
                       <svg viewBox="0 0 24 24" fill="none" className="w-full h-full" stroke="currentColor" strokeWidth="1.5">
                         {icons[activeStage.id]}
                       </svg>
@@ -319,7 +319,7 @@ const HowWeWorkProcess = () => {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2, duration: 0.5 }}
-                    className="inline-flex items-center gap-3 mb-6"
+                    className="flex justify-center md:justify-start items-center gap-3 mb-3 md:mb-6"
                   >
                     <span className="w-10 h-[2px] bg-accent/50" />
                     <span className="font-mono text-accent text-sm tracking-[0.2em] font-semibold">المرحلة {activeStage.number}</span>
@@ -348,7 +348,7 @@ const HowWeWorkProcess = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.6 }}
-                    className="flex justify-center md:justify-start gap-4 mt-10"
+                    className="flex justify-center md:justify-start gap-4 mt-8 md:mt-10"
                   >
                     <button 
                       onClick={() => selectStage((activeIdx + stages.length - 1) % stages.length)}
