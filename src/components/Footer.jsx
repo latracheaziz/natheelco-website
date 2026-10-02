@@ -4,7 +4,6 @@ import { useRef } from 'react';
 import TiltCard from './fx/TiltCard';
 import Magnetic from './fx/Magnetic';
 import RevealText from './fx/RevealText';
-import { SocialIcon } from './SocialIcons';
 
 const ease = [0.16, 1, 0.3, 1];
 
@@ -14,17 +13,6 @@ const navItems = [
   { name: 'كيف نعمل', link: '/كيف-نعمل' },
   { name: 'جذورنا', link: '/جذورنا' },
   { name: 'تواصل معنا', link: '/اتصل-بنا' },
-];
-
-const socials = [
-  { name: 'Instagram', url: 'https://instagram.com' },
-  { name: 'Snapchat', url: 'https://snapchat.com' },
-  { name: 'LinkedIn', url: 'https://www.linkedin.com/company/natheel-s/about/' },
-  { name: 'TikTok', url: 'https://www.tiktok.com/@natheels' },
-  { name: 'YouTube', url: 'https://www.youtube.com/@Natheels' },
-  { name: 'Facebook', url: 'https://www.facebook.com/profile.php?id=61588825941973#' },
-  { name: 'X', url: 'https://x.com/Natheel2030' },
-  { name: 'Pinterest', url: 'https://www.pinterest.com/natheels/' },
 ];
 
 const colVariants = {
@@ -101,23 +89,8 @@ const Footer = () => {
             <motion.div className="flex flex-col items-start" variants={colVariants} custom={3} initial="hidden" whileInView="visible" viewport={{ once: true }}>
               <h3 className="text-[11px] font-latin font-bold tracking-[0.2em] uppercase text-white/70 mb-6">تابعنا</h3>
               <TiltCard max={14} className="w-44 glass-panel rounded-2xl">
-                <div className="p-3 pb-2" style={{ transform: 'translateZ(30px)' }}>
+                <div className="p-3" style={{ transform: 'translateZ(30px)' }}>
                   <img src="/qr.jpg" alt="QR Code - Natheel" className="w-full h-auto rounded-lg" />
-                </div>
-                {/* Social Icons */}
-                <div className="flex items-center justify-center gap-5 pb-4 pt-1" style={{ transform: 'translateZ(20px)' }}>
-                  {socials.map((s) => (
-                    <a
-                      key={s.name}
-                      href={s.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-white/80 hover:text-accent-glow hover:-translate-y-0.5 transition-all duration-300"
-                      aria-label={s.name}
-                    >
-                      <SocialIcon name={s.name} />
-                    </a>
-                  ))}
                 </div>
               </TiltCard>
             </motion.div>
