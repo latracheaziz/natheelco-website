@@ -154,21 +154,21 @@ const HowWeWorkProcess = () => {
       <div className="container-premium relative z-10" dir="rtl">
         
         {/* ── Header ── */}
-        <div className="text-center mb-20 lg:mb-28">
+        <div className="text-center mb-12 lg:mb-28 px-4">
           <motion.span
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-6"
+            className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-4 sm:mb-6"
           >
-            <span className="w-8 h-px bg-accent" />
+            <span className="w-6 sm:w-8 h-px bg-accent" />
             منهجية العمل
-            <span className="w-8 h-px bg-accent" />
+            <span className="w-6 sm:w-8 h-px bg-accent" />
           </motion.span>
-          <h2 className="text-3xl md:text-5xl lg:text-[56px] font-heading font-[900] text-primary leading-[1.2] mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-[56px] font-heading font-[900] text-primary leading-[1.3] md:leading-[1.2] mb-4 sm:mb-6">
             <RevealText text="كيف نعمل في نثيل؟" />
           </h2>
-          <p className="text-text-secondary text-lg max-w-2xl mx-auto">
+          <p className="text-text-secondary text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
             رحلة متكاملة تبدأ من الفكرة وتصل إلى الاستقلالية والنمو المستدام.
           </p>
         </div>
@@ -185,7 +185,7 @@ const HowWeWorkProcess = () => {
           </div>
 
           {/* Timeline Nodes */}
-          <div className="relative flex justify-between items-center z-10 gap-2 md:gap-0 overflow-x-auto md:overflow-visible pb-6 md:pb-0 hide-scrollbar scroll-smooth">
+          <div className="relative flex justify-start md:justify-between items-center z-10 gap-6 md:gap-0 overflow-x-auto md:overflow-visible pb-6 md:pb-0 hide-scrollbar scroll-smooth snap-x snap-mandatory px-4 md:px-0">
             {stages.map((stage, idx) => {
               const isActive = activeIdx === idx;
               const isPast = activeIdx > idx;
@@ -194,7 +194,7 @@ const HowWeWorkProcess = () => {
                 <button
                   key={stage.id}
                   onClick={() => selectStage(idx)}
-                  className="group relative flex flex-col items-center gap-4 min-w-[100px] md:min-w-0 focus:outline-none shrink-0"
+                  className="group relative flex flex-col items-center gap-3 sm:gap-4 min-w-[90px] sm:min-w-[100px] md:min-w-0 focus:outline-none shrink-0 snap-center"
                 >
                   {/* Orb */}
                   <div className="relative w-12 h-12 md:w-16 md:h-16 flex items-center justify-center">
@@ -257,11 +257,11 @@ const HowWeWorkProcess = () => {
         </div>
 
         {/* ── 3D Dynamic Content Card ── */}
-        <div className="flex justify-center perspective-[1200px]">
+        <div className="flex justify-center perspective-[1200px] px-4 md:px-0 mx-auto w-full max-w-[100vw] overflow-hidden md:overflow-visible">
           <motion.div
             onMouseMove={onMove}
             onMouseLeave={onLeave}
-            className="w-full max-w-4xl relative rounded-[32px] overflow-hidden shadow-[0_24px_70px_-36px_rgba(10,22,40,0.15)]"
+            className="w-full max-w-4xl relative rounded-[24px] md:rounded-[32px] overflow-hidden shadow-[0_24px_70px_-36px_rgba(10,22,40,0.15)] mx-auto"
             style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
           >
             {/* Card Background Container */}
@@ -280,7 +280,7 @@ const HowWeWorkProcess = () => {
                 animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
                 exit={{ opacity: 0, scale: 1.05, y: -20, filter: 'blur(8px)' }}
                 transition={{ duration: 0.5, ease }}
-                className="relative p-8 md:p-14 grid md:grid-cols-[1fr_2fr] gap-8 md:gap-12 items-center"
+                className="relative p-6 sm:p-8 md:p-14 grid md:grid-cols-[1fr_2fr] gap-6 sm:gap-8 md:gap-12 items-center"
               >
                 
                 {/* Left side: Holographic Icon */}
@@ -329,7 +329,7 @@ const HowWeWorkProcess = () => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.5 }}
-                    className="text-3xl md:text-4xl lg:text-5xl font-heading font-[900] text-primary mb-6 leading-tight"
+                    className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-heading font-[900] text-primary mb-4 sm:mb-6 leading-tight"
                   >
                     {activeStage.title}
                   </motion.h3>
@@ -338,7 +338,7 @@ const HowWeWorkProcess = () => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4, duration: 0.5 }}
-                    className="text-text-secondary text-lg md:text-xl leading-relaxed font-medium"
+                    className="text-text-secondary text-base sm:text-lg md:text-xl leading-relaxed font-medium"
                   >
                     {activeStage.text}
                   </motion.p>
