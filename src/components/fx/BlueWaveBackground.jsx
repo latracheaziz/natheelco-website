@@ -1,12 +1,18 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const BlueWaveBackground = () => {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-      <svg
+      <motion.svg
         viewBox="0 0 1440 600"
         preserveAspectRatio="xMidYMid slice"
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 ease-out"
+        style={{
+          x: 'calc(var(--roots-pointer-x, 0px) * 1.5)',
+          y: 'calc(var(--roots-pointer-y, 0px) * 1.5)',
+          scale: 1.05
+        }}
       >
         <defs>
           <linearGradient id="darkBg" x1="0%" y1="100%" x2="100%" y2="0%">
@@ -39,15 +45,29 @@ const BlueWaveBackground = () => {
         <rect width="1440" height="600" fill="url(#darkBg)" />
 
         {/* Top bright blue area */}
-        <path
-          d="M0,0 L1440,0 L1440,150 C1000,450 400,300 0,100 Z"
+        <motion.path
+          animate={{
+            d: [
+              "M0,0 L1440,0 L1440,150 C1000,450 400,300 0,100 Z",
+              "M0,0 L1440,0 L1440,180 C950,420 450,280 0,120 Z",
+              "M0,0 L1440,0 L1440,150 C1000,450 400,300 0,100 Z",
+            ]
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           fill="url(#topBlue)"
           filter="url(#dropShadow)"
         />
 
         {/* Glowing wave line */}
-        <path
-          d="M0,100 C400,300 1000,450 1440,150"
+        <motion.path
+          animate={{
+            d: [
+              "M0,100 C400,300 1000,450 1440,150",
+              "M0,120 C450,280 950,420 1440,180",
+              "M0,100 C400,300 1000,450 1440,150",
+            ]
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           fill="none"
           stroke="url(#waveLine)"
           strokeWidth="16"
@@ -55,15 +75,22 @@ const BlueWaveBackground = () => {
         />
         
         {/* Secondary subtle line for depth */}
-        <path
-          d="M0,115 C400,315 1000,465 1440,165"
+        <motion.path
+          animate={{
+            d: [
+              "M0,115 C400,315 1000,465 1440,165",
+              "M0,135 C450,295 950,435 1440,195",
+              "M0,115 C400,315 1000,465 1440,165",
+            ]
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
           fill="none"
           stroke="#00e5ff"
           strokeWidth="3"
           opacity="0.4"
           filter="url(#waveGlow)"
         />
-      </svg>
+      </motion.svg>
     </div>
   );
 };

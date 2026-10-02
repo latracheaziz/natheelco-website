@@ -56,8 +56,8 @@ const PageHero = ({
   return (
     <section
       ref={ref}
-      onMouseMove={backgroundImage ? handleScenicMove : undefined}
-      onMouseLeave={backgroundImage ? handleScenicLeave : undefined}
+      onMouseMove={(backgroundImage || useEnvatoWave) ? handleScenicMove : undefined}
+      onMouseLeave={(backgroundImage || useEnvatoWave) ? handleScenicLeave : undefined}
       className={`bg-primary relative overflow-hidden min-h-[70vh] flex items-end ${backgroundImage ? 'roots-photo-hero' : ''}`}
     >
       {backgroundImage ? (
