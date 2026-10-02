@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import RevealText from './RevealText';
 import FloatingShapes from './FloatingShapes';
 import WaveLinesBackground from './WaveLinesBackground';
+import BlueWaveBackground from './BlueWaveBackground';
 
 const ScenicHeroBackground = ({ src, scrollProgress }) => {
   const parallaxY = useTransform(scrollProgress, [0, 1], [0, 54]);
@@ -30,6 +31,7 @@ const PageHero = ({
   heritageMarkClassName = '',
   backgroundImage = '',
   useWaveLines = false,
+  useEnvatoWave = false,
 }) => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
@@ -60,6 +62,8 @@ const PageHero = ({
     >
       {backgroundImage ? (
         <ScenicHeroBackground src={backgroundImage} scrollProgress={scrollYProgress} />
+      ) : useEnvatoWave ? (
+        <BlueWaveBackground />
       ) : useWaveLines ? (
         <WaveLinesBackground />
       ) : (

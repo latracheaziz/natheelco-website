@@ -39,7 +39,7 @@ const Contact = () => {
         title="تواصل معنا"
         subtitle="تابعنا على منصات التواصل الإجتماعي للإطلاع على كل جديد."
         variant={3}
-        useWaveLines={true}
+        useEnvatoWave={true}
       />
 
       {/* Contact content */}
