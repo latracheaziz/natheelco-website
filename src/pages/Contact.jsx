@@ -6,9 +6,9 @@ import Magnetic from '../components/fx/Magnetic';
 import { SocialIcon } from '../components/SocialIcons';
 
 const socials = [
-  { name: 'Instagram', url: 'https://instagram.com' },
+  { name: 'Instagram', url: 'https://www.instagram.com/nathe.els/' },
   { name: 'LinkedIn', url: 'https://www.linkedin.com/company/natheel-s/about/' },
-  { name: 'Snapchat', url: 'https://snapchat.com' },
+  { name: 'Snapchat', url: 'https://www.snapchat.com/@natheel-s?share_id=wCG-7NCO0eQ&locale=en-AU' },
   { name: 'TikTok', url: 'https://www.tiktok.com/@natheels' },
   { name: 'YouTube', url: 'https://www.youtube.com/@Natheels' },
   { name: 'Facebook', url: 'https://www.facebook.com/profile.php?id=61588825941973#' },
