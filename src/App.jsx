@@ -79,6 +79,12 @@ const AnimatedRoutes = () => {
   );
 };
 
+const ConditionalMarquee = () => {
+  const location = useLocation();
+  if (location.pathname !== '/') return null;
+  return <BrandMarquee />;
+};
+
 function App() {
   return (
     <MotionConfig reducedMotion="user">
@@ -89,7 +95,7 @@ function App() {
           <main className="flex-grow w-full">
             <AnimatedRoutes />
           </main>
-          <BrandMarquee />
+          <ConditionalMarquee />
           <Footer />
         </div>
       </Router>
