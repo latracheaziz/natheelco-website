@@ -15,7 +15,7 @@ const BlueWaveBackground = () => {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 bg-[#020617]">
       {/* Ambient gradient glow in the background for volumetric feel */}
-      <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-[#0044ff] rounded-full blur-[150px] opacity-30" />
+      <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-[#0033aa] rounded-full blur-[150px] opacity-15" />
       <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-[#00e5ff] rounded-full blur-[150px] opacity-10" />
 
       <motion.svg
@@ -35,9 +35,9 @@ const BlueWaveBackground = () => {
           </linearGradient>
           
           <linearGradient id="topBlue" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#0055ff" />
-            <stop offset="50%" stopColor="#0077ff" />
-            <stop offset="100%" stopColor="#0022aa" />
+            <stop offset="0%" stopColor="#002288" />
+            <stop offset="50%" stopColor="#0033aa" />
+            <stop offset="100%" stopColor="#001155" />
           </linearGradient>
 
           <linearGradient id="waveLine" x1="0%" y1="0%" x2="100%" y2="0%">
