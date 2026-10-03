@@ -97,6 +97,7 @@ void main() {
   col = ribbon(col, r2, t, 0.46, 0.0, 0.04, 2.0, 0.22, 5.0, 0.07, 0.22, 0.36);
 
   col += (hash(gl_FragCoord.xy) - 0.5) / 255.0;
+  col *= 0.6; // Darken the entire background by 40%
   gl_FragColor = vec4(col, 1.0);
 }
 `;
