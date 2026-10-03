@@ -41,9 +41,9 @@ const BlueWaveBackground = () => {
           </linearGradient>
 
           <linearGradient id="waveLine" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#00f2ff" />
-            <stop offset="50%" stopColor="#0088ff" />
-            <stop offset="100%" stopColor="#00f2ff" />
+            <stop offset="0%" stopColor="#0066cc" />
+            <stop offset="50%" stopColor="#0033aa" />
+            <stop offset="100%" stopColor="#0066cc" />
           </linearGradient>
 
           <filter id="waveGlow" x="-20%" y="-20%" width="140%" height="140%">
@@ -141,9 +141,9 @@ const BlueWaveBackground = () => {
           }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
           fill="none"
-          stroke="#ffffff"
+          stroke="#0088ff"
           strokeWidth="3"
-          opacity="0.8"
+          opacity="0.6"
         />
 
         {/* Secondary subtle line for liquid depth */}
@@ -157,7 +157,7 @@ const BlueWaveBackground = () => {
           }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
           fill="none"
-          stroke="#00e5ff"
+          stroke="#0055cc"
           strokeWidth="4"
           opacity="0.4"
           filter="url(#waveGlow)"
