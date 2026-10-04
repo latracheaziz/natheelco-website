@@ -6,7 +6,7 @@ import RootsWindScene from './RootsWindScene';
 const RootsAnimatedHero = ({ title, subtitle }) => {
   const ref = useRef(null);
   const reduceMotion = useReducedMotion();
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start end', 'end start'],
@@ -20,7 +20,6 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
   });
 
   useEffect(() => {
-    setIsMobile(window.innerWidth < 768);
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -50,9 +49,9 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
         className="pointer-events-none absolute inset-x-0 top-0 h-[100dvh] w-full origin-center will-change-transform"
         style={{ y, scale: 1.05 }}
       >
-        
+
         {/* Layer 1: Landscape with wind */}
-        <motion.div 
+        <motion.div
           className="absolute inset-0"
           animate={!reduceMotion && !isMobile ? { x: mousePos.x * -10, y: mousePos.y * -10 } : {}}
           transition={{ type: "tween", ease: "easeOut", duration: 0.5 }}
@@ -97,7 +96,6 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
           )}
         </motion.div>
       </div>
-      
     </section>
   );
 };

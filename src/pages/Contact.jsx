@@ -4,6 +4,8 @@ import Reveal3D from '../components/fx/Reveal3D';
 import TiltCard from '../components/fx/TiltCard';
 import Magnetic from '../components/fx/Magnetic';
 import { SocialIcon } from '../components/SocialIcons';
+import FeedbackCard from '../components/FeedbackCard';
+import ReviewsCarousel from '../components/ReviewsCarousel';
 
 const socials = [
   { name: 'Instagram', url: 'https://www.instagram.com/nathe.els/' },
@@ -46,8 +48,7 @@ const Contact = () => {
       <section className="relative py-24 lg:py-32 overflow-hidden">
         <div className="dot-field" />
         <div className="absolute top-10 right-1/4 w-[420px] h-[420px] rounded-full bg-accent/10 blur-[120px] pointer-events-none" />
-
-        <div className="container-premium section-padding relative" dir="rtl">
+        <div className="w-full px-4 md:px-8 lg:px-12 section-padding relative" dir="rtl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto">
 
             {/* Contact Info */}
@@ -56,13 +57,13 @@ const Contact = () => {
                 <div style={{ transform: 'translateZ(30px)' }}>
                   <CardHeading>معلومات التواصل</CardHeading>
 
-                  <div className="space-y-6">
-                    <div className="rounded-2xl bg-surface-warm/80 border border-border-light p-5">
-                      <p className="text-text-muted text-xs font-semibold tracking-wide uppercase mb-2">الموقع</p>
+                  <div className="space-y-8">
+                    <div className="rounded-2xl bg-surface-warm/80 border border-border-light p-8">
+                      <p className="text-text-muted text-xs font-semibold tracking-wide uppercase mb-3">الموقع</p>
                       <p className="text-text-primary text-base font-medium">حائل، المملكة العربية السعودية</p>
                     </div>
-                    <div className="rounded-2xl bg-surface-warm/80 border border-border-light p-5">
-                      <p className="text-text-muted text-xs font-semibold tracking-wide uppercase mb-2">البريد الإلكتروني</p>
+                    <div className="rounded-2xl bg-surface-warm/80 border border-border-light p-8">
+                      <p className="text-text-muted text-xs font-semibold tracking-wide uppercase mb-3">البريد الإلكتروني</p>
                       <a href="mailto:contact@natheelco.com" className="text-accent text-base font-latin font-medium hover:text-accent-light transition-colors" dir="ltr">
                         contact@natheelco.com
                       </a>
@@ -103,7 +104,7 @@ const Contact = () => {
                             perspective={600}
                             hoverScale={1.08}
                             glare={true}
-                            className="group block h-[72px] relative z-10 rounded-xl bg-surface border border-border-light shadow-sm transition-shadow duration-500 hover:shadow-[0_20px_40px_rgba(58,168,188,0.2)]"
+                            className="group block h-[84px] relative z-10 rounded-xl bg-surface border border-border-light shadow-sm transition-shadow duration-500 hover:shadow-[0_20px_40px_rgba(58,168,188,0.2)]"
                           >
                             <a
                               href={social.url}
@@ -140,6 +141,17 @@ const Contact = () => {
               </TiltCard>
             </Reveal3D>
 
+          </div>
+
+          <div className="flex flex-col xl:flex-row gap-8 lg:gap-12 items-stretch w-full mx-auto mt-16 md:mt-24">
+            <div className="flex-1 w-full flex">
+              <FeedbackCard />
+            </div>
+            
+            {/* Client Reviews Section */}
+            <div className="flex-1 w-full flex">
+              <ReviewsCarousel />
+            </div>
           </div>
         </div>
       </section>

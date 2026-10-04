@@ -86,7 +86,9 @@ const RootsShowcase = () => {
   const stageRef = useRef(null);
   const inView = useInView(stageRef, { amount: 0.15 });
   const inViewRef = useRef(false);
-  inViewRef.current = inView;
+  useEffect(() => {
+    inViewRef.current = inView;
+  }, [inView]);
   const progress = useMotionValue(0);
   const intro = useMotionValue(reduce ? 1 : 0);
 
