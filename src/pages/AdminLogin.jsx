@@ -1,21 +1,27 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowLeft, Eye, EyeOff, LockKeyhole, Mail } from 'lucide-react';
+import { ArrowLeft, Check, Eye, EyeOff, LockKeyhole, Mail } from 'lucide-react';
+
+const ADMIN_EMAIL = 'adminnatheelco@gmail.com';
+const ADMIN_PASSWORD = 'ir123456';
 
 export default function AdminLogin({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!email.trim() || !password) {
-      setError('يرجى إدخال البريد الإلكتروني وكلمة المرور.');
+    if (email.trim().toLowerCase() !== ADMIN_EMAIL || password !== ADMIN_PASSWORD) {
+      setError('البريد الإلكتروني أو كلمة المرور غير صحيحة.');
       return;
     }
 
-    onLogin();
+    setError('');
+    setIsAuthenticating(true);
+    window.setTimeout(onLogin, 1400);
   };
 
   return (
@@ -50,6 +56,7 @@ export default function AdminLogin({ onLogin }) {
               required
               value={email}
               onChange={(event) => { setEmail(event.target.value); setError(''); }}
+              disabled={isAuthenticating}
               placeholder="name@natheelco.com"
               className="h-full min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-white/30"
             />
@@ -65,12 +72,14 @@ export default function AdminLogin({ onLogin }) {
               required
               value={password}
               onChange={(event) => { setPassword(event.target.value); setError(''); }}
+              disabled={isAuthenticating}
               placeholder="أدخل كلمة المرور"
               className="h-full min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-white/30"
             />
             <button
               type="button"
               onClick={() => setShowPassword((visible) => !visible)}
+              disabled={isAuthenticating}
               aria-label={showPassword ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'}
               className="flex h-8 w-8 shrink-0 items-center justify-center text-white/50 transition-colors hover:text-white"
             >
@@ -86,7 +95,7 @@ export default function AdminLogin({ onLogin }) {
             )}
           </AnimatePresence>
 
-          <button type="submit" className="mt-7 flex h-12 w-full items-center justify-center gap-2 bg-[#2E8B9C] text-sm font-bold text-white transition-colors hover:bg-[#3AA8BC] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5FD4E6]">
+          <button type="submit" disabled={isAuthenticating} className="mt-7 flex h-12 w-full items-center justify-center gap-2 bg-[#2E8B9C] text-sm font-bold text-white transition-colors hover:bg-[#3AA8BC] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5FD4E6] disabled:cursor-wait disabled:opacity-65">
             <span>تسجيل الدخول</span>
             <ArrowLeft aria-hidden="true" size={17} />
           </button>
@@ -97,6 +106,51 @@ export default function AdminLogin({ onLogin }) {
           العودة إلى الموقع
         </a>
       </motion.section>
+
+      <AnimatePresence>
+        {isAuthenticating && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#071321]/95 px-6 text-center backdrop-blur-xl"
+            role="status"
+            aria-live="polite"
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 18, scale: 0.94 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col items-center"
+            >
+              <div className="relative mb-7 flex h-24 w-24 items-center justify-center">
+                <motion.span
+                  animate={{ scale: [1, 1.45], opacity: [0.45, 0] }}
+                  transition={{ duration: 1.1, repeat: Infinity, ease: 'easeOut' }}
+                  className="absolute inset-0 rounded-full border border-[#5FD4E6]"
+                />
+                <motion.span
+                  initial={{ scale: 0, rotate: -45 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{ type: 'spring', stiffness: 220, damping: 16, delay: 0.1 }}
+                  className="relative flex h-16 w-16 items-center justify-center rounded-full bg-[#2E8B9C] text-white shadow-[0_0_42px_rgba(95,212,230,0.5)]"
+                >
+                  <Check className="h-8 w-8" strokeWidth={3} />
+                </motion.span>
+              </div>
+              <h2 className="text-2xl font-bold text-white">تم تسجيل الدخول بنجاح</h2>
+              <p className="mt-3 text-sm text-white/65">جارٍ فتح لوحة الإدارة</p>
+              <motion.div
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 1.25, ease: 'linear' }}
+                className="mt-7 h-0.5 w-48 origin-right bg-gradient-to-l from-[#5FD4E6] to-[#2E8B9C]"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }
