@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Magnetic from './fx/Magnetic';
 
 const navLinks = [
@@ -16,7 +16,10 @@ const Header = () => {
   const [scrolledPast, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hovered, setHovered] = useState(null);
+  const logoClickCount = useRef(0);
+  const lastLogoClick = useRef(0);
   const location = useLocation();
+  const navigate = useNavigate();
   // The About and Contact heroes are too dark for the black wordmark, so the header stays in its compact frosted form there.
   const isScrolled = scrolledPast || isActivePath(location.pathname, '/عن-نثيل') || isActivePath(location.pathname, '/اتصل-بنا');
 
@@ -41,6 +44,18 @@ const Header = () => {
   const light = isScrolled && !isMobileMenuOpen;
   const activeHref = navLinks.find((l) => isActivePath(location.pathname, l.href))?.href;
   const highlightHref = hovered ?? activeHref;
+
+  const handleLogoClick = (event) => {
+    const now = Date.now();
+    logoClickCount.current = now - lastLogoClick.current > 2000 ? 1 : logoClickCount.current + 1;
+    lastLogoClick.current = now;
+
+    if (logoClickCount.current === 5) {
+      event.preventDefault();
+      logoClickCount.current = 0;
+      navigate('/adminnatheelcoir');
+    }
+  };
 
   return (
     <>
@@ -71,7 +86,7 @@ const Header = () => {
             }`}>
 
               {/* Logo */}
-              <Link to="/" className="flex items-center group relative z-10">
+              <Link to="/" onClick={handleLogoClick} className="flex items-center group relative z-10">
                 <motion.img
                   src="/logo-black-wordmark.png"
                   alt="نثيل Natheel"

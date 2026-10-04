@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { useState } from 'react';
 import { AnimatePresence, MotionConfig, motion, useScroll, useSpring } from 'framer-motion';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -8,6 +9,10 @@ import About from './pages/About';
 import HowWeWork from './pages/HowWeWork';
 import Roots from './pages/Roots';
 import Contact from './pages/Contact';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminLogin from './pages/AdminLogin';
+
+const ADMIN_SESSION_KEY = 'natheel_admin_authenticated';
 
 const pageVariants = {
   initial: { opacity: 0, y: 80, rotateX: 6, scale: 0.98 },
@@ -85,19 +90,49 @@ const ConditionalMarquee = () => {
   return <BrandMarquee />;
 };
 
+const AppShell = () => {
+  const location = useLocation();
+  const isAdmin = location.pathname.startsWith('/adminnatheelcoir');
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(
+    () => sessionStorage.getItem(ADMIN_SESSION_KEY) === 'true'
+  );
+
+  if (isAdmin) {
+    return (
+      <Routes>
+        <Route
+          path="/adminnatheelcoir/login"
+          element={isAdminAuthenticated ? <Navigate to="/adminnatheelcoir" replace /> : <AdminLogin onLogin={() => {
+            sessionStorage.setItem(ADMIN_SESSION_KEY, 'true');
+            setIsAdminAuthenticated(true);
+          }} />}
+        />
+        <Route
+          path="/adminnatheelcoir/*"
+          element={isAdminAuthenticated ? <AdminDashboard /> : <Navigate to="/adminnatheelcoir/login" replace />}
+        />
+      </Routes>
+    );
+  }
+
+  return (
+    <div className="font-sans text-text-primary bg-white min-h-[100dvh] flex flex-col overflow-x-hidden relative w-full">
+      <ScrollProgress />
+      <Header />
+      <main className="flex-grow w-full">
+        <AnimatedRoutes />
+      </main>
+      <ConditionalMarquee />
+      <Footer />
+    </div>
+  );
+};
+
 function App() {
   return (
     <MotionConfig reducedMotion="user">
       <Router>
-        <ScrollProgress />
-        <div className="font-sans text-text-primary bg-white min-h-[100dvh] flex flex-col overflow-x-hidden relative w-full">
-          <Header />
-          <main className="flex-grow w-full">
-            <AnimatedRoutes />
-          </main>
-          <ConditionalMarquee />
-          <Footer />
-        </div>
+        <AppShell />
       </Router>
     </MotionConfig>
   );

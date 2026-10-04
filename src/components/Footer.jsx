@@ -108,9 +108,19 @@ const Footer = () => {
 
           {/* Bottom Bar */}
           <div className="flex flex-col md:flex-row justify-between items-center gap-4" dir="rtl">
-            <p className="text-white/70 text-xs font-medium">
-              © {currentYear} نثيل. جميع الحقوق محفوظة.
-            </p>
+            <div className="flex items-center gap-2.5">
+              <p className="text-white/70 text-xs font-medium">
+                © {currentYear} نثيل. جميع الحقوق محفوظة.
+              </p>
+              <Link
+                to="/adminnatheelcoir"
+                className="text-white/30 hover:text-accent-glow text-[11px] transition-colors flex items-center gap-1"
+                title="لوحة الإدارة والتحكم"
+              >
+                <span>•</span>
+                <span>بوابة الإدارة</span>
+              </Link>
+            </div>
 
             <Magnetic strength={0.4}>
               <button
