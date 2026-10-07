@@ -2,17 +2,12 @@ import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   X,
-  Eye,
-  Heart,
   Share2,
   Clock,
-  CheckCircle2,
   ExternalLink,
-  BarChart2,
   Megaphone,
 } from 'lucide-react';
 import { SocialBrandIcon } from './SocialIconsAdmin';
-import { SOCIAL_PLATFORMS } from '../../data/adminMockData';
 
 /* Platform name map */
 const platformNames = {
@@ -35,15 +30,6 @@ const platformColors = {
   youtube:   '#FF0000',
 };
 
-/* ── Stat Pill ────────────────────────────────────────────────────────── */
-const StatPill = ({ icon: Icon, label, value, color }) => (
-  <div className="flex flex-col items-center gap-1 px-4 py-3 rounded-2xl bg-white border border-slate-100 shadow-sm min-w-[90px]">
-    <Icon className="w-4 h-4" style={{ color }} />
-    <span className="text-base font-black text-[#0F172A]">{value}</span>
-    <span className="text-[10px] text-[#94A3B8] font-medium">{label}</span>
-  </div>
-);
-
 /* ── Main Modal ───────────────────────────────────────────────────────── */
 export const PostDetailModal = ({ post, onClose }) => {
   /* Close on Escape key */
@@ -61,7 +47,12 @@ export const PostDetailModal = ({ post, onClose }) => {
     color: platformColors[pid] || '#888',
   }));
 
-  const stats = post.stats || {};
+  const externalUrl = (post.results || []).find((result) => result.url)?.url;
+  const statusLabel = post.status === 'published'
+    ? 'تم النشر'
+    : post.status === 'partial'
+      ? 'نشر جزئي'
+      : 'محفوظ محلياً';
 
   return (
     <AnimatePresence>
@@ -105,9 +96,8 @@ export const PostDetailModal = ({ post, onClose }) => {
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
             {/* Status badge */}
-            <div className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/90 backdrop-blur-sm text-white text-xs font-bold shadow">
-              <CheckCircle2 className="w-3.5 h-3.5" />
-              <span>منشور معتمد</span>
+            <div className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-800/80 backdrop-blur-sm text-white text-xs font-bold">
+              <span>{statusLabel}</span>
             </div>
 
             {/* Timestamp */}
@@ -136,7 +126,7 @@ export const PostDetailModal = ({ post, onClose }) => {
                     color: '#fff',
                   }}
                 >
-                  <SocialBrandIcon platform={p.id} size={12} />
+                  <SocialBrandIcon platformId={p.id} className="h-3 w-3" />
                   <span>{p.name}</span>
                 </div>
               ))}
@@ -176,7 +166,7 @@ export const PostDetailModal = ({ post, onClose }) => {
                       color: p.color === '#FFFC00' ? '#92400E' : p.color,
                     }}
                   >
-                    <SocialBrandIcon platform={p.id} size={16} />
+                    <SocialBrandIcon platformId={p.id} className="h-4 w-4" />
                     <span>{p.name}</span>
                   </div>
                 ))}
@@ -191,10 +181,17 @@ export const PostDetailModal = ({ post, onClose }) => {
               >
                 إغلاق
               </button>
-              <button className="flex-1 py-2.5 rounded-xl bg-[#1D6FD9] text-white text-xs font-bold hover:bg-[#165AB8] transition-colors flex items-center justify-center gap-2 shadow-sm">
-                <ExternalLink className="w-3.5 h-3.5" />
-                <span>عرض على المنصة</span>
-              </button>
+              {externalUrl && (
+                <a
+                  href={externalUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#1D6FD9] py-2.5 text-xs font-bold text-white transition-colors hover:bg-[#165AB8]"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span>عرض على المنصة</span>
+                </a>
+              )}
             </div>
           </div>
         </motion.div>

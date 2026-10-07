@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowLeft, Check, Eye, EyeOff, LockKeyhole, Mail } from 'lucide-react';
 
-const ADMIN_EMAIL = 'adminnatheelco@gmail.com';
-const ADMIN_PASSWORD = 'ir123456';
+import { loginAdmin } from '../api/reviews';
 
 export default function AdminLogin({ onLogin }) {
   const [email, setEmail] = useState('');
@@ -12,16 +11,17 @@ export default function AdminLogin({ onLogin }) {
   const [error, setError] = useState('');
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if (email.trim().toLowerCase() !== ADMIN_EMAIL || password !== ADMIN_PASSWORD) {
-      setError('البريد الإلكتروني أو كلمة المرور غير صحيحة.');
-      return;
-    }
-
     setError('');
     setIsAuthenticating(true);
-    window.setTimeout(onLogin, 1400);
+    try {
+      await loginAdmin(email.trim(), password);
+      window.setTimeout(onLogin, 1400);
+    } catch (loginError) {
+      setIsAuthenticating(false);
+      setError(loginError.message || 'البريد الإلكتروني أو كلمة المرور غير صحيحة.');
+    }
   };
 
   return (

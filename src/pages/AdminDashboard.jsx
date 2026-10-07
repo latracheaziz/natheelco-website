@@ -9,77 +9,123 @@ import { ClientOpinionSection } from '../components/admin/ClientOpinionSection';
 import { SocialMediaSection } from '../components/admin/SocialMediaSection';
 import { StatisticsSection } from '../components/admin/StatisticsSection';
 import { PostDetailModal } from '../components/admin/PostDetailModal';
-import { 
-  INITIAL_POSTS, 
-  INITIAL_OPINIONS 
-} from '../data/adminMockData';
+import { decideReview, fetchAdminReviews, submitReview, toOpinion } from '../api/reviews';
+import {
+  deleteHubPost,
+  fetchHubAnalytics,
+  fetchHubPosts,
+  syncHubAnalytics,
+  toAdminPost,
+} from '../api/socialHub';
 import { 
   Megaphone, 
   Clock 
 } from 'lucide-react';
-
-const STORAGE_KEYS = {
-  POSTS: 'natheel_admin_posts_v6',
-  OPINIONS: 'natheel_admin_opinions_v6',
-};
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'opinions' | 'social' | 'posts' | 'statistics'
   const [mobileOpen, setMobileOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
 
-  // Initialize Opinions
-  const [opinions, setOpinions] = useState(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEYS.OPINIONS);
-      return saved ? JSON.parse(saved) : INITIAL_OPINIONS;
-    } catch {
-      return INITIAL_OPINIONS;
-    }
-  });
-
-  // Initialize Posts
-  const [posts, setPosts] = useState(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEYS.POSTS);
-      return saved ? JSON.parse(saved) : INITIAL_POSTS;
-    } catch {
-      return INITIAL_POSTS;
-    }
-  });
-
-  // Save to LocalStorage
-  useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEYS.OPINIONS, JSON.stringify(opinions));
-    } catch (e) {
-      console.error(e);
-    }
-  }, [opinions]);
+  const [opinions, setOpinions] = useState([]);
+  const [opinionsError, setOpinionsError] = useState('');
+  const [posts, setPosts] = useState([]);
+  const [postsError, setPostsError] = useState('');
+  const [analytics, setAnalytics] = useState({ accounts: [], publications: [], history: [] });
+  const [analyticsError, setAnalyticsError] = useState('');
+  const [analyticsLoading, setAnalyticsLoading] = useState(true);
 
   useEffect(() => {
+    let stop = false;
+    const load = () => {
+      fetchAdminReviews()
+        .then((data) => {
+          if (!stop) {
+            setOpinions((data.reviews || []).map(toOpinion));
+            setOpinionsError('');
+          }
+        })
+        .catch((error) => {
+          if (!stop) setOpinionsError(error.message || 'تعذر تحميل الآراء');
+        });
+    };
+    load();
+    const timer = window.setInterval(load, 10000);
+    return () => {
+      stop = true;
+      window.clearInterval(timer);
+    };
+  }, []);
+
+  const loadAnalytics = async () => {
+    setAnalyticsLoading(true);
     try {
-      localStorage.setItem(STORAGE_KEYS.POSTS, JSON.stringify(posts));
-    } catch (e) {
-      console.error(e);
+      const data = await syncHubAnalytics();
+      setAnalytics(data);
+      setAnalyticsError('');
+    } catch (error) {
+      setAnalyticsError(error.message || 'تعذر تحميل بيانات المنصات');
+    } finally {
+      setAnalyticsLoading(false);
     }
-  }, [posts]);
+  };
+
+  useEffect(() => {
+    let stop = false;
+    fetchHubAnalytics()
+      .then((data) => {
+        if (!stop) {
+          setAnalytics(data);
+          setAnalyticsError('');
+        }
+      })
+      .catch((error) => {
+        if (!stop) setAnalyticsError(error.message || 'تعذر تحميل بيانات المنصات');
+      })
+      .finally(() => {
+        if (!stop) setAnalyticsLoading(false);
+      });
+    return () => {
+      stop = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    let stop = false;
+    fetchHubPosts()
+      .then((data) => {
+        if (!stop && Array.isArray(data.posts)) {
+          setPosts(data.posts.map(toAdminPost));
+          setPostsError('');
+        }
+      })
+      .catch((error) => {
+        if (!stop) setPostsError(error.message || 'تعذر تحميل المنشورات');
+      });
+    return () => {
+      stop = true;
+    };
+  }, []);
 
   // Handle Opinion Actions: Accept, Decline
-  const handleAcceptOpinion = (id) => {
-    setOpinions((prev) =>
-      prev.map((op) => (op.id === id ? { ...op, status: 'accepted' } : op))
-    );
+  const handleAcceptOpinion = async (id) => {
+    const updated = await decideReview(id, 'accepted');
+    setOpinions((prev) => prev.map((op) => (op.id === id ? toOpinion(updated.review) : op)));
   };
 
-  const handleDeclineOpinion = (id) => {
-    setOpinions((prev) =>
-      prev.map((op) => (op.id === id ? { ...op, status: 'declined' } : op))
-    );
+  const handleDeclineOpinion = async (id) => {
+    const updated = await decideReview(id, 'declined');
+    setOpinions((prev) => prev.map((op) => (op.id === id ? toOpinion(updated.review) : op)));
   };
 
-  const handleAddOpinion = (newOpinion) => {
-    setOpinions((prev) => [newOpinion, ...prev]);
+  const handleAddOpinion = async (newOpinion) => {
+    const created = await submitReview({
+      name: newOpinion.name,
+      comment: newOpinion.comment,
+      rating: newOpinion.rating,
+      role: newOpinion.role,
+    });
+    setOpinions((prev) => [toOpinion(created.review), ...prev]);
   };
 
   // Handle Social Media Post Actions
@@ -87,11 +133,18 @@ export default function AdminDashboard() {
     setPosts((prev) => [newPost, ...prev]);
   };
 
-  const handleDeletePost = (id) => {
+  const handleDeletePost = async (id) => {
+    try {
+      await deleteHubPost(id);
+    } catch {
+      return;
+    }
     setPosts((prev) => prev.filter((p) => p.id !== id));
   };
 
   const pendingCount = opinions.filter((o) => o.status === 'pending').length;
+  const connectedCount = analytics.accounts.filter((account) => account.connected).length;
+  const publishedCount = posts.filter((post) => ['published', 'partial'].includes(post.status)).length;
 
   return (
     <div 
@@ -104,6 +157,7 @@ export default function AdminDashboard() {
         setActiveTab={setActiveTab} 
         mobileOpen={mobileOpen}
         setMobileOpen={setMobileOpen}
+        pendingCount={pendingCount}
       />
 
       {/* ─── 2. MAIN CONTENT AREA (Left side in RTL) ─── */}
@@ -118,7 +172,9 @@ export default function AdminDashboard() {
         {/* 4 Metric Cards Row */}
         <AdminMetricCards 
           pendingCount={pendingCount} 
-          postsCount={posts.length} 
+          postsCount={posts.length}
+          publishedCount={publishedCount}
+          connectedCount={connectedCount}
         />
 
         {/* ─── TAB CONTENT (With Framer Motion Transitions) ─── */}
@@ -137,6 +193,7 @@ export default function AdminDashboard() {
                 onNavigateTab={(tabId) => setActiveTab(tabId)}
                 pendingCount={pendingCount}
                 postsCount={posts.length}
+                connectedCount={connectedCount}
               />
             </motion.div>
           )}
@@ -151,10 +208,11 @@ export default function AdminDashboard() {
               transition={{ duration: 0.25 }}
             >
               <ClientOpinionSection 
-                opinions={opinions}
-                onAcceptOpinion={handleAcceptOpinion}
-                onDeclineOpinion={handleDeclineOpinion}
+                opinions={opinions} 
+                onAcceptOpinion={handleAcceptOpinion} 
+                onDeclineOpinion={handleDeclineOpinion} 
                 onAddOpinion={handleAddOpinion}
+                error={opinionsError}
               />
             </motion.div>
           )}
@@ -170,6 +228,8 @@ export default function AdminDashboard() {
             >
               <SocialMediaSection 
                 posts={posts} 
+                postsError={postsError}
+                analytics={analytics}
                 onAddPost={handleAddPost} 
                 onDeletePost={handleDeletePost} 
               />
@@ -201,6 +261,16 @@ export default function AdminDashboard() {
 
               {/* Clickable post cards — opens PostDetailModal */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {postsError && (
+                  <p className="col-span-full rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-700">
+                    {postsError}
+                  </p>
+                )}
+                {!postsError && posts.length === 0 && (
+                  <p className="col-span-full rounded-xl border border-[#E2E8F0] bg-white p-6 text-center text-sm text-[#64748B]">
+                    لا توجد منشورات مسجلة بعد.
+                  </p>
+                )}
                 {posts.map((post) => (
                   <div
                     key={post.id}
@@ -231,8 +301,8 @@ export default function AdminDashboard() {
                         {post.caption}
                       </p>
                       <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-[#64748B]">
-                        <span>مشاهدات: {post.stats?.views || '1.2K'}</span>
-                        <span className="text-[#1D6FD9] font-bold">منشور معتمد ←</span>
+                        <span>{post.publishedAt}</span>
+                        <span className="text-[#1D6FD9] font-bold">عرض التفاصيل ←</span>
                       </div>
                     </div>
                   </div>
@@ -250,7 +320,13 @@ export default function AdminDashboard() {
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.25 }}
             >
-              <StatisticsSection opinions={opinions} posts={posts} />
+              <StatisticsSection
+                opinions={opinions}
+                analytics={analytics}
+                loading={analyticsLoading}
+                error={analyticsError}
+                onRefresh={loadAnalytics}
+              />
             </motion.div>
           )}
 

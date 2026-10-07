@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { 
   Share2, 
   Image as ImageIcon, 
@@ -22,8 +22,22 @@ import {
 } from 'lucide-react';
 import { SOCIAL_PLATFORMS } from '../../data/adminMockData';
 import { SocialBrandIcon } from './SocialIconsAdmin';
+import {
+  aggregatePublicationMetrics,
+  fetchHubStatus,
+  fileFromUrl,
+  publishHubPost,
+  toAdminPost,
+} from '../../api/socialHub';
 
-const LivePlatformPreview = ({ platform, caption, imagePreview, videoUrl }) => {
+const RESULT_LABELS = {
+  published: 'تم النشر',
+  missing_credentials: 'أضف المفاتيح في social.env',
+  unsupported: 'غير مدعوم بهذا المحتوى',
+  failed: 'تعذر النشر',
+};
+
+const LivePlatformPreview = ({ platform, caption, imagePreview, videoUrl, accountMetric }) => {
   const postText = caption || 'هنا سيظهر نص المنشور الذي تقوم بكتابته في النموذج...';
   const renderMedia = (emptyMessage = 'معاينة الوسائط') => {
     if (videoUrl) {
@@ -45,7 +59,7 @@ const LivePlatformPreview = ({ platform, caption, imagePreview, videoUrl }) => {
       <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#0B3B46] text-sm font-bold text-white">N</div>
       <div className="min-w-0 text-right">
         <p className="truncate text-xs font-bold text-slate-900">شركة نثيل</p>
-        <p className="truncate text-[10px] text-slate-500">@natheelco</p>
+        <p className="truncate text-[10px] text-slate-500">{accountMetric?.username || 'معاينة الحساب'}</p>
       </div>
     </div>
   );
@@ -56,10 +70,10 @@ const LivePlatformPreview = ({ platform, caption, imagePreview, videoUrl }) => {
         <div className="absolute inset-0">{renderMedia('أضف صورة أو فيديو لتيك توك')}</div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-transparent to-black/80" />
         <div className="absolute inset-x-0 top-0 flex items-center justify-between px-4 pt-5 text-[11px] font-bold">
-          <span>LIVE</span><span>لك　|　أتابعه</span><span>⌕</span>
+          <span>معاينة</span><span>لك　|　أتابعه</span><span>⌕</span>
         </div>
         <div className="absolute bottom-5 left-12 right-3 text-right">
-          <p className="mb-1 text-xs font-bold">@natheelco</p>
+          <p className="mb-1 text-xs font-bold">{accountMetric?.username || 'شركة نثيل'}</p>
           <p className="line-clamp-4 whitespace-pre-wrap text-xs leading-relaxed">{postText}</p>
           <p className="mt-2 text-[10px] text-white/80">♪ الصوت الأصلي - شركة نثيل</p>
         </div>
@@ -92,9 +106,8 @@ const LivePlatformPreview = ({ platform, caption, imagePreview, videoUrl }) => {
         <div className="aspect-square overflow-hidden bg-slate-100">{renderMedia('أضف صورة أو فيديو لمنشور إنستغرام')}</div>
         <div className="p-3">
           <div className="mb-2 flex items-center justify-between text-slate-800"><span className="flex items-center gap-3"><Heart className="h-5 w-5" /><MessageCircle className="h-5 w-5" /><Repeat2 className="h-5 w-5" /></span><Bookmark className="h-5 w-5" /></div>
-          <p className="mb-1 text-xs font-bold text-slate-900">٢٬٤٠٠ إعجاب</p>
           <p className="line-clamp-5 whitespace-pre-wrap text-xs leading-relaxed text-slate-800"><strong>natheelco </strong>{postText}</p>
-          <p className="mt-2 text-[10px] text-slate-400">عرض جميع التعليقات　·　الآن</p>
+          <p className="mt-2 text-[10px] text-slate-400">معاينة قبل النشر</p>
         </div>
       </article>
     );
@@ -117,7 +130,7 @@ const LivePlatformPreview = ({ platform, caption, imagePreview, videoUrl }) => {
         <div className="flex items-start justify-between"><span className="text-lg font-bold text-slate-900">𝕏</span>{account}</div>
         <p className="my-3 whitespace-pre-wrap text-sm leading-relaxed text-slate-900">{postText}</p>
         {(imagePreview || videoUrl) && <div className="mb-3 max-h-[230px] overflow-hidden rounded-2xl border border-slate-200">{renderMedia('')}</div>}
-        <div className="flex items-center justify-between border-t border-slate-100 pt-3 text-[10px] text-slate-500"><span>💬 142</span><span>🔄 86</span><span>❤️ 2.4K</span><span>↗</span></div>
+        <div className="border-t border-slate-100 pt-3 text-[10px] text-slate-500">معاينة قبل النشر</div>
       </article>
     );
   }
@@ -139,18 +152,20 @@ const LivePlatformPreview = ({ platform, caption, imagePreview, videoUrl }) => {
       <div className="aspect-video overflow-hidden bg-black">{renderMedia('أضف فيديو لمعاينة يوتيوب')}</div>
       <div className="flex gap-3 p-3">
         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#FF0000] text-white"><Play className="h-4 w-4 fill-current" /></div>
-        <div className="min-w-0 flex-1"><p className="mb-1 line-clamp-2 whitespace-pre-wrap text-xs font-bold leading-relaxed text-slate-900">{postText}</p><p className="text-[10px] text-slate-500">شركة نثيل　·　٢٫٤ ألف مشاهدة　·　الآن</p></div>
+        <div className="min-w-0 flex-1"><p className="mb-1 line-clamp-2 whitespace-pre-wrap text-xs font-bold leading-relaxed text-slate-900">{postText}</p><p className="text-[10px] text-slate-500">شركة نثيل · معاينة قبل النشر</p></div>
       </div>
-      <div className="flex items-center gap-4 px-3 pb-3 text-[10px] font-semibold text-slate-600"><span>👍 ٢٫٤ ألف</span><span>👎</span><span>مشاركة</span><span>حفظ</span></div>
+      <div className="flex items-center gap-4 px-3 pb-3 text-[10px] font-semibold text-slate-600"><span>إعجاب</span><span>مشاركة</span><span>حفظ</span></div>
     </article>
   );
 };
 
-export const SocialMediaSection = ({ posts = [], onAddPost, onDeletePost }) => {
+export const SocialMediaSection = ({ posts = [], postsError = '', analytics = {}, onAddPost, onDeletePost }) => {
   // Form State
   const [caption, setCaption] = useState('');
   const [imagePreview, setImagePreview] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
   const [videoUrl, setVideoUrl] = useState('');
+  const [videoFile, setVideoFile] = useState(null);
   const [selectedPlatforms, setSelectedPlatforms] = useState([
     'instagram',
     'linkedin',
@@ -160,7 +175,21 @@ export const SocialMediaSection = ({ posts = [], onAddPost, onDeletePost }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPlatformModal, setShowPlatformModal] = useState(false);
   const [publishingStep, setPublishingStep] = useState(null);
+  const [publishResults, setPublishResults] = useState(null);
+  const [hubStatus, setHubStatus] = useState(null);
   const [toastMessage, setToastMessage] = useState(null);
+
+  useEffect(() => {
+    let stop = false;
+    fetchHubStatus()
+      .then((data) => {
+        if (!stop) setHubStatus(data);
+      })
+      .catch(() => {});
+    return () => {
+      stop = true;
+    };
+  }, []);
 
   const fileInputRef = useRef(null);
   const videoInputRef = useRef(null);
@@ -184,6 +213,7 @@ export const SocialMediaSection = ({ posts = [], onAddPost, onDeletePost }) => {
   const handleImageUpload = (e) => {
     const file = e.target.files?.[0];
     if (file) {
+      setImageFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result);
@@ -195,9 +225,19 @@ export const SocialMediaSection = ({ posts = [], onAddPost, onDeletePost }) => {
   const handleVideoUpload = (e) => {
     const file = e.target.files?.[0];
     if (file) {
+      setVideoFile(file);
       const objectUrl = URL.createObjectURL(file);
       setVideoUrl(objectUrl);
     }
+  };
+
+  const resetComposer = () => {
+    setCaption('');
+    setImagePreview(null);
+    setImageFile(null);
+    setVideoUrl('');
+    setVideoFile(null);
+    setPublishResults(null);
   };
 
   const togglePlatform = (id) => {
@@ -226,7 +266,7 @@ export const SocialMediaSection = ({ posts = [], onAddPost, onDeletePost }) => {
     setShowPlatformModal(true);
   };
 
-  const confirmPublish = () => {
+  const confirmPublish = async () => {
     if (selectedPlatforms.length === 0) {
       showToast('يرجى تحديد منصة واحدة على الأقل للنشر', 'error');
       return;
@@ -234,35 +274,39 @@ export const SocialMediaSection = ({ posts = [], onAddPost, onDeletePost }) => {
 
     setIsSubmitting(true);
     setPublishingStep('broadcasting');
-
-    setTimeout(() => {
-      const newPost = {
-        id: `post-${Date.now()}`,
-        caption: caption.trim() || 'منشور جديد من شركة نثيل للمقاولات والتصميم',
-        mediaType: videoUrl ? 'video' : imagePreview ? 'image' : 'text',
-        mediaUrl: imagePreview || (videoUrl ? '' : '/pic1.jpeg'),
-        videoUrl: videoUrl || '',
-        platforms: [...selectedPlatforms],
-        status: 'published',
-        publishedAt: 'الآن',
-        stats: { views: '1', likes: '0', shares: '0' },
-      };
-
-      onAddPost(newPost);
+    setPublishResults(null);
+    try {
+      let imageToSend = imageFile;
+      if (!imageToSend && imagePreview && !imagePreview.startsWith('data:') && !imagePreview.startsWith('blob:')) {
+        imageToSend = await fileFromUrl(imagePreview, 'image.jpg');
+      }
+      const remoteVideo = /^https?:\/\//i.test(videoUrl) ? videoUrl : '';
+      const data = await publishHubPost({
+        caption,
+        platforms: selectedPlatforms,
+        imageFile: imageToSend,
+        videoFile: remoteVideo ? null : videoFile,
+        videoUrl: remoteVideo,
+      });
+      onAddPost(toAdminPost(data.post));
+      const results = data.results || [];
+      setPublishResults(results);
+      const published = results.filter((item) => item.status === 'published').length;
+      if (published === results.length && results.length > 0) {
+        showToast(`تم النشر على ${published} منصات`, 'success');
+        resetComposer();
+        setShowPlatformModal(false);
+      } else if (published > 0) {
+        showToast(`تم النشر على ${published} منصات، وتعذر الباقي`, 'error');
+      } else {
+        showToast('حُفظ المنشور في لوحة التحكم، وتعذر إرساله إلى الشبكات المحددة', 'error');
+      }
+    } catch (error) {
+      showToast(error.message || 'تعذر الاتصال بخدمة النشر', 'error');
+    } finally {
       setIsSubmitting(false);
-      setShowPlatformModal(false);
       setPublishingStep(null);
-
-      // Reset form
-      setCaption('');
-      setImagePreview(null);
-      setVideoUrl('');
-
-      showToast(
-        `تم نشر المنشور بنجاح على ${selectedPlatforms.length} منصات اجتماعية!`,
-        'success'
-      );
-    }, 1200);
+    }
   };
 
   const showToast = (msg, type = 'success') => {
@@ -304,8 +348,13 @@ export const SocialMediaSection = ({ posts = [], onAddPost, onDeletePost }) => {
             </div>
           </div>
           <p className="text-xs text-[#64748B] mt-1 font-medium">
-            صياغة ونشر المحتوى فورياً أو مجدولاً على قنوات نثيل السبع
+            صياغة ونشر المحتوى فورياً على قنوات نثيل السبع عبر خادم النشر
           </p>
+          {hubStatus?.details?.snapchat && !hubStatus.details.snapchat.ok && (
+            <p className="mt-2 max-w-xl text-[11px] leading-relaxed text-rose-700">
+              {hubStatus.details.snapchat.message}
+            </p>
+          )}
         </div>
 
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-[#E2E8F0] text-xs font-semibold text-[#475569] shadow-sm">
@@ -380,7 +429,10 @@ export const SocialMediaSection = ({ posts = [], onAddPost, onDeletePost }) => {
                   {imagePreview && (
                     <button
                       type="button"
-                      onClick={() => setImagePreview(null)}
+                      onClick={() => {
+                        setImagePreview(null);
+                        setImageFile(null);
+                      }}
                       className="text-rose-500 hover:text-rose-700 text-xs font-bold flex items-center gap-1"
                     >
                       <Trash2 className="w-3 h-3" /> حذف
@@ -421,18 +473,6 @@ export const SocialMediaSection = ({ posts = [], onAddPost, onDeletePost }) => {
                   className="hidden"
                 />
 
-                {!imagePreview && (
-                  <div className="mt-2 pt-2 border-t border-slate-200 flex items-center justify-between text-[11px]">
-                    <span className="text-[#64748B]">صورة نموذجية:</span>
-                    <button
-                      type="button"
-                      onClick={() => setImagePreview('/pic1.jpeg')}
-                      className="text-[#1D6FD9] font-bold hover:underline"
-                    >
-                      صورة مشروع الدرعية
-                    </button>
-                  </div>
-                )}
               </div>
 
               {/* Video Upload / Link Zone */}
@@ -445,7 +485,10 @@ export const SocialMediaSection = ({ posts = [], onAddPost, onDeletePost }) => {
                   {videoUrl && (
                     <button
                       type="button"
-                      onClick={() => setVideoUrl('')}
+                      onClick={() => {
+                        setVideoUrl('');
+                        setVideoFile(null);
+                      }}
                       className="text-rose-500 hover:text-rose-700 text-xs font-bold flex items-center gap-1"
                     >
                       <Trash2 className="w-3 h-3" /> حذف
@@ -484,25 +527,16 @@ export const SocialMediaSection = ({ posts = [], onAddPost, onDeletePost }) => {
                         type="url"
                         placeholder="أو رابط فيديو..."
                         value={videoUrl}
-                        onChange={(e) => setVideoUrl(e.target.value)}
+                        onChange={(e) => {
+                          setVideoFile(null);
+                          setVideoUrl(e.target.value);
+                        }}
                         className="w-full px-2 py-1 text-[11px] rounded bg-white border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#1D6FD9]"
                       />
                     </div>
                   </div>
                 )}
 
-                {!videoUrl && (
-                  <div className="mt-2 pt-2 border-t border-slate-200 flex items-center justify-between text-[11px]">
-                    <span className="text-[#64748B]">عينة فيديو:</span>
-                    <button
-                      type="button"
-                      onClick={() => setVideoUrl('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4')}
-                      className="text-[#D97706] font-bold hover:underline"
-                    >
-                      فيديو هندسي
-                    </button>
-                  </div>
-                )}
               </div>
 
             </div>
@@ -529,6 +563,15 @@ export const SocialMediaSection = ({ posts = [], onAddPost, onDeletePost }) => {
               <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
                 {SOCIAL_PLATFORMS.map((platform) => {
                   const isSelected = selectedPlatforms.includes(platform.id);
+                  const ready = hubStatus?.platforms?.[platform.id];
+                  const check = hubStatus?.details?.[platform.id];
+                  const connectionLabel = check
+                    ? (check.ok ? 'متصل' : 'الرمز مرفوض')
+                    : ready
+                      ? 'متصل'
+                      : hubStatus
+                        ? 'social.env'
+                        : 'جارٍ التحقق';
                   return (
                     <button
                       key={platform.id}
@@ -550,8 +593,8 @@ export const SocialMediaSection = ({ posts = [], onAddPost, onDeletePost }) => {
                       <span className="text-xs font-bold text-[#0F172A]">
                         {platform.name}
                       </span>
-                      <span className="text-[10px] text-[#64748B] font-mono mt-0.5">
-                        {platform.followers}
+                      <span className={`text-[10px] font-mono mt-0.5 ${check && !check.ok ? 'text-rose-600' : 'text-[#64748B]'}`}>
+                        {connectionLabel}
                       </span>
 
                       {isSelected && (
@@ -593,11 +636,11 @@ export const SocialMediaSection = ({ posts = [], onAddPost, onDeletePost }) => {
             <div className="flex items-center gap-2">
               <Smartphone className="w-4 h-4 text-[#1D6FD9]" />
               <h4 className="font-heading font-bold text-xs text-[#0F172A]">
-                معاينة المنشور المباشرة (Live Mockup)
+                معاينة شكل المنشور
               </h4>
             </div>
             <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 font-bold border border-emerald-200">
-              مباشر
+              معاينة فقط
             </span>
           </div>
 
@@ -635,6 +678,7 @@ export const SocialMediaSection = ({ posts = [], onAddPost, onDeletePost }) => {
               caption={caption}
               imagePreview={imagePreview}
               videoUrl={videoUrl}
+              accountMetric={(analytics.accounts || []).find((item) => item.platform === activePreviewPlatform.id)}
             />
           </div>
         </div>
@@ -667,6 +711,7 @@ export const SocialMediaSection = ({ posts = [], onAddPost, onDeletePost }) => {
             <div className="my-4 space-y-2 max-h-[300px] overflow-y-auto pr-1">
               {SOCIAL_PLATFORMS.map((platform) => {
                 const isSelected = selectedPlatforms.includes(platform.id);
+                const accountMetric = (analytics.accounts || []).find((item) => item.platform === platform.id);
                 return (
                   <div
                     key={platform.id}
@@ -689,7 +734,9 @@ export const SocialMediaSection = ({ posts = [], onAddPost, onDeletePost }) => {
                           {platform.name} ({platform.enName})
                         </span>
                         <span className="text-[11px] text-[#64748B] block">
-                          المتابعون: {platform.followers}
+                          المتابعون: {accountMetric?.followers_count == null
+                            ? 'غير متاح'
+                            : new Intl.NumberFormat('ar-SA').format(accountMetric.followers_count)}
                         </span>
                       </div>
                     </div>
@@ -707,6 +754,18 @@ export const SocialMediaSection = ({ posts = [], onAddPost, onDeletePost }) => {
                 );
               })}
             </div>
+
+            {publishResults && (
+              <div className="mb-3 space-y-1.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] p-3">
+                {publishResults.map((result) => (
+                  <p key={result.platform} className="text-[11px] leading-relaxed text-[#334155]">
+                    <span className="font-bold">{result.platform}: </span>
+                    {RESULT_LABELS[result.status] || result.status}
+                    {result.status !== 'published' && result.message ? ` — ${result.message}` : ''}
+                  </p>
+                ))}
+              </div>
+            )}
 
             <div className="pt-3 border-t border-[#F1F5F9] flex items-center justify-between gap-3">
               <button
@@ -753,8 +812,22 @@ export const SocialMediaSection = ({ posts = [], onAddPost, onDeletePost }) => {
         </div>
 
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {posts.map((post) => (
-            <div
+          {postsError && (
+            <p className="col-span-full rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-700">
+              {postsError}
+            </p>
+          )}
+          {!postsError && posts.length === 0 && (
+            <p className="col-span-full rounded-xl bg-[#F8FAFC] p-6 text-center text-sm text-[#64748B]">
+              لا توجد منشورات مسجلة بعد.
+            </p>
+          )}
+          {posts.map((post) => {
+            const metrics = aggregatePublicationMetrics(
+              (analytics.publications || []).filter((item) => item.hub_post_id === post.id),
+            );
+            return (
+              <div
               key={post.id}
               className="rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] hover:border-[#1D6FD9]/50 transition-all overflow-hidden flex flex-col"
             >
@@ -790,8 +863,28 @@ export const SocialMediaSection = ({ posts = [], onAddPost, onDeletePost }) => {
                     ))}
                   </div>
 
+                  {post.results?.length > 0 && (
+                    <div className="mb-2 space-y-1">
+                      {post.results.map((result) => (
+                        <p key={result.platform} className="text-[10px] leading-relaxed text-[#475569]">
+                          <span className="font-bold">{result.platform}: </span>
+                          {RESULT_LABELS[result.status] || result.status}
+                        </p>
+                      ))}
+                    </div>
+                  )}
+
+                  {metrics.available && (
+                    <div className="mb-2 flex flex-wrap gap-2 text-[10px] text-[#475569]">
+                      {metrics.likes_count != null && <span>الإعجابات: {metrics.likes_count}</span>}
+                      {metrics.comments_count != null && <span>التعليقات: {metrics.comments_count}</span>}
+                      {metrics.shares_count != null && <span>المشاركات: {metrics.shares_count}</span>}
+                      {metrics.views_count != null && <span>المشاهدات: {metrics.views_count}</span>}
+                    </div>
+                  )}
+
                   <div className="pt-2 border-t border-slate-200 flex items-center justify-between text-[11px] text-[#64748B]">
-                    <span>مشاهدات: {post.stats?.views || '1.2K'}</span>
+                    <span>{post.status === 'published' ? 'نُشر' : post.status === 'partial' ? 'نشر جزئي' : 'محفوظ'}</span>
                     <button
                       type="button"
                       onClick={() => onDeletePost(post.id)}
@@ -803,8 +896,9 @@ export const SocialMediaSection = ({ posts = [], onAddPost, onDeletePost }) => {
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+              </div>
+            );
+          })}
         </div>
       </div>
 

@@ -13,7 +13,8 @@ export const ClientOpinionSection = ({
   opinions = [], 
   onAcceptOpinion, 
   onDeclineOpinion, 
-  onAddOpinion 
+  onAddOpinion,
+  error = '',
 }) => {
   const [filterStatus, setFilterStatus] = useState('all'); // 'all' | 'pending' | 'accepted' | 'declined'
   const [showAddModal, setShowAddModal] = useState(false);
@@ -22,8 +23,6 @@ export const ClientOpinionSection = ({
   // New Opinion Modal Form State
   const [newClientName, setNewClientName] = useState('');
   const [newClientRole, setNewClientRole] = useState('');
-  const [newClientCity, setNewClientCity] = useState('الرياض');
-  const [newClientProject, setNewClientProject] = useState('');
   const [newClientRating, setNewClientRating] = useState(5);
   const [newClientComment, setNewClientComment] = useState('');
 
@@ -32,17 +31,25 @@ export const ClientOpinionSection = ({
     setTimeout(() => setToastMessage(null), 3500);
   };
 
-  const handleAccept = (id, clientName) => {
-    onAcceptOpinion(id);
-    showToast(`تم قبول واعتماد رأي العميل "${clientName}" بنجاح!`, 'success');
+  const handleAccept = async (id, clientName) => {
+    try {
+      await onAcceptOpinion(id);
+      showToast(`تم قبول واعتماد رأي العميل "${clientName}" بنجاح!`, 'success');
+    } catch (acceptError) {
+      showToast(acceptError.message || 'تعذر قبول الرأي', 'error');
+    }
   };
 
-  const handleDecline = (id, clientName) => {
-    onDeclineOpinion(id);
-    showToast(`تم رفض رأي العميل "${clientName}".`, 'declined');
+  const handleDecline = async (id, clientName) => {
+    try {
+      await onDeclineOpinion(id);
+      showToast(`تم رفض رأي العميل "${clientName}".`, 'declined');
+    } catch (declineError) {
+      showToast(declineError.message || 'تعذر رفض الرأي', 'error');
+    }
   };
 
-  const handleAddSubmit = (e) => {
+  const handleAddSubmit = async (e) => {
     e.preventDefault();
     if (!newClientName.trim() || !newClientComment.trim()) {
       showToast('يرجى ملء اسم العميل ونص التقييم', 'error');
@@ -50,26 +57,21 @@ export const ClientOpinionSection = ({
     }
 
     const newOp = {
-      id: Date.now(),
       name: newClientName.trim(),
-      role: newClientRole.trim() || 'مالك المشروع',
-      city: newClientCity,
-      date: 'اليوم، الآن',
+      role: newClientRole.trim() || 'عميل',
       rating: Number(newClientRating),
-      status: 'pending',
-      avatar: '/logo.png',
       comment: newClientComment.trim(),
-      project: newClientProject.trim() || 'مشروع سكني فاخر',
-      sentiment: Number(newClientRating) >= 4 ? 'positive' : 'neutral',
-      verified: true,
     };
 
-    onAddOpinion(newOp);
+    try {
+      await onAddOpinion(newOp);
+    } catch (addError) {
+      showToast(addError.message || 'تعذر إضافة الرأي', 'error');
+      return;
+    }
     setShowAddModal(false);
-    // Reset Form
     setNewClientName('');
     setNewClientRole('');
-    setNewClientProject('');
     setNewClientComment('');
     setNewClientRating(5);
 
@@ -137,7 +139,9 @@ export const ClientOpinionSection = ({
         </button>
       </div>
 
-      {/* Filter Tabs matching exact pills in screenshot */}
+      {error && (
+        <p className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-xs font-bold text-rose-700">{error}</p>
+      )}
       <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
         <button
           onClick={() => setFilterStatus('all')}
@@ -231,47 +235,15 @@ export const ClientOpinionSection = ({
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-bold text-[#334155] mb-1">
-                    الصفة / الشركة
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="مثال: مالك قصر الواحة"
-                    value={newClientRole}
-                    onChange={(e) => setNewClientRole(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-[#1D6FD9]"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-[#334155] mb-1">
-                    المدينة
-                  </label>
-                  <select
-                    value={newClientCity}
-                    onChange={(e) => setNewClientCity(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-[#1D6FD9]"
-                  >
-                    <option value="الرياض">الرياض</option>
-                    <option value="جدة">جدة</option>
-                    <option value="الخبر">الخبر</option>
-                    <option value="الدمام">الدمام</option>
-                    <option value="القصيم">القصيم</option>
-                    <option value="أبها">أبها</option>
-                  </select>
-                </div>
-              </div>
-
               <div>
                 <label className="block text-xs font-bold text-[#334155] mb-1">
-                  المشروع المرتبط
+                  الصفة / الشركة
                 </label>
                 <input
                   type="text"
-                  placeholder="مثال: قصر الدرعية التراثي"
-                  value={newClientProject}
-                  onChange={(e) => setNewClientProject(e.target.value)}
+                  placeholder="مثال: مالك المشروع"
+                  value={newClientRole}
+                  onChange={(e) => setNewClientRole(e.target.value)}
                   className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-[#1D6FD9]"
                 />
               </div>

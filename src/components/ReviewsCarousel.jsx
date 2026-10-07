@@ -1,55 +1,67 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight, ChevronLeft, Star, Quote, BadgeCheck } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Star, Quote } from 'lucide-react';
 import TiltCard from './fx/TiltCard';
+import { fetchPublicReviews } from '../api/reviews';
 
-const reviews = [
-  {
-    id: 1,
-    name: "أحمد المولد",
-    role: "المدير التنفيذي، شركة أفق التقنية",
-    review: "تجربتنا مع نثيل كانت استثنائية بكل المقاييس. فريق عمل احترافي قدم لنا حلولاً مبتكرة ساهمت في نمو مبيعاتنا بشكل ملحوظ.",
-    rating: 5,
-    initials: "أ.م"
-  },
-  {
-    id: 2,
-    name: "سارة العتيبي",
-    role: "مديرة التسويق، مجموعة الريادة",
-    review: "التزام كامل بالمواعيد وجودة عالية في المخرجات. نثيل ليست مجرد وكالة، بل شريك استراتيجي حقيقي لنجاح أعمالنا.",
-    rating: 5,
-    initials: "س.ع"
-  },
-  {
-    id: 3,
-    name: "خالد الشمري",
-    role: "مؤسس، تطبيق مسار",
-    review: "منذ بداية تعاوننا، لاحظنا تطوراً كبيراً في هويتنا الرقمية. الاحترافية والاهتمام بأدق التفاصيل هو ما يميز فريق نثيل.",
-    rating: 5,
-    initials: "خ.ش"
-  }
-];
+const initialsOf = (name) => name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]).join('.');
 
 export default function ReviewsCarousel() {
+  const [reviews, setReviews] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(1);
   const [isHovered, setIsHovered] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (isHovered) return;
+    let stop = false;
+    const load = () => {
+      fetchPublicReviews()
+        .then((data) => {
+          if (stop) return;
+          const next = (data.reviews || []).map((review) => ({
+            id: review.id,
+            name: review.name,
+            role: review.role || 'عميل',
+            review: review.comment,
+            rating: review.rating,
+            initials: initialsOf(review.name),
+          }));
+          setReviews(next);
+          setCurrentIndex((index) => (next.length ? Math.min(index, next.length - 1) : 0));
+        })
+        .catch(() => {
+          if (!stop) setReviews([]);
+        })
+        .finally(() => {
+          if (!stop) setIsLoading(false);
+        });
+    };
+    load();
+    const timer = window.setInterval(load, 15000);
+    return () => {
+      stop = true;
+      window.clearInterval(timer);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isHovered || reviews.length < 2) return;
     const timer = setInterval(() => {
       setDirection(1);
       setCurrentIndex((prev) => (prev + 1) % reviews.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, [isHovered]);
+  }, [isHovered, reviews.length]);
 
   const handleNext = () => {
+    if (!reviews.length) return;
     setDirection(1);
     setCurrentIndex((prev) => (prev + 1) % reviews.length);
   };
 
   const handlePrev = () => {
+    if (!reviews.length) return;
     setDirection(-1);
     setCurrentIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
   };
@@ -133,6 +145,14 @@ export default function ReviewsCarousel() {
 
         {/* Carousel Content */}
         <div className="flex-1 relative flex items-center justify-center min-h-[340px] perspective-[1500px]">
+          {isLoading ? (
+            <div role="status" aria-label="جارٍ تحميل الآراء" className="flex flex-col items-center gap-3">
+              <span className="w-10 h-10 rounded-full border-2 border-white/15 border-t-accent animate-spin" />
+              <span className="text-white/60 text-xs">جارٍ تحميل الآراء...</span>
+            </div>
+          ) : reviews.length === 0 ? (
+            <p className="text-white/70 text-sm text-center">لا توجد آراء بعد!</p>
+          ) : (
           <AnimatePresence initial={false} custom={direction} mode="wait">
             <motion.div
               key={currentIndex}
@@ -196,7 +216,6 @@ export default function ReviewsCarousel() {
                     <div>
                       <h4 className="text-white font-bold flex items-center gap-2 text-lg drop-shadow-sm">
                         {reviews[currentIndex].name}
-                        <BadgeCheck className="w-5 h-5 text-accent drop-shadow-[0_0_8px_rgba(58,168,188,0.5)]" />
                       </h4>
                       <p className="text-accent/80 text-xs mt-1 font-medium">
                         {reviews[currentIndex].role}
@@ -207,6 +226,7 @@ export default function ReviewsCarousel() {
               </TiltCard>
             </motion.div>
           </AnimatePresence>
+          )}
         </div>
 
         {/* Controls */}

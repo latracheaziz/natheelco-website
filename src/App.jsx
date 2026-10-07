@@ -11,6 +11,7 @@ import Roots from './pages/Roots';
 import Contact from './pages/Contact';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminLogin from './pages/AdminLogin';
+import { ADMIN_TOKEN_KEY } from './api/reviews';
 
 const ADMIN_SESSION_KEY = 'natheel_admin_authenticated';
 
@@ -94,7 +95,7 @@ const AppShell = () => {
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/adminnatheelcoir');
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(
-    () => sessionStorage.getItem(ADMIN_SESSION_KEY) === 'true'
+    () => sessionStorage.getItem(ADMIN_SESSION_KEY) === 'true' && Boolean(sessionStorage.getItem(ADMIN_TOKEN_KEY))
   );
 
   if (isAdmin) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star, Clock, CheckCircle2 } from 'lucide-react';
+import { Star, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const ClientOpinionCard = ({ opinion, onAccept, onDecline }) => {
@@ -20,25 +20,15 @@ export const ClientOpinionCard = ({ opinion, onAccept, onDecline }) => {
           
           {/* Client Details (Right side in RTL) */}
           <div className="flex items-start gap-3">
-            <img
-              src={opinion.avatar}
-              alt={opinion.name}
-              className="w-12 h-12 rounded-full object-cover border border-[#E2E8F0] shadow-sm flex-shrink-0"
-              onError={(e) => {
-                e.currentTarget.src = '/logo.png';
-              }}
-            />
+            <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-[#E2E8F0] bg-[#F8FAFC] text-sm font-bold text-[#1D6FD9]">
+              {(opinion.name || 'ع').trim().charAt(0)}
+            </div>
             <div className="text-right">
               <h4 className="font-heading font-bold text-sm text-[#0F172A] leading-tight">
                 {opinion.name}
               </h4>
-              <div className="flex items-center gap-1 text-[11px] text-[#1D6FD9] font-semibold mt-0.5">
-                <CheckCircle2 className="w-3 h-3 fill-[#1D6FD9] text-white" />
-                <span>عميل موثّق</span>
-              </div>
-              
               <div className="text-[11px] text-[#64748B] mt-1 space-y-0.5 leading-tight">
-                <p>{opinion.role} | {opinion.city}</p>
+                <p>{opinion.role}{opinion.city ? ` | ${opinion.city}` : ''}</p>
                 {opinion.project && (
                   <p className="font-medium text-[#334155]">{opinion.project}</p>
                 )}

@@ -145,8 +145,9 @@ const TiltCard = ({ card, onNavigateTab, index }) => {
 /* ─── Main Component ─────────────────────────────────────────────────── */
 export const DashboardIntroduction = ({
   onNavigateTab,
-  pendingCount = 2,
-  postsCount = 4,
+  pendingCount = 0,
+  postsCount = 0,
+  connectedCount = 0,
 }) => {
   const featureCards = [
     {
@@ -171,7 +172,7 @@ export const DashboardIntroduction = ({
     {
       id: 'social',
       title: 'بث ونشر المحتوى لـ 7 منصات',
-      statBadge: '7 شبكات متصلة',
+      statBadge: `${connectedCount} منصات متصلة`,
       actionLabel: 'نموذج النشر',
       tabTarget: 'social',
       icon: Share2,
@@ -190,7 +191,7 @@ export const DashboardIntroduction = ({
     {
       id: 'statistics',
       title: 'التحليلات والمخططات البيانية',
-      statBadge: 'مخططان بيانيان تفاعليان',
+      statBadge: 'بيانات المنصات المتاحة',
       actionLabel: 'استعراض الإحصائيات',
       tabTarget: 'statistics',
       icon: BarChart3,
@@ -209,7 +210,7 @@ export const DashboardIntroduction = ({
     {
       id: 'security',
       title: 'أمان وثبات الواجهة والبيانات',
-      statBadge: 'نظام محلي آمن',
+      statBadge: `${postsCount} منشورات مسجلة`,
       actionLabel: 'سجل المنشورات',
       tabTarget: 'posts',
       icon: ShieldCheck,
@@ -257,7 +258,7 @@ export const DashboardIntroduction = ({
               مرحباً بك في المركز الإداري الشامل والمصمم خصيصاً لإدارة الحضور الرقمي لشركة{' '}
               <span className="font-bold text-[#1D6FD9] mx-1">نثيل للخدمات المعمارية والهندسية</span>.
               تمنحك هذه اللوحة تحكماً مركزياً فائق السلاسة لإدارة التقييمات، نشر المحتوى متعدد المنصات،
-              ومتابعة الأداء الإحصائي الحي.
+              ومتابعة البيانات التي تتيحها واجهات المنصات المتصلة.
             </p>
           </div>
           <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-[#BFDBFE] text-xs font-bold text-[#1D6FD9] self-start md:self-auto flex-shrink-0 shadow-sm">
@@ -312,7 +313,7 @@ export const DashboardIntroduction = ({
               step: 3,
               label: 'متابعة الأداء الإحصائي',
               desc: (
-                <>تحقق من تبويب <span className="font-bold text-[#1D6FD9]">"الإحصائيات والتحليلات"</span> لمشاهدة المخططات البيانية محدثة لحظياً.</>
+                <>تحقق من تبويب <span className="font-bold text-[#1D6FD9]">"الإحصائيات والتحليلات"</span> لمشاهدة آخر بيانات جلبها الخادم من المنصات.</>
               ),
             },
           ].map(({ step, label, desc }) => (

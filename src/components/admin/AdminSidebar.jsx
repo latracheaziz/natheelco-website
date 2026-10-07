@@ -10,15 +10,16 @@ import {
   X 
 } from 'lucide-react';
 
-const navItems = [
-  { id: 'overview', label: 'الرئيسية', icon: Home },
-  { id: 'opinions', label: 'آراء وتقييمات العملاء', icon: Star, badge: '2 معلق' },
-  { id: 'social', label: 'التواصل الاجتماعي', icon: Share2 },
-  { id: 'posts', label: 'سجل المنشورات', icon: Megaphone },
-  { id: 'statistics', label: 'الإحصائيات والتحليلات', icon: BarChart3 },
-];
+const SidebarInner = ({ activeTab, onSelectTab, onCloseMobile, pendingCount = 0 }) => {
+  const navItems = [
+    { id: 'overview', label: 'الرئيسية', icon: Home },
+    { id: 'opinions', label: 'آراء وتقييمات العملاء', icon: Star, badge: pendingCount > 0 ? `${pendingCount} معلق` : null },
+    { id: 'social', label: 'التواصل الاجتماعي', icon: Share2 },
+    { id: 'posts', label: 'سجل المنشورات', icon: Megaphone },
+    { id: 'statistics', label: 'الإحصائيات والتحليلات', icon: BarChart3 },
+  ];
 
-const SidebarInner = ({ activeTab, onSelectTab, onCloseMobile }) => (
+  return (
   <div className="h-full flex flex-col justify-between py-6 px-4">
     <div>
       {/* Brand Logo & Subtitle */}
@@ -83,13 +84,15 @@ const SidebarInner = ({ activeTab, onSelectTab, onCloseMobile }) => (
       </div>
     </div>
   </div>
-);
+  );
+};
 
 export const AdminSidebar = ({ 
   activeTab, 
   setActiveTab, 
   mobileOpen = false, 
-  setMobileOpen = () => {} 
+  setMobileOpen = () => {},
+  pendingCount = 0,
 }) => {
   const handleSelectTab = (id) => {
     setActiveTab(id);
@@ -102,7 +105,8 @@ export const AdminSidebar = ({
       <aside className="hidden lg:flex w-64 bg-[#0B3B46] border-l border-white/10 min-h-screen flex-col justify-between shadow-[2px_0_18px_rgba(0,0,0,0.16)] flex-shrink-0 z-20">
         <SidebarInner 
           activeTab={activeTab} 
-          onSelectTab={handleSelectTab} 
+          onSelectTab={handleSelectTab}
+          pendingCount={pendingCount}
         />
       </aside>
 
@@ -131,6 +135,7 @@ export const AdminSidebar = ({
                 activeTab={activeTab} 
                 onSelectTab={handleSelectTab} 
                 onCloseMobile={() => setMobileOpen(false)}
+                pendingCount={pendingCount}
               />
             </motion.aside>
           </div>

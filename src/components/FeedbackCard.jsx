@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Star, ArrowLeft, Send } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
+import { submitReview } from '../api/reviews';
 
 const triggerFireworks = () => {
   const duration = 3 * 1000;
@@ -32,10 +33,12 @@ const triggerFireworks = () => {
 };
 
 export default function FeedbackCard() {
+  const [name, setName] = useState('');
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [opinion, setOpinion] = useState('');
   const [status, setStatus] = useState('idle');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (status === 'success') {
@@ -43,13 +46,18 @@ export default function FeedbackCard() {
     }
   }, [status]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!rating) return;
+    if (!rating || name.trim().length < 2 || opinion.trim().length < 2) return;
     setStatus('submitting');
-    setTimeout(() => {
+    setError('');
+    try {
+      await submitReview({ name: name.trim(), comment: opinion.trim(), rating });
       setStatus('success');
-    }, 2500);
+    } catch (submitError) {
+      setStatus('idle');
+      setError(submitError.message || 'تعذر إرسال الرأي. حاول مرة أخرى.');
+    }
   };
 
   return (
@@ -106,6 +114,19 @@ export default function FeedbackCard() {
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
+                    <label htmlFor="reviewer-name" className="block text-sm font-bold text-primary mb-3 font-heading">الاسم</label>
+                    <input
+                      id="reviewer-name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value.slice(0, 80))}
+                      placeholder="اسمك"
+                      required
+                      minLength={2}
+                      className="w-full bg-[#FAFAFA] border border-border-light rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 text-primary placeholder:text-text-muted"
+                    />
+                  </div>
+
+                  <div>
                     <label className="block text-sm font-bold text-primary mb-3 font-heading">قيّم تجربتك</label>
                     <div className="flex items-center gap-2">
                       {[1, 2, 3, 4, 5].map((star) => (
@@ -148,12 +169,13 @@ export default function FeedbackCard() {
 
                   <button
                     type="submit"
-                    disabled={!rating}
+                    disabled={!rating || name.trim().length < 2 || opinion.trim().length < 2}
                     className="group mt-2 flex items-center gap-3 bg-[#1B2A2F] hover:bg-primary text-white text-sm font-medium px-8 py-3.5 rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
                   >
                     إرسال الرأي
                     <ArrowLeft className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-2 group-hover:scale-110" />
                   </button>
+                  {error && <p className="text-sm text-rose-600">{error}</p>}
                 </form>
               </motion.div>
             )}
@@ -211,6 +233,7 @@ export default function FeedbackCard() {
                     setStatus('idle');
                     setRating(0);
                     setOpinion('');
+                    setName('');
                   }}
                   className="mt-6 text-accent text-sm font-medium hover:underline underline-offset-4"
                 >
