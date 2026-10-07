@@ -143,7 +143,12 @@ const Home = () => {
     return () => clearTimeout(timer);
   }, [currentSlide]);
 
-  const openModal = useCallback((project) => {
+  const openProject = useCallback((project) => {
+    if (project.website) {
+      window.location.assign(project.website);
+      return;
+    }
+
     setSelectedProject(project);
     setIsModalOpen(true);
   }, []);
@@ -594,7 +599,7 @@ const Home = () => {
           transition={{ duration: 1.2, ease }}
           className="relative"
         >
-          <ProjectRing projects={projects} onOpen={openModal} />
+          <ProjectRing projects={projects} onOpen={openProject} />
         </motion.div>
       </section>
 
