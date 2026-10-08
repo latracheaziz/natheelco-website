@@ -61,31 +61,31 @@ const FluidWaveBackground = () => {
       >
         <defs>
           <linearGradient id="fluid-base" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#0645c6" />
-            <stop offset="34%" stopColor="#07379f" />
-            <stop offset="64%" stopColor="#041e69" />
-            <stop offset="100%" stopColor="#063fb6" />
+            <stop offset="0%" stopColor="#1B3A5C" />
+            <stop offset="34%" stopColor="#132240" />
+            <stop offset="64%" stopColor="#0A1628" />
+            <stop offset="100%" stopColor="#132240" />
           </linearGradient>
           <linearGradient id="fluid-ribbon" x1="0" y1="0" x2="1" y2="0.8">
-            <stop offset="0%" stopColor="#0860ed" stopOpacity="0.12" />
-            <stop offset="30%" stopColor="#1354d5" stopOpacity="0.55" />
-            <stop offset="54%" stopColor="#1675ff" stopOpacity="0.9" />
-            <stop offset="76%" stopColor="#063aa7" stopOpacity="0.45" />
-            <stop offset="100%" stopColor="#1173ff" stopOpacity="0.65" />
+            <stop offset="0%" stopColor="#2E8B9C" stopOpacity="0.12" />
+            <stop offset="30%" stopColor="#1B3A5C" stopOpacity="0.55" />
+            <stop offset="54%" stopColor="#3AA8BC" stopOpacity="0.9" />
+            <stop offset="76%" stopColor="#132240" stopOpacity="0.45" />
+            <stop offset="100%" stopColor="#2E8B9C" stopOpacity="0.65" />
           </linearGradient>
           <linearGradient id="fluid-edge" x1="0" y1="0" x2="1" y2="0.5">
-            <stop offset="0%" stopColor="#2678ff" stopOpacity="0.14" />
-            <stop offset="44%" stopColor="#3d8cff" stopOpacity="0.56" />
-            <stop offset="66%" stopColor="#70b2ff" stopOpacity="0.84" />
-            <stop offset="100%" stopColor="#217aff" stopOpacity="0.2" />
+            <stop offset="0%" stopColor="#5FD4E6" stopOpacity="0.14" />
+            <stop offset="44%" stopColor="#3AA8BC" stopOpacity="0.56" />
+            <stop offset="66%" stopColor="#5FD4E6" stopOpacity="0.84" />
+            <stop offset="100%" stopColor="#2E8B9C" stopOpacity="0.2" />
           </linearGradient>
           <radialGradient id="fluid-glow-left">
-            <stop offset="0%" stopColor="#1265ff" stopOpacity="0.55" />
-            <stop offset="100%" stopColor="#1265ff" stopOpacity="0" />
+            <stop offset="0%" stopColor="#2E8B9C" stopOpacity="0.55" />
+            <stop offset="100%" stopColor="#2E8B9C" stopOpacity="0" />
           </radialGradient>
           <radialGradient id="fluid-glow-right">
-            <stop offset="0%" stopColor="#0871ff" stopOpacity="0.52" />
-            <stop offset="100%" stopColor="#0871ff" stopOpacity="0" />
+            <stop offset="0%" stopColor="#1B3A5C" stopOpacity="0.52" />
+            <stop offset="100%" stopColor="#1B3A5C" stopOpacity="0" />
           </radialGradient>
           <filter id="fluid-bloom" x="-30%" y="-40%" width="160%" height="180%">
             <feGaussianBlur stdDeviation="24" />
