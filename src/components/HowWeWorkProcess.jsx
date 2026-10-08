@@ -155,16 +155,6 @@ const HowWeWorkProcess = () => {
         
         {/* ── Header ── */}
         <div className="text-center mb-12 lg:mb-28 px-4">
-          <motion.span
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-4 sm:mb-6"
-          >
-            <span className="w-6 sm:w-8 h-px bg-accent" />
-            منهجية العمل
-            <span className="w-6 sm:w-8 h-px bg-accent" />
-          </motion.span>
           <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-[56px] font-heading font-[900] text-primary leading-[1.3] md:leading-[1.2] mb-4 sm:mb-6">
             <RevealText text="كيف نعمل في نثيل؟" />
           </h2>
@@ -321,7 +311,6 @@ const HowWeWorkProcess = () => {
                     transition={{ delay: 0.2, duration: 0.5 }}
                     className="flex justify-center md:justify-start items-center gap-3 mb-3 md:mb-6"
                   >
-                    <span className="w-10 h-[2px] bg-accent/50" />
                     <span className="font-mono text-accent text-sm tracking-[0.2em] font-semibold">المرحلة {activeStage.number}</span>
                   </motion.div>
 

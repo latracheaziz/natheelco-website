@@ -4,6 +4,7 @@ import RevealText from './RevealText';
 import FloatingShapes from './FloatingShapes';
 import WaveLinesBackground from './WaveLinesBackground';
 import BlueWaveBackground from './BlueWaveBackground';
+import FluidWaveBackground from './FluidWaveBackground';
 
 const ScenicHeroBackground = ({ src, scrollProgress }) => {
   const parallaxY = useTransform(scrollProgress, [0, 1], [0, 54]);
@@ -32,6 +33,9 @@ const PageHero = ({
   backgroundImage = '',
   useWaveLines = false,
   useEnvatoWave = false,
+  useFluidWave = false,
+  hideEyebrowLine = false,
+  children,
 }) => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
@@ -40,7 +44,7 @@ const PageHero = ({
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   const handleScenicMove = (event) => {
-    if (!backgroundImage) return;
+    if (!backgroundImage && !useFluidWave) return;
     const bounds = event.currentTarget.getBoundingClientRect();
     const horizontal = (event.clientX - bounds.left) / bounds.width - 0.5;
     const vertical = (event.clientY - bounds.top) / bounds.height - 0.5;
@@ -56,12 +60,14 @@ const PageHero = ({
   return (
     <section
       ref={ref}
-      onMouseMove={(backgroundImage || useEnvatoWave) ? handleScenicMove : undefined}
-      onMouseLeave={(backgroundImage || useEnvatoWave) ? handleScenicLeave : undefined}
-      className={`bg-primary relative overflow-hidden min-h-[70vh] flex items-end ${backgroundImage ? 'roots-photo-hero' : ''}`}
+      onMouseMove={(backgroundImage || useEnvatoWave || useFluidWave) ? handleScenicMove : undefined}
+      onMouseLeave={(backgroundImage || useEnvatoWave || useFluidWave) ? handleScenicLeave : undefined}
+      className={`bg-primary relative overflow-hidden min-h-[70vh] ${useFluidWave ? 'flex flex-col justify-end fluid-wave-hero' : 'flex items-end'} ${backgroundImage ? 'roots-photo-hero' : ''}`}
     >
       {backgroundImage ? (
         <ScenicHeroBackground src={backgroundImage} scrollProgress={scrollYProgress} />
+      ) : useFluidWave ? (
+        <FluidWaveBackground />
       ) : useEnvatoWave ? (
         <BlueWaveBackground />
       ) : useWaveLines ? (
@@ -86,20 +92,28 @@ const PageHero = ({
           transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="mb-6"
         >
-          <span className="inline-flex items-center gap-3 text-[12px] font-semibold tracking-[0.2em] uppercase text-accent-light">
-            <motion.span
-              className="h-px bg-accent-light origin-right"
-              initial={{ width: 0 }}
-              animate={{ width: 32 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-            />
+          <span className={`inline-flex items-center gap-3 ${useFluidWave ? 'text-base md:text-lg font-semibold tracking-[0.2em] uppercase fluid-wave-eyebrow' : 'text-[12px] font-semibold tracking-[0.2em] uppercase text-accent-light'}`}>
+            {!hideEyebrowLine && (
+              <motion.span
+                className={`h-px origin-right ${useFluidWave ? 'fluid-wave-accent' : 'bg-accent-light'}`}
+                initial={{ width: 0 }}
+                animate={{ width: 32 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+              />
+            )}
             {eyebrow}
-            <span className="w-1.5 h-1.5 rounded-full bg-accent-glow shadow-[0_0_12px_#5FD4E6] animate-pulse" />
+            <span className={`w-1.5 h-1.5 rounded-full shadow-[0_0_12px_#5FD4E6] animate-pulse ${useFluidWave ? 'fluid-wave-accent' : 'bg-accent-glow'}`} />
           </span>
         </motion.div>
 
-        <h1 className="text-5xl md:text-6xl lg:text-8xl font-heading font-[900] text-white leading-[1.1] max-w-3xl">
-          <RevealText text={title} immediate delay={0.3} stagger={0.1} wordClassName="gradient-text-light pb-2" />
+        <h1 className={`text-5xl md:text-6xl lg:text-8xl font-heading font-[900] leading-[1.1] max-w-3xl text-white ${useFluidWave ? 'fluid-wave-heading' : ''}`}>
+          <RevealText
+            text={title}
+            immediate
+            delay={0.3}
+            stagger={0.1}
+            wordClassName={useFluidWave ? 'fluid-wave-title pb-2' : 'gradient-text-light pb-2'}
+          />
         </h1>
 
         {subtitle && (
@@ -107,12 +121,14 @@ const PageHero = ({
             initial={{ opacity: 0, y: 20, filter: 'blur(8px)' }}
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             transition={{ duration: 0.9, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className={subtitleClassName}
+            className={`${subtitleClassName} ${useFluidWave ? 'fluid-wave-subtitle' : ''}`}
           >
             {subtitle}
           </motion.p>
         )}
       </motion.div>
+
+      {children}
 
       <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-l from-transparent via-accent-light/50 to-transparent" />
     </section>

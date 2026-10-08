@@ -11,13 +11,11 @@ const Eyebrow = ({ children, center = false, light = false }) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.7, ease }}
-    className={`inline-flex items-center gap-2 text-[12px] font-semibold tracking-[0.15em] uppercase ${
+    className={`inline-flex items-center gap-2 text-lg md:text-xl font-bold tracking-[0.15em] uppercase ${
       light ? 'text-accent-light' : 'text-accent'
     } ${center ? 'justify-center' : ''}`}
   >
-    <span className={`w-8 h-px ${light ? 'bg-accent-light' : 'bg-accent'}`} />
     {children}
-    {center && <span className={`w-8 h-px ${light ? 'bg-accent-light' : 'bg-accent'}`} />}
   </motion.span>
 );
 
@@ -76,17 +74,15 @@ const AboutIdentity = () => {
   return (
     <>
       {/* Manifesto — dark footer-style band */}
-      <section className="relative bg-primary text-white overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary to-primary-light/30 pointer-events-none" />
-        <div className="aurora opacity-20" />
-        <div className="grain" />
+      <section className="fluid-wave-manifesto relative bg-transparent text-white overflow-hidden pt-8">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/10 to-primary/25 pointer-events-none" />
 
         <div className="container-premium section-padding relative z-10 py-24 lg:py-32" dir="rtl">
           <Reveal3D rotateX={14} distance={60}>
-            <div className="max-w-4xl mr-auto">
+            <div className="max-w-3xl ml-auto text-right">
               <div className="mb-8">
-                <Eyebrow light>من نحن</Eyebrow>
-              </div>
+                  <Eyebrow light>من نحن</Eyebrow>
+                </div>
 
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-[800] leading-[1.3] mb-10">
                 <RevealText text="في نثيل" wordClassName="gradient-text-light pb-1" />
@@ -98,7 +94,7 @@ const AboutIdentity = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.9, delay: 0.15, ease }}
-                  className="text-xl md:text-2xl text-white/80 leading-[1.9] font-light"
+                  className="text-3xl md:text-4xl text-white leading-[1.9] font-medium"
                 >
                   نعمل على تحويل الأفكار الواعدة إلى مشاريع منظّمة قابلة للنمو.
                 </motion.p>
@@ -107,7 +103,7 @@ const AboutIdentity = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.9, delay: 0.3, ease }}
-                  className="text-lg md:text-xl text-white/50 leading-[1.9]"
+                  className="text-3xl md:text-4xl text-white leading-[1.9] font-medium"
                 >
                   نطوّر نموذج العمل، ونبني الفريق والأنظمة، ونقود التنفيذ للوصول إلى نمو وربحية مستدامة
                 </motion.p>
@@ -275,7 +271,7 @@ const AboutIdentity = () => {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.6, delay: 0.15 }}
-                      className="text-text-secondary text-lg md:text-xl leading-[2] flex-1"
+                      className="text-text-secondary text-xl md:text-2xl leading-[2] flex-1"
                       style={{ transform: 'translateZ(40px)' }}
                     >
                       {current.text}

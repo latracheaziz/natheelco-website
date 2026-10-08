@@ -46,7 +46,7 @@ export const TopPills = ({ items, focusedId, onFocus }) => (
         layoutId="map-top-pill"
         gold={item.id === 'hq'}
       >
-        <span className="font-latin tracking-wider text-[12px]">{item.nameEn}</span>
+        <span className="text-[12px] font-semibold">{item.nameAr}</span>
       </Pill>
     ))}
   </div>
@@ -101,10 +101,10 @@ export const Compass = ({ rotZ }) => {
         <polygon points="50,14 56,50 50,46 44,50" fill="#E8B04A" style={{ filter: 'drop-shadow(0 0 4px #E8B04A)' }} />
         <polygon points="50,86 56,50 50,54 44,50" fill="rgba(255,255,255,0.35)" />
         <circle cx="50" cy="50" r="3" fill="#FFD27A" />
-        <text x="50" y="27" textAnchor="middle" className="font-latin" fontSize="9" fontWeight="800" fill="#FFD27A">N</text>
-        <text x="50" y="80" textAnchor="middle" className="font-latin" fontSize="8" fontWeight="700" fill="rgba(255,255,255,0.5)">S</text>
-        <text x="79" y="53" textAnchor="middle" className="font-latin" fontSize="8" fontWeight="700" fill="rgba(255,255,255,0.5)">E</text>
-        <text x="21" y="53" textAnchor="middle" className="font-latin" fontSize="8" fontWeight="700" fill="rgba(255,255,255,0.5)">W</text>
+        <text x="50" y="27" textAnchor="middle" fontSize="9" fontWeight="800" fill="#FFD27A">ش</text>
+        <text x="50" y="80" textAnchor="middle" fontSize="8" fontWeight="700" fill="rgba(255,255,255,0.5)">ج</text>
+        <text x="79" y="53" textAnchor="middle" fontSize="8" fontWeight="700" fill="rgba(255,255,255,0.5)">ق</text>
+        <text x="21" y="53" textAnchor="middle" fontSize="8" fontWeight="700" fill="rgba(255,255,255,0.5)">غ</text>
       </motion.svg>
     </div>
   );
@@ -262,8 +262,8 @@ export const VenturesPanel = ({ projects, revealed, delay, onHover, onSelect, ho
             hovered === p.id ? 'border-accent-light/60 bg-accent/15' : 'border-white/5 bg-white/[0.03] hover:border-white/20'
           }`}
         >
-          <span className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center font-latin font-black text-[7px] leading-none text-white/80 text-center whitespace-pre-line group-hover:border-accent-glow group-hover:text-accent-glow transition-colors">
-            {p.logo.split('\n')[0].slice(0, 5)}
+          <span className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center font-bold text-[8px] leading-none text-white/80 text-center whitespace-pre-line group-hover:border-accent-glow group-hover:text-accent-glow transition-colors">
+            {p.nameAr.split(' ')[0]}
           </span>
           <span className="text-[9px] text-white/50 leading-tight">{p.nameAr}</span>
         </button>

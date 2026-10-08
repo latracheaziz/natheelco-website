@@ -204,7 +204,7 @@ const DetailPanel = ({ pillar }) => {
 
         {/* Title */}
         <div className="text-center mb-5" dir="rtl" style={{ transform: 'translateZ(40px)' }}>
-          <h3 className="text-3xl md:text-4xl font-heading font-[900] leading-tight text-primary">
+          <h3 className="text-4xl md:text-5xl font-heading font-[900] leading-tight text-primary">
             {pillar.title}
           </h3>
         </div>
@@ -231,7 +231,7 @@ const DetailPanel = ({ pillar }) => {
 
         {/* Short text */}
         <p
-          className="text-center text-text-secondary text-base leading-[1.8] mb-5 max-w-xs mx-auto"
+          className="text-center text-text-secondary text-lg md:text-xl leading-[1.8] mb-5 max-w-sm mx-auto"
           dir="rtl"
           style={{ transform: 'translateZ(20px)' }}
         >
@@ -252,7 +252,7 @@ const DetailPanel = ({ pillar }) => {
 
         {/* Detail */}
         <p
-          className="text-center text-text-muted text-sm leading-[2] max-w-xs mx-auto"
+          className="text-center text-text-muted text-base leading-[2] max-w-sm mx-auto"
           dir="rtl"
           style={{ transform: 'translateZ(10px)' }}
         >
@@ -325,14 +325,14 @@ const PillarListItem = ({ pillar, isActive, index, onHover, onClick }) => (
       {/* Text */}
       <div className="flex-1 min-w-0 text-right">
         <motion.p
-          className="font-heading font-bold text-sm md:text-base leading-tight"
+          className="font-heading font-bold text-base md:text-lg leading-tight"
           animate={{ color: isActive ? '#0A1628' : 'rgba(10,22,40,0.75)' }}
           transition={{ duration: 0.3 }}
         >
           {pillar.title}
         </motion.p>
         <motion.p
-          className="text-xs mt-0.5 truncate"
+          className="text-sm mt-0.5 truncate"
           animate={{ color: isActive ? '#3AA8BC' : 'rgba(10,22,40,0.45)' }}
           transition={{ duration: 0.3 }}
         >
@@ -428,18 +428,6 @@ const CoreFocus = () => {
 
         {/* ── Section header ── */}
         <div className="text-center mb-14" dir="rtl">
-          <motion.span
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease }}
-            className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-5"
-          >
-            <span className="w-8 h-px bg-accent" />
-            ركائزنا الإستراتيجية
-            <span className="w-8 h-px bg-accent" />
-          </motion.span>
-
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-[900] text-primary mb-4">
             <RevealText text="تركيزنا الأساسي" />
           </h2>

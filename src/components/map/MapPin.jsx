@@ -100,17 +100,10 @@ const MapPin = ({
             animate={{ x: isHq ? '-50%' : '-10%', scale: isHot ? 1.08 : 1, opacity: dimmed ? 0 : 1 }}
             transition={{ type: 'spring', stiffness: 300, damping: 24 }}
           >
-            <p className={`font-latin font-extrabold tracking-[0.12em] uppercase leading-tight ${isHq ? 'text-[13px]' : 'text-[11px]'} ${tone.text}`}>
-              {item.nameEn}
+            <p className={`font-bold leading-tight ${isHq ? 'text-[13px]' : 'text-[12px]'} ${tone.text}`}>
+              {item.nameAr}
             </p>
-            <p className="text-white/80 text-[11px] font-bold leading-tight mt-0.5">{item.nameAr}</p>
-            <motion.p
-              className="text-white/45 text-[10px] leading-tight overflow-hidden"
-              initial={false}
-              animate={{ height: isHot || isHq ? 'auto' : 0, opacity: isHot || isHq ? 1 : 0, marginTop: isHot || isHq ? 2 : 0 }}
-            >
-              {item.category}
-            </motion.p>
+            <p className="text-white/70 text-[10px] font-medium leading-tight mt-0.5">{item.category}</p>
           </motion.div>
         )}
 
@@ -122,7 +115,7 @@ const MapPin = ({
           onMouseLeave={() => onHover(null)}
           onFocus={() => onHover(item.id)}
           onBlur={() => onHover(null)}
-          aria-label={`${item.nameAr} — ${item.nameEn}`}
+          aria-label={item.nameAr}
           className="relative block focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-glow rounded-full cursor-pointer"
         >
           <span
@@ -133,7 +126,7 @@ const MapPin = ({
             <span className="absolute inset-[3px] rounded-full rounded-br-none bg-gradient-to-br from-white/35 to-transparent" />
             <span className="-rotate-45 relative flex items-center justify-center rounded-full bg-primary-deep/85 border border-white/20 w-[70%] h-[70%]">
               {isHq ? (
-                <span className="font-latin font-black text-lg text-map-gold-light drop-shadow-[0_0_6px_rgba(232,176,74,0.9)]">N</span>
+                <span className="font-bold text-lg text-map-gold-light drop-shadow-[0_0_6px_rgba(232,176,74,0.9)]">ن</span>
               ) : (
                 <Icon className={`w-4 h-4 ${tone.text}`} strokeWidth={2.2} />
               )}

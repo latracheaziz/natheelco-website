@@ -153,9 +153,7 @@ const HailMap = () => {
           transition={{ duration: 0.8, ease }}
           className="inline-flex items-center gap-2 text-[12px] font-semibold tracking-[0.15em] uppercase text-map-gold mb-5"
         >
-          <span className="w-8 h-px bg-map-gold" />
           محفظة المشاريع
-          <span className="w-8 h-px bg-map-gold" />
         </motion.span>
         <motion.h2
           initial={{ opacity: 0, y: 30, rotateX: -40 }}

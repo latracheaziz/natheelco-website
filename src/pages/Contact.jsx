@@ -42,6 +42,7 @@ const Contact = () => {
         subtitle="تابعنا على منصات التواصل الإجتماعي للإطلاع على كل جديد."
         variant={3}
         useEnvatoWave={true}
+        hideEyebrowLine={true}
       />
 
       {/* Contact content */}

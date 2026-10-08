@@ -24,8 +24,7 @@ const HowWeWorkHero = () => {
         >
           {/* Eyebrow / Label */}
           <div className="mb-6 inline-flex items-center gap-3">
-            <span className="w-8 h-px bg-white/40" />
-            <span className="text-white/70 font-medium tracking-wide text-sm md:text-base">منهجيتنا</span>
+            <span className="text-white font-bold tracking-wide text-base md:text-lg">منهجيتنا</span>
           </div>
 
           {/* Main Title */}
@@ -40,7 +39,7 @@ const HowWeWorkHero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="text-lg md:text-xl lg:text-2xl text-white/70 leading-relaxed font-light max-w-2xl drop-shadow-sm"
+            className="text-2xl md:text-3xl text-white leading-relaxed font-medium max-w-3xl drop-shadow-sm"
           >
             نعمل بخطوات واضحة، تبدأ بدراسة الفكرة وتنتهي ببناء مشروع منظم ومستدام.
           </motion.p>

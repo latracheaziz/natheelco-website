@@ -76,8 +76,7 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
           className="mb-8"
         >
           <div className="mb-4 inline-flex items-center gap-3 md:mb-6">
-            <span className="w-8 h-px bg-white/60 md:w-10" />
-            <span className="text-white/80 font-medium tracking-wide text-xs sm:text-sm md:text-base">قصتنا</span>
+            <span className="text-white/80 font-medium tracking-wide text-sm sm:text-base md:text-lg">قصتنا</span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[84px] font-heading font-[900] leading-tight md:leading-none mb-4 md:mb-6 text-white drop-shadow-xl">
@@ -89,7 +88,7 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="text-lg sm:text-xl md:text-3xl text-white/60 font-heading font-bold max-w-2xl drop-shadow-md leading-relaxed"
+              className="text-xl sm:text-2xl md:text-3xl text-white/60 font-heading font-bold max-w-2xl drop-shadow-md leading-relaxed"
             >
               {subtitle}
             </motion.p>

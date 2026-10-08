@@ -1,0 +1,92 @@
+.fluid-wave-hero {
+  isolation: isolate;
+  min-height: min(100vh, 900px);
+  background: #062775;
+}
+
+.fluid-wave-hero .fluid-wave-background {
+  inset: 0;
+  height: auto;
+}
+
+.fluid-wave-atmosphere {
+  background:
+    radial-gradient(ellipse 58% 48% at 9% 19%, rgba(13, 78, 234, 0.25), transparent 78%),
+    radial-gradient(ellipse 48% 54% at 88% 24%, rgba(5, 61, 205, 0.28), transparent 78%),
+    radial-gradient(ellipse 64% 50% at 56% 77%, rgba(7, 79, 242, 0.2), transparent 78%);
+  filter: blur(54px);
+  opacity: 0.72;
+  transform: translate3d(
+    calc(var(--roots-pointer-x, 0px) * 0.16),
+    calc(var(--roots-pointer-y, 0px) * 0.16),
+    0
+  );
+  will-change: transform;
+}
+
+.fluid-wave-fade {
+  background: linear-gradient(
+    180deg,
+    rgba(1, 5, 22, 0.02) 0%,
+    rgba(1, 5, 22, 0) 48%,
+    rgba(2, 15, 55, 0.12) 84%,
+    rgba(2, 15, 55, 0.3) 100%
+  );
+}
+
+.fluid-wave-hero .fluid-wave-eyebrow {
+  color: #ffffff;
+  text-shadow: 0 2px 12px rgba(0, 8, 27, 0.92);
+}
+
+.fluid-wave-hero .fluid-wave-accent {
+  background-color: #d8f1ff;
+  box-shadow: 0 0 14px rgba(216, 241, 255, 0.9);
+}
+
+.fluid-wave-hero .fluid-wave-heading {
+  color: #f5f8ff;
+}
+
+.fluid-wave-hero .fluid-wave-title {
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  text-shadow: 0 3px 28px rgba(0, 5, 22, 0.95), 0 0 12px rgba(0, 8, 27, 0.72);
+}
+
+.fluid-wave-hero .fluid-wave-subtitle {
+  color: #ffffff;
+  text-shadow: 0 2px 16px rgba(0, 5, 22, 0.96), 0 0 8px rgba(0, 8, 27, 0.75);
+}
+
+.fluid-wave-hero .fluid-wave-manifesto .gradient-text-light {
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  text-shadow: 0 3px 24px rgba(0, 5, 22, 0.94), 0 0 10px rgba(0, 8, 27, 0.75);
+}
+
+.fluid-wave-hero .fluid-wave-manifesto .text-accent-light {
+  color: #ffffff;
+  text-shadow: 0 2px 12px rgba(0, 5, 22, 0.96);
+}
+
+.fluid-wave-hero .fluid-wave-manifesto p {
+  color: #ffffff;
+  text-shadow: 0 2px 16px rgba(0, 5, 22, 0.96), 0 0 8px rgba(0, 8, 27, 0.72);
+}
+
+@media (max-width: 640px) {
+  .fluid-wave-hero {
+    min-height: 92svh;
+  }
+
+  .fluid-wave-atmosphere {
+    filter: blur(28px);
+  }
+}
