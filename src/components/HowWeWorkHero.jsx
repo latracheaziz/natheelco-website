@@ -4,7 +4,7 @@ import AnimatedProcessBackground from './fx/AnimatedProcessBackground';
 
 const HowWeWorkHero = () => {
   return (
-    <section className="relative min-h-[85vh] flex items-center overflow-hidden bg-[#004499] text-white">
+    <section className="relative min-h-[85vh] flex items-center overflow-hidden bg-primary text-white">
       {/* 
         Ensure navbar stays visible. 
         The existing Navbar is fixed and has a z-index. 

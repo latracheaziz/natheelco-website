@@ -6,12 +6,12 @@ precision highp float;
 uniform vec2 u_res;
 uniform float u_time;
 
-const vec3 DEEP  = vec3(0.000, 0.408, 0.937); // #0068EF
-const vec3 AZURE = vec3(0.000, 0.447, 0.933); // #0072EE
-const vec3 SKY   = vec3(0.000, 0.525, 0.906); // #0086E7
-const vec3 CYAN  = vec3(0.000, 0.682, 0.867); // #00AEDD
-const vec3 LOW   = vec3(0.000, 0.455, 0.890); // #0074E3
-const vec3 FOAM  = vec3(0.560, 0.920, 1.000);
+const vec3 DEEP  = vec3(0.04, 0.10, 0.18); // Very dark petrol/navy
+const vec3 AZURE = vec3(0.06, 0.15, 0.25); // Dark petrol
+const vec3 SKY   = vec3(0.10, 0.25, 0.40); // Medium petrol
+const vec3 CYAN  = vec3(0.18, 0.55, 0.65); // Bright teal (Accent)
+const vec3 LOW   = vec3(0.05, 0.12, 0.20); 
+const vec3 FOAM  = vec3(0.40, 0.85, 0.95); // Bright cyan for edges
 
 float aspect;
 
@@ -97,7 +97,7 @@ void main() {
   col = ribbon(col, r2, t, 0.46, 0.0, 0.04, 2.0, 0.22, 5.0, 0.07, 0.22, 0.36);
 
   col += (hash(gl_FragCoord.xy) - 0.5) / 255.0;
-  col *= 0.6; // Darken the entire background by 40%
+  // col *= 0.6; // Darkening removed because theme colors are already dark
   gl_FragColor = vec4(col, 1.0);
 }
 `;
@@ -107,7 +107,7 @@ const AnimatedProcessBackground = () => {
   const { canvasRef, status } = useShaderCanvas({ fragment: FRAGMENT, still: !!reduceMotion, dprCap: 1.5 });
 
   return (
-    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-gradient-to-br from-[#0068EF] via-[#0090E6] to-[#00AEDD]">
+    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-gradient-to-br from-primary-light via-primary to-primary-medium">
       <canvas
         ref={canvasRef}
         className="absolute inset-0 h-full w-full transition-opacity duration-700"

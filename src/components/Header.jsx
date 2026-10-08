@@ -20,8 +20,8 @@ const Header = () => {
   const lastLogoClick = useRef(0);
   const location = useLocation();
   const navigate = useNavigate();
-  // The About and Contact heroes are too dark for the black wordmark, so the header stays in its compact frosted form there.
-  const isScrolled = scrolledPast || isActivePath(location.pathname, '/عن-نثيل') || isActivePath(location.pathname, '/اتصل-بنا');
+  // The About, Contact, and How We Work heroes are too dark for the black wordmark, so the header stays in its compact frosted form there.
+  const isScrolled = scrolledPast || isActivePath(location.pathname, '/عن-نثيل') || isActivePath(location.pathname, '/اتصل-بنا') || isActivePath(location.pathname, '/كيف-نعمل');
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
