@@ -74,40 +74,30 @@ const AboutIdentity = () => {
   return (
     <>
       {/* Manifesto — dark footer-style band */}
-      <section className="fluid-wave-manifesto relative bg-transparent text-white overflow-hidden pt-8">
+      <section className="fluid-wave-manifesto relative bg-transparent text-white overflow-hidden pt-0">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/10 to-primary/25 pointer-events-none" />
 
-        <div className="container-premium section-padding relative z-10 py-24 lg:py-32" dir="rtl">
+        <div className="container-premium section-padding relative z-10 py-8 lg:py-12" dir="rtl">
           <Reveal3D rotateX={14} distance={60}>
             <div className="max-w-3xl ml-auto text-right">
-              <div className="mb-8">
+              <div className="mb-4">
                   <Eyebrow light>من نحن</Eyebrow>
                 </div>
 
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-[800] leading-[1.3] mb-10">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-heading font-[800] leading-[1.3] mb-6">
                 <RevealText text="في نثيل" wordClassName="gradient-text-light pb-1" />
               </h2>
 
-              <div className="space-y-6">
-                <motion.p
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.9, delay: 0.15, ease }}
-                  className="text-3xl md:text-4xl text-white leading-[1.9] font-medium"
-                >
-                  نعمل على تحويل الأفكار الواعدة إلى مشاريع منظّمة قابلة للنمو.
-                </motion.p>
-                <motion.p
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.9, delay: 0.3, ease }}
-                  className="text-3xl md:text-4xl text-white leading-[1.9] font-medium"
-                >
-                  نطوّر نموذج العمل، ونبني الفريق والأنظمة، ونقود التنفيذ للوصول إلى نمو وربحية مستدامة
-                </motion.p>
-              </div>
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1, ease }}
+                className="text-3xl md:text-4xl text-white leading-[1.9] font-medium"
+              >
+                <span>نعمل على تحويل الأفكار الواعدة إلى مشاريع منظّمة قابلة للنمو. </span>
+                <span>نطوّر نموذج العمل، ونبني الفريق والأنظمة، ونقود التنفيذ للوصول إلى نمو وربحية مستدامة</span>
+              </motion.div>
 
               <motion.div
                 initial={{ width: 0 }}

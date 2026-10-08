@@ -109,26 +109,24 @@ const FluidWaveBackground = () => {
           animate={reduceMotion ? undefined : { cx: [1390, 1250, 1390], cy: [620, 532, 620] }}
           transition={transition(26, 2)}
         />
-        <ellipse cx="820" cy="468" rx="620" ry="340" fill="#020d35" opacity="0.22" filter="url(#fluid-shadow)" />
+        <ellipse cx="820" cy="468" rx="620" ry="340" fill="#020d35" opacity="0.22" />
 
-        {ribbon('outer', 118, 0.2, 'url(#fluid-shadow)', '#020b2d')}
-        {ribbon('center', 126, 0.2, 'url(#fluid-shadow)', '#020a30')}
-        {ribbon('lower', 118, 0.22, 'url(#fluid-shadow)', '#020a30')}
-        {ribbon('upper', 92, 0.2, 'url(#fluid-shadow)', '#020a30')}
+        {/* Simplified shadows */}
+        {ribbon('outer', 80, 0.15, undefined, '#020b2d')}
+        {ribbon('center', 85, 0.15, undefined, '#020a30')}
+        {ribbon('lower', 80, 0.15, undefined, '#020a30')}
 
-        {ribbon('outer', 72, 0.25, 'url(#fluid-bloom)', 'url(#fluid-ribbon)')}
-        {ribbon('center', 76, 0.3, 'url(#fluid-bloom)', 'url(#fluid-ribbon)')}
-        {ribbon('lower', 70, 0.24, 'url(#fluid-bloom)', 'url(#fluid-ribbon)')}
-        {ribbon('upper', 64, 0.2, 'url(#fluid-bloom)', 'url(#fluid-ribbon)')}
+        {/* Base ribbons */}
+        {ribbon('outer', 60, 0.4, undefined, 'url(#fluid-ribbon)')}
+        {ribbon('center', 65, 0.5, undefined, 'url(#fluid-ribbon)')}
+        {ribbon('lower', 60, 0.4, undefined, 'url(#fluid-ribbon)')}
+        {ribbon('upper', 50, 0.3, undefined, 'url(#fluid-ribbon)')}
 
-        {ribbon('outer', 22, 0.48, 'url(#fluid-soft)', 'url(#fluid-ribbon)')}
-        {ribbon('center', 25, 0.56, 'url(#fluid-soft)', 'url(#fluid-ribbon)')}
-        {ribbon('lower', 22, 0.48, 'url(#fluid-soft)', 'url(#fluid-ribbon)')}
-        {ribbon('upper', 18, 0.4, 'url(#fluid-soft)', 'url(#fluid-ribbon)')}
-        {ribbon('outer', 2.2, 0.5, undefined, 'url(#fluid-edge)')}
-        {ribbon('center', 2.6, 0.58, undefined, 'url(#fluid-edge)')}
-        {ribbon('lower', 2.2, 0.45, undefined, 'url(#fluid-edge)')}
-        {ribbon('upper', 1.8, 0.38, undefined, 'url(#fluid-edge)')}
+        {/* Edge highlights */}
+        {ribbon('outer', 3, 0.6, undefined, 'url(#fluid-edge)')}
+        {ribbon('center', 3.5, 0.7, undefined, 'url(#fluid-edge)')}
+        {ribbon('lower', 3, 0.5, undefined, 'url(#fluid-edge)')}
+        {ribbon('upper', 2.5, 0.4, undefined, 'url(#fluid-edge)')}
       </motion.svg>
       <div className="fluid-wave-fade absolute inset-0" />
     </div>

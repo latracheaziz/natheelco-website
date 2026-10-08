@@ -26,6 +26,7 @@ const PageHero = ({
   eyebrow,
   title,
   subtitle,
+  titleClassName = '',
   subtitleClassName = 'text-lg text-white/50 mt-6 max-w-xl leading-relaxed font-light',
   variant = 0,
   showHeritageMark = false,
@@ -35,6 +36,7 @@ const PageHero = ({
   useEnvatoWave = false,
   useFluidWave = false,
   hideEyebrowLine = false,
+  contentClassName = '',
   children,
 }) => {
   const ref = useRef(null);
@@ -83,38 +85,42 @@ const PageHero = ({
 
       <motion.div
         style={{ rotateX, y, opacity, transformPerspective: 1200, transformOrigin: '50% 0%' }}
-        className="container-premium section-padding pt-40 pb-24 lg:pt-48 lg:pb-32 relative z-10 w-full"
+        className={contentClassName || "container-premium section-padding pt-40 pb-24 lg:pt-48 lg:pb-32 relative z-10 w-full"}
         dir="rtl"
       >
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-6"
-        >
-          <span className={`inline-flex items-center gap-3 ${useFluidWave ? 'text-base md:text-lg font-semibold tracking-[0.2em] uppercase fluid-wave-eyebrow' : 'text-[12px] font-semibold tracking-[0.2em] uppercase text-accent-light'}`}>
-            {!hideEyebrowLine && (
-              <motion.span
-                className={`h-px origin-right ${useFluidWave ? 'fluid-wave-accent' : 'bg-accent-light'}`}
-                initial={{ width: 0 }}
-                animate={{ width: 32 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-              />
-            )}
-            {eyebrow}
-            <span className={`w-1.5 h-1.5 rounded-full shadow-[0_0_12px_#5FD4E6] animate-pulse ${useFluidWave ? 'fluid-wave-accent' : 'bg-accent-glow'}`} />
-          </span>
-        </motion.div>
+        {eyebrow && (
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-6"
+          >
+            <span className={`inline-flex items-center gap-3 ${useFluidWave ? 'text-base md:text-lg font-semibold tracking-[0.2em] uppercase fluid-wave-eyebrow' : 'text-[12px] font-semibold tracking-[0.2em] uppercase text-accent-light'}`}>
+              {!hideEyebrowLine && (
+                <motion.span
+                  className={`h-px origin-right ${useFluidWave ? 'fluid-wave-accent' : 'bg-accent-light'}`}
+                  initial={{ width: 0 }}
+                  animate={{ width: 32 }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                />
+              )}
+              {eyebrow}
+              <span className={`w-1.5 h-1.5 rounded-full shadow-[0_0_12px_#5FD4E6] animate-pulse ${useFluidWave ? 'fluid-wave-accent' : 'bg-accent-glow'}`} />
+            </span>
+          </motion.div>
+        )}
 
-        <h1 className={`text-5xl md:text-6xl lg:text-8xl font-heading font-[900] leading-[1.1] max-w-3xl text-white ${useFluidWave ? 'fluid-wave-heading' : ''}`}>
-          <RevealText
-            text={title}
-            immediate
-            delay={0.3}
-            stagger={0.1}
-            wordClassName={useFluidWave ? 'fluid-wave-title pb-2' : 'gradient-text-light pb-2'}
-          />
-        </h1>
+        {title && (
+          <h1 className={`${titleClassName || 'text-5xl md:text-6xl lg:text-8xl'} font-heading font-[900] leading-[1.1] max-w-3xl text-white ${useFluidWave ? 'fluid-wave-heading' : ''}`}>
+            <RevealText
+              text={title}
+              immediate
+              delay={0.3}
+              stagger={0.1}
+              wordClassName={useFluidWave ? 'fluid-wave-title pb-2' : 'gradient-text-light pb-2'}
+            />
+          </h1>
+        )}
 
         {subtitle && (
           <motion.p
