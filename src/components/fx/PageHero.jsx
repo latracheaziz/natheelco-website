@@ -26,6 +26,7 @@ const PageHero = ({
   eyebrow,
   title,
   subtitle,
+  eyebrowClassName = '',
   titleClassName = '',
   subtitleClassName = 'text-lg text-white/50 mt-6 max-w-xl leading-relaxed font-light',
   variant = 0,
@@ -95,7 +96,7 @@ const PageHero = ({
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="mb-6"
           >
-            <span className={`inline-flex items-center gap-3 ${useFluidWave ? 'text-base md:text-lg font-semibold tracking-[0.2em] uppercase fluid-wave-eyebrow' : 'text-[12px] font-semibold tracking-[0.2em] uppercase text-accent-light'}`}>
+            <span className={eyebrowClassName || `inline-flex items-center gap-3 ${useFluidWave ? 'text-base md:text-lg font-semibold tracking-[0.2em] uppercase fluid-wave-eyebrow' : 'text-[12px] font-semibold tracking-[0.2em] uppercase text-accent-light'}`}>
               {!hideEyebrowLine && (
                 <motion.span
                   className={`h-px origin-right ${useFluidWave ? 'fluid-wave-accent' : 'bg-accent-light'}`}

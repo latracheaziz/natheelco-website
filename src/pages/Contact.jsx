@@ -40,6 +40,8 @@ const Contact = () => {
         eyebrow="نتطلع للتواصل"
         title="تواصل معنا"
         subtitle="تابعنا على منصات التواصل الإجتماعي للإطلاع على كل جديد."
+        eyebrowClassName="inline-flex items-center gap-3 text-base md:text-lg font-semibold tracking-[0.2em] text-accent-light"
+        subtitleClassName="text-xl md:text-2xl text-white/70 mt-6 max-w-xl leading-relaxed font-medium"
         variant={3}
         useEnvatoWave={true}
         hideEyebrowLine={true}

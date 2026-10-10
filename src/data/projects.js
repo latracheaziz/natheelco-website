@@ -50,6 +50,7 @@ export const projects = [
     year: '2026',
     status: 'قيد التطوير',
     location: 'حائل',
+    image: '/ghalia.jpeg',
     cover: '/ghalia.jpeg',
     pos: { x: 80, y: 62 },
     icon: 'cake',
