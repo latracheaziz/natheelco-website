@@ -20,8 +20,7 @@ const Header = () => {
   const lastLogoClick = useRef(0);
   const location = useLocation();
   const navigate = useNavigate();
-  // The About, Contact, and How We Work heroes are too dark for the black wordmark, so the header stays in its compact frosted form there.
-  const isScrolled = scrolledPast || isActivePath(location.pathname, '/عن-نثيل') || isActivePath(location.pathname, '/اتصل-بنا') || isActivePath(location.pathname, '/كيف-نعمل');
+  const isScrolled = scrolledPast;
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -90,7 +89,7 @@ const Header = () => {
                 <motion.img
                   src="/logo-black-wordmark.png"
                   alt="نثيل Natheel"
-                  className="h-10 md:h-12 w-auto object-contain transition-all duration-500"
+                  className={`h-10 md:h-12 w-auto object-contain transition-all duration-500 ${!light ? 'brightness-0 invert' : ''}`}
                   whileHover={{ scale: 1.05 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 />
@@ -133,10 +132,10 @@ const Header = () => {
                 <Magnetic strength={0.3} className="mr-4">
                   <Link
                     to="/اتصل-بنا"
-                    className={`group relative inline-flex overflow-hidden px-7 py-2.5 text-[14px] font-semibold rounded-full transition-all duration-400 ${
+                    className={`group relative inline-flex overflow-hidden px-8 py-3 text-[15px] font-semibold rounded-full transition-all duration-400 ${
                       light
                         ? 'bg-primary text-white shadow-[0_10px_30px_-10px_rgba(10,22,40,0.6)]'
-                        : 'bg-white text-primary'
+                        : 'bg-white text-primary hover:shadow-[0_10px_30px_-10px_rgba(255,255,255,0.4)]'
                     }`}
                   >
                     <span className="absolute inset-0 bg-gradient-to-l from-accent to-accent-light translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />

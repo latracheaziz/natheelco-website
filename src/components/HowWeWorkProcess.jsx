@@ -58,7 +58,7 @@ const stages = [
   },
   {
     id: 'stage3', number: '03', title: 'تشكيل الفريق',
-    text: 'نختار الكفاءات المتمكنة في التنفيذ ونحدد الأهداف ومسؤولياتها لضمان الاستمرارية.',
+    text: 'نختار الكفاءات المتمكنة في التنفيذ وتحدد الأهداف ومسؤولياتها لضمان الاستمرارية.',
     color: '#3AA8BC',
   },
   {
@@ -156,7 +156,7 @@ const HowWeWorkProcess = () => {
         {/* ── Header ── */}
         <div className="text-center mb-12 lg:mb-28 px-4">
           <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-[56px] font-heading font-[900] text-primary leading-[1.3] md:leading-[1.2] mb-4 sm:mb-6">
-            <RevealText text="كيف نعمل في نثيل؟" />
+            <RevealText text="في نثيل نعمل كالاتي:" />
           </h2>
           <p className="text-text-secondary text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
             رحلة متكاملة تبدأ من الفكرة وتصل إلى الاستقلالية والنمو المستدام.

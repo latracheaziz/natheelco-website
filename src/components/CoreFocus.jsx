@@ -53,30 +53,30 @@ const icons = {
 /* ─── Data ───────────────────────────────────────────────── */
 const pillars = [
   {
-    id: 'team', index: '01', title: 'فريق متمكن',
-    text: 'بناء فريق متمكن وكفء لكل مشروع لضمان أعلى أداء.',
-    detail: 'نوظّف ونؤهّل الكفاءات التي تناسب طبيعة كل مشروع، ونبني ثقافة أداء عالية تدفع الفريق نحو التميز في كل مرحلة من مراحل العمل.',
+    id: 'team', index: '01', title: 'بناء فريق متمكن',
+    text: 'اختيار كفاءات شابة لكل مشروع لضمان أعلى أداء.',
+    detail: 'نؤهّل الكفاءات التي تناسب طبيعة كل مشروع، ونبني ثقافة أداء عالية تدفع الفريق نحو التميز في كل مرحلة من مراحل العمل مع وضع أهداف و حوافز مخصصة مبنية على ال KPI.',
     accent: '#3AA8BC',
     tags: ['توظيف', 'تأهيل', 'أداء'],
   },
   {
     id: 'brand', index: '02', title: 'العلامة التجارية والنمو',
     text: 'بناء العلامة التجارية ودعم التسويق والنمو.',
-    detail: 'نطوّر هوية بصرية متكاملة لكل مشروع وندعمه بخطط تسويقية ذكية تضمن حضوراً سوقياً قوياً وقاعدة عملاء وفية.',
+    detail: 'نحرص ونهتم بتطوّير كل هوية بصرية متكاملة لكل مشروع وندعمه بخطط تسويقية ذكية تضمن حضوراً سوقياً قوياً وقاعدة عملاء وفية.',
     accent: '#2E8B9C',
     tags: ['هوية بصرية', 'تسويق', 'نمو'],
   },
   {
-    id: 'operation', index: '03', title: 'تشغيل مجدي',
-    text: 'المشاريع ذات التشغيل المجدي وعالي الكفاءة.',
-    detail: 'نختار المشاريع ذات الهامش الصحي ونُحسّن عمليات التشغيل باستمرار لتحقيق أقصى كفاءة بأدنى تكلفة ممكنة.',
+    id: 'operation', index: '03', title: 'مشاريعنا',
+    text: 'نركز على المشاريع الخدمية عالية الكفاءة.',
+    detail: 'نعمل على تحسين كفاءة التشغيل وتطويره باستمرار لتحقيق أفضل النتائج بأقل تكلفة ممكنة.',
     accent: '#3AA8BC',
-    tags: ['كفاءة', 'هامش ربح', 'تحسين'],
+    tags: ['كفاءة', 'هامش ربح', 'تطوير'],
   },
   {
     id: 'performance', index: '04', title: 'قياس الأداء والتطوير',
     text: 'قياس الأداء والتطوير المستمر المرتبط بحوافز مجزية.',
-    detail: 'نعتمد مؤشرات قياس واضحة ونربطها بحوافز حقيقية تحفّز الفريق على التطوير الذاتي المستمر وتجاوز الأهداف المرسومة.',
+    detail: 'نعتمد مؤشرات قياس واضحة للإنتاجية و الإبداع و الحرص ونربطها بحوافز تكافىء أعضاء الفريق لضمان التطوير الذاتي المستمر وتجاوز الأهداف المرسومة.',
     accent: '#2E8B9C',
     tags: ['مؤشرات', 'حوافز', 'تطوير'],
   },
@@ -203,8 +203,8 @@ const DetailPanel = ({ pillar }) => {
         </motion.div>
 
         {/* Title */}
-        <div className="text-center mb-5" dir="rtl" style={{ transform: 'translateZ(40px)' }}>
-          <h3 className="text-4xl md:text-5xl font-heading font-[900] leading-tight text-primary">
+        <div className="text-center mb-6" dir="rtl" style={{ transform: 'translateZ(40px)' }}>
+          <h3 className="text-4xl md:text-5xl lg:text-[52px] font-heading font-[900] leading-tight text-primary">
             {pillar.title}
           </h3>
         </div>
@@ -217,7 +217,7 @@ const DetailPanel = ({ pillar }) => {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4, delay: i * 0.08, ease }}
-              className="px-3 py-1 rounded-full text-xs font-semibold border"
+              className="px-4 py-1.5 rounded-full text-sm font-semibold border"
               style={{
                 backgroundColor: `${pillar.accent}12`,
                 borderColor: `${pillar.accent}35`,
@@ -231,7 +231,7 @@ const DetailPanel = ({ pillar }) => {
 
         {/* Short text */}
         <p
-          className="text-center text-text-secondary text-lg md:text-xl leading-[1.8] mb-5 max-w-sm mx-auto"
+          className="text-center text-text-secondary text-xl md:text-2xl leading-[1.8] mb-6 max-w-md mx-auto"
           dir="rtl"
           style={{ transform: 'translateZ(20px)' }}
         >
@@ -252,7 +252,7 @@ const DetailPanel = ({ pillar }) => {
 
         {/* Detail */}
         <p
-          className="text-center text-text-muted text-base leading-[2] max-w-sm mx-auto"
+          className="text-center text-text-muted text-lg leading-[1.9] max-w-md mx-auto"
           dir="rtl"
           style={{ transform: 'translateZ(10px)' }}
         >
@@ -325,14 +325,14 @@ const PillarListItem = ({ pillar, isActive, index, onHover, onClick }) => (
       {/* Text */}
       <div className="flex-1 min-w-0 text-right">
         <motion.p
-          className="font-heading font-bold text-base md:text-lg leading-tight"
+          className="font-heading font-bold text-lg md:text-xl leading-tight"
           animate={{ color: isActive ? '#0A1628' : 'rgba(10,22,40,0.75)' }}
           transition={{ duration: 0.3 }}
         >
           {pillar.title}
         </motion.p>
         <motion.p
-          className="text-sm mt-0.5 truncate"
+          className="text-base mt-1 truncate"
           animate={{ color: isActive ? '#3AA8BC' : 'rgba(10,22,40,0.45)' }}
           transition={{ duration: 0.3 }}
         >

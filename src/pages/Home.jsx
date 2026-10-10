@@ -216,7 +216,7 @@ const Home = () => {
 
         {/* Floating slide deck (3D) */}
         <motion.div
-          className="absolute left-[4%] top-1/2 -translate-y-1/2 hidden 2xl:block z-10"
+          className="absolute left-[4%] top-1/2 -translate-y-1/2 hidden lg:block z-10"
           style={{ opacity: heroOpacity, perspective: 1200 }}
         >
           <motion.div
@@ -241,7 +241,7 @@ const Home = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-white/10" />
                 {i === 0 && (
                   <div className="absolute bottom-5 right-5 left-5 flex items-center justify-between font-latin text-white/80 text-xs tracking-[0.2em]">
-                    <span>{String(currentSlide + 1).padStart(2, '0')} / {String(heroSlides.length).padStart(2, '0')}</span>
+                    <span dir="ltr">{String(currentSlide + 1).padStart(2, '0')} / {String(heroSlides.length).padStart(2, '0')}</span>
                     <span className="w-2 h-2 rounded-full bg-accent-glow shadow-[0_0_12px_#5FD4E6] animate-pulse" />
                   </div>
                 )}
@@ -280,7 +280,7 @@ const Home = () => {
           className="relative z-10 w-full"
         >
           <div className="container-premium section-padding pt-32 pb-24 lg:pt-40 lg:pb-32">
-            <div className="max-w-4xl mr-auto text-right" dir="rtl">
+            <div className="max-w-2xl lg:max-w-[55%] xl:max-w-3xl ml-auto text-right" dir="rtl">
               {/* Eyebrow */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -288,7 +288,7 @@ const Home = () => {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="mb-8"
               >
-                <span className="inline-flex items-center gap-3 text-base md:text-lg font-latin font-semibold tracking-[0.2em] uppercase text-accent-light px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                <span className="inline-flex items-center gap-3 text-base md:text-lg font-latin font-semibold tracking-[0.2em] uppercase text-white px-5 py-2.5 rounded-full bg-black/20 border border-white/20 backdrop-blur-md shadow-lg">
                   <span className="relative flex w-2 h-2">
                     <span className="absolute inline-flex h-full w-full rounded-full bg-accent-glow opacity-75 animate-ping" />
                     <span className="relative inline-flex rounded-full w-2 h-2 bg-accent-glow" />
@@ -324,7 +324,7 @@ const Home = () => {
                 <Magnetic>
                   <a
                     href="#projects"
-                    className="group relative inline-flex items-center gap-3 overflow-hidden bg-white text-primary px-8 py-4 rounded-full text-[15px] font-semibold shadow-[0_20px_50px_-15px_rgba(95,212,230,0.5)]"
+                    className="group relative inline-flex items-center gap-3 overflow-hidden bg-white text-primary px-8 py-3.5 rounded-full text-[15px] font-semibold shadow-[0_20px_50px_-15px_rgba(95,212,230,0.5)] transition-all duration-400"
                   >
                     <span className="absolute inset-0 bg-gradient-to-l from-accent to-accent-light scale-x-0 origin-right group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
                     <span className="relative z-10 group-hover:text-white transition-colors duration-300">تعرّف على مشاريعنا</span>
@@ -336,7 +336,7 @@ const Home = () => {
                 <Magnetic strength={0.25}>
                   <a
                     href="#about"
-                    className="inline-flex items-center gap-2 text-white/70 px-6 py-4 rounded-full text-[15px] font-medium border border-white/10 backdrop-blur-md hover:text-white hover:bg-white/10 hover:border-white/25 transition-all duration-400"
+                    className="inline-flex items-center gap-2 text-white px-8 py-3.5 rounded-full text-[15px] font-semibold bg-white/10 border border-white/20 backdrop-blur-md hover:bg-white/20 hover:border-white/30 hover:shadow-lg transition-all duration-400"
                   >
                     من نحن؟
                   </a>

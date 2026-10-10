@@ -73,43 +73,7 @@ const AboutIdentity = () => {
 
   return (
     <>
-      {/* Manifesto — dark footer-style band */}
-      <section className="fluid-wave-manifesto relative bg-transparent text-white overflow-hidden pt-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/10 to-primary/25 pointer-events-none" />
 
-        <div className="container-premium section-padding relative z-10 py-8 lg:py-12" dir="rtl">
-          <Reveal3D rotateX={14} distance={60}>
-            <div className="max-w-3xl ml-auto text-right">
-              <div className="mb-4">
-                  <Eyebrow light>من نحن</Eyebrow>
-                </div>
-
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-heading font-[800] leading-[1.3] mb-6">
-                <RevealText text="في نثيل" wordClassName="gradient-text-light pb-1" />
-              </h2>
-
-              <motion.div
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.1, ease }}
-                className="text-3xl md:text-4xl text-white leading-[1.9] font-medium"
-              >
-                <span>نعمل على تحويل الأفكار الواعدة إلى مشاريع منظّمة قابلة للنمو. </span>
-                <span>نطوّر نموذج العمل، ونبني الفريق والأنظمة، ونقود التنفيذ للوصول إلى نمو وربحية مستدامة</span>
-              </motion.div>
-
-              <motion.div
-                initial={{ width: 0 }}
-                whileInView={{ width: 96 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.2, delay: 0.5, ease }}
-                className="h-[2px] bg-gradient-to-l from-accent-glow to-accent-light rounded-full mt-12 shadow-[0_0_16px_rgba(95,212,230,0.5)]"
-              />
-            </div>
-          </Reveal3D>
-        </div>
-      </section>
 
       {/* Interactive pillars */}
       <section className="relative py-28 lg:py-40 bg-surface overflow-hidden">
@@ -148,7 +112,7 @@ const AboutIdentity = () => {
                   aria-controls={`pillar-panel-${i}`}
                   id={`pillar-tab-${i}`}
                   onClick={() => goTo(i)}
-                  className={`relative px-5 sm:px-7 py-3 rounded-full text-sm font-semibold transition-colors duration-300 ${
+                  className={`relative px-8 py-3 rounded-full text-[15px] font-semibold transition-colors duration-300 ${
                     active === i ? 'text-white' : 'text-text-secondary hover:text-primary'
                   }`}
                 >
