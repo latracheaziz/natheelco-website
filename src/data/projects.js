@@ -2,7 +2,7 @@
 export const projects = [
   {
     id: 1,
-    nameAr: 'أودن فرني',
+    nameAr: 'أودن بيديه',
     nameEn: 'ÖDÜN',
     logo: 'أودن',
     logoSize: 'text-3xl font-bold',

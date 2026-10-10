@@ -136,7 +136,7 @@ const Roots = () => {
               </h2>
               <div className="mx-auto my-6 h-[2px] w-16 rounded-full bg-gradient-to-l from-accent to-accent-light shadow-[0_0_12px_rgba(58,168,188,0.4)]" />
               <p className="mx-auto max-w-3xl text-xl leading-[2] text-text-secondary md:text-[1.375rem]">
-                نؤمن بأن المشاريع الناجحة تبدأ من فهم المكان والناس. لذلك نطّور مشاريع تحترم هوية حائل، وتستفيد من قدرات شبابها، وتجمع بين الأصالة والأسلوب العصري.
+                نؤمن ان مشاريع ناجحة تبدا من فهم متطلبات ناس و مكان و معتمد على قدرات شبابها و كذلك نجمع بين اصلة و اسلوب العصري
               </p>
               <h3 className="mt-8 text-[1.625rem] font-heading font-bold text-accent md:text-[2rem]">
                 ياهلا والله.....  الله يحييكم

@@ -5,12 +5,6 @@ import FluidWaveBackground from './FluidWaveBackground';
 
 const slides = [
   {
-    id: 0,
-    eyebrow: "تعرّف علينا",
-    title: "عن نثيل",
-    subtitle: "نطوّر الأفكار الواعدة ونحولها إلى مشاريع منظّمة قابلة للتوسع والنمو المستدام.",
-  },
-  {
     id: 1,
     eyebrow: "من نحن",
     title: "في نثيل",

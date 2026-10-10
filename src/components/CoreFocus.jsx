@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import RevealText from './fx/RevealText';
 
 const ease = [0.16, 1, 0.3, 1];
-const AUTO_INTERVAL = 4500;
+const AUTO_INTERVAL = 60000;
 
 /* ─── Icons ─────────────────────────────────────────────── */
 const icons = {
@@ -76,7 +76,7 @@ const pillars = [
   {
     id: 'performance', index: '04', title: 'قياس الأداء والتطوير',
     text: 'قياس الأداء والتطوير المستمر المرتبط بحوافز مجزية.',
-    detail: 'نعتمد مؤشرات قياس واضحة للإنتاجية و الإبداع و الحرص ونربطها بحوافز تكافىء أعضاء الفريق لضمان التطوير الذاتي المستمر وتجاوز الأهداف المرسومة.',
+    detail: 'نعتمد مؤشرات قياس واضحة للإنتاجية و الإبداع و الحرص ونربطها بحوافز تكافىء أعضاء الفريق لضمان التطوير الذاتي المستمر لتجاوز و تحقيق الأهداف المرسومة.',
     accent: '#2E8B9C',
     tags: ['مؤشرات', 'حوافز', 'تطوير'],
   },
@@ -97,7 +97,7 @@ const pillars = [
   {
     id: 'success', index: '07', title: 'مشاركة النجاح',
     text: 'مشاركة النجاح والمكاسب مع فرق المشاريع.',
-    detail: 'نؤمن بأن نجاح المشروع ملك للجميع. نُشرك الفرق في ثمار النجاح لبناء بيئة عمل محفزة وشراكة حقيقية طويلة الأمد.',
+    detail: 'نُشرك الفرق في ثمار النجاح لبناء بيئة عمل محفزة وشراكة حقيقية طويلة الأمد.',
     accent: '#3AA8BC',
     tags: ['شراكة', 'تحفيز', 'استدامة'],
   },
@@ -429,7 +429,7 @@ const CoreFocus = () => {
         {/* ── Section header ── */}
         <div className="text-center mb-14" dir="rtl">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-[900] text-primary mb-4">
-            <RevealText text="تركيزنا الأساسي" />
+            <RevealText text="تركيزنا" />
           </h2>
 
           <motion.p
