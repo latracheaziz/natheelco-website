@@ -13,21 +13,12 @@ const navLinks = [
 const isActivePath = (pathname, href) => pathname === href || pathname === encodeURI(href);
 
 const Header = () => {
-  const [scrolledPast, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hovered, setHovered] = useState(null);
   const logoClickCount = useRef(0);
   const lastLogoClick = useRef(0);
   const location = useLocation();
   const navigate = useNavigate();
-  const isScrolled = scrolledPast;
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -40,7 +31,7 @@ const Header = () => {
     return () => { document.body.style.overflow = ''; };
   }, [isMobileMenuOpen]);
 
-  const light = isScrolled && !isMobileMenuOpen;
+  const light = !isMobileMenuOpen;
   const activeHref = navLinks.find((l) => isActivePath(location.pathname, l.href))?.href;
   const highlightHref = hovered ?? activeHref;
 
@@ -63,16 +54,16 @@ const Header = () => {
           className="mx-auto pointer-events-auto"
           initial={false}
           animate={{
-            maxWidth: isScrolled ? 1040 : 1280,
-            marginTop: isScrolled ? 14 : 0,
-            paddingLeft: isScrolled ? 12 : 0,
-            paddingRight: isScrolled ? 12 : 0,
+            maxWidth: 1040,
+            marginTop: 14,
+            paddingLeft: 12,
+            paddingRight: 12,
           }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
           <motion.div
             initial={false}
-            animate={{ borderRadius: isScrolled ? 999 : 0 }}
+            animate={{ borderRadius: 999 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className={`relative overflow-hidden transition-[background,box-shadow,backdrop-filter] duration-700 ${
               light
@@ -80,9 +71,7 @@ const Header = () => {
                 : 'bg-transparent'
             }`}
           >
-            <div className={`flex justify-between items-center transition-all duration-700 ${
-              isScrolled ? 'px-4 sm:px-6 py-2.5' : 'section-padding py-6 lg:py-8'
-            }`}>
+            <div className="flex justify-between items-center transition-all duration-700 px-4 sm:px-6 py-2.5">
 
               {/* Logo */}
               <Link to="/" onClick={handleLogoClick} className="flex items-center group relative z-10">
