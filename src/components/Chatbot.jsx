@@ -50,12 +50,12 @@ const Chatbot = () => {
             style={{ maxHeight: 'calc(100vh - 120px)' }}
           >
             {/* Header */}
-            <div className="bg-primary text-white p-4 flex justify-between items-center shadow-sm z-10">
+            <div className="bg-white border-b border-gray-100 p-4 flex justify-between items-center shadow-sm z-10">
               <div className="flex items-center gap-3">
-                <img src="/logo.png" alt="Natheel" className="w-8 h-8 object-contain filter brightness-0 invert" />
-                <span className="font-bold text-lg">نثيل</span>
+                <img src="/logo.png" alt="Natheel" className="w-8 h-8 object-contain" />
+                <span className="font-bold text-lg text-primary">نثيل</span>
               </div>
-              <button onClick={() => setIsOpen(false)} className="text-white/80 hover:text-white transition-colors">
+              <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-primary transition-colors">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-6 h-6" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>

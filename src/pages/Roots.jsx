@@ -31,7 +31,7 @@ const VisionSection = () => {
         style={{ y }}
         aria-hidden="true"
       >
-        <img src="/hail-city.png" alt="" draggable="false" className="h-full w-full object-cover" />
+        <img src="/roots-canyon.jpg" alt="" draggable="false" className="h-full w-full object-cover" />
       </motion.div>
 
       <div className="absolute inset-0 bg-primary/40 mix-blend-multiply" />
@@ -106,7 +106,7 @@ const Roots = () => {
             <Reveal3D delay={0.3}>
               <TiltCard className="rounded-[32px]">
                 <div className="aspect-[4/3] rounded-[32px] overflow-hidden relative shadow-[var(--shadow-depth)] border border-white/20">
-                  <img src="/hail-city.png" alt="مدينة حائل" className="w-full h-full object-cover" />
+                  <img src="/hail-night.jpg" alt="مدينة حائل" className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-transparent" />
                 </div>
               </TiltCard>
