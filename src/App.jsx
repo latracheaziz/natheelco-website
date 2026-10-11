@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { AnimatePresence, MotionConfig, motion, useScroll, useSpring } from 'framer-motion';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Chatbot from './components/Chatbot';
 import BrandMarquee from './components/BrandMarquee';
 import Home from './pages/Home';
 import About from './pages/About';
@@ -124,6 +125,7 @@ const AppShell = () => {
         <AnimatedRoutes />
       </main>
       <ConditionalMarquee />
+      <Chatbot />
       <Footer />
     </div>
   );

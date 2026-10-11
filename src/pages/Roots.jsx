@@ -31,7 +31,7 @@ const VisionSection = () => {
         style={{ y }}
         aria-hidden="true"
       >
-        <img src="/pic1.jpeg" alt="" draggable="false" className="h-full w-full object-cover" />
+        <img src="/hail-city.png" alt="" draggable="false" className="h-full w-full object-cover" />
       </motion.div>
 
       <div className="absolute inset-0 bg-primary/40 mix-blend-multiply" />
@@ -53,7 +53,7 @@ const VisionSection = () => {
 
         <Reveal3D delay={0.4}>
           <p className="mx-auto max-w-3xl text-lg leading-relaxed text-white/90 drop-shadow-md md:text-xl">
-            كما النخيل يضرب بجذوره في الأرض، نثيل تبني مشاريعها على أسس متينة من الجودة والثقة لنعكس طموحنا نحو التطور المستمر.
+            في نثيل، نبني مشاريعنا على جودة المنتج و الخدمة لكسب ثقة السوق
           </p>
         </Reveal3D>
       </div>
