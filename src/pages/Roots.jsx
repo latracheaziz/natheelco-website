@@ -31,7 +31,7 @@ const VisionSection = () => {
         style={{ y }}
         aria-hidden="true"
       >
-        <img src="/roots-canyon.jpg" alt="" draggable="false" className="h-full w-full object-cover" />
+        <img src="/roots-lake.jpg" alt="" draggable="false" className="h-full w-full object-cover" />
       </motion.div>
 
       <div className="absolute inset-0 bg-primary/40 mix-blend-multiply" />
