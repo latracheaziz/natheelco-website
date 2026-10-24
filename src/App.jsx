@@ -13,6 +13,7 @@ import Contact from './pages/Contact';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminLogin from './pages/AdminLogin';
 import { ADMIN_TOKEN_KEY } from './api/reviews';
+import { LanguageProvider, useLanguage } from './context/LanguageContext';
 
 const ADMIN_SESSION_KEY = 'natheel_admin_authenticated';
 
@@ -73,9 +74,13 @@ const AnimatedRoutes = () => {
           <Routes location={location}>
             <Route path="/" element={<Home />} />
             <Route path="/عن-نثيل" element={<About />} />
+            <Route path="/about" element={<About />} />
             <Route path="/كيف-نعمل" element={<HowWeWork />} />
+            <Route path="/how-we-work" element={<HowWeWork />} />
             <Route path="/جذورنا" element={<Roots />} />
+            <Route path="/roots" element={<Roots />} />
             <Route path="/اتصل-بنا" element={<Contact />} />
+            <Route path="/contact" element={<Contact />} />
 
             {/* Fallback route just in case */}
             <Route path="*" element={<Home />} />
@@ -94,6 +99,7 @@ const ConditionalMarquee = () => {
 
 const AppShell = () => {
   const location = useLocation();
+  const { dir } = useLanguage();
   const isAdmin = location.pathname.startsWith('/adminnatheelcoir');
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(
     () => sessionStorage.getItem(ADMIN_SESSION_KEY) === 'true' && Boolean(sessionStorage.getItem(ADMIN_TOKEN_KEY))
@@ -118,7 +124,7 @@ const AppShell = () => {
   }
 
   return (
-    <div className="font-sans text-text-primary bg-white min-h-[100dvh] flex flex-col overflow-x-hidden relative w-full">
+    <div dir={dir} className="font-sans text-text-primary bg-white min-h-[100dvh] flex flex-col overflow-x-hidden relative w-full">
       <ScrollProgress />
       <Header />
       <main className="flex-grow w-full">
@@ -134,9 +140,11 @@ const AppShell = () => {
 function App() {
   return (
     <MotionConfig reducedMotion="user">
-      <Router>
-        <AppShell />
-      </Router>
+      <LanguageProvider>
+        <Router>
+          <AppShell />
+        </Router>
+      </LanguageProvider>
     </MotionConfig>
   );
 }

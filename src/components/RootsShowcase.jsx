@@ -14,6 +14,7 @@ import {
 import { useEffect, useRef, useState } from 'react';
 import Reveal3D from './fx/Reveal3D';
 import { useMediaQuery } from './fx/useCanHover';
+import { useLanguage } from '../context/LanguageContext';
 
 const slides = [
   { src: '/roots/roots-oasis.jpeg', alt: 'واحة جبلية تحيط بها الصخور الحمراء والنخيل وينعكس المشهد على الماء', caption: 'واحة الجذور' },
@@ -78,6 +79,7 @@ const WheelCard = ({ card, index, progress, intro, geo, onPick }) => {
 };
 
 const RootsShowcase = () => {
+  const { isEn, dir } = useLanguage();
   const reduce = useReducedMotion();
   const isWide = useMediaQuery('(min-width: 900px)');
   const geo = isWide
@@ -188,16 +190,15 @@ const RootsShowcase = () => {
 
 
   return (
-    <section className="relative overflow-hidden bg-primary py-20 lg:py-28" dir="rtl">
+    <section className="relative overflow-hidden bg-primary py-20 lg:py-28" dir={dir}>
       <div className="aurora opacity-35" />
       <div className="grain" />
       <div className="absolute -left-44 top-1/4 h-[440px] w-[440px] rounded-full bg-accent/10 blur-[130px]" />
 
       <div className="container-premium section-padding relative z-10">
-        <Reveal3D className="flex justify-start" dir="rtl">
+        <Reveal3D className="flex justify-start" dir={dir}>
           <span className="inline-flex items-center gap-3 text-[12px] font-semibold tracking-[0.16em] text-accent-light">
-
-            مشاهد من طبيعة حائل
+            {isEn ? "Scenes from Ha'il's Nature" : 'مشاهد من طبيعة حائل'}
             <span className="h-1.5 w-1.5 rounded-full bg-accent-glow shadow-[0_0_12px_#5FD4E6]" />
           </span>
         </Reveal3D>

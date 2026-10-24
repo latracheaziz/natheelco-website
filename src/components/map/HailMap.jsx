@@ -14,6 +14,7 @@ import { Compass, FilterPills, GrowthPanel, StatusPanel, Toolbar, TopPills, Vent
 import ProjectModal from '../ProjectModal';
 import { useMediaQuery } from '../fx/useCanHover';
 import { projects, hq } from '../../data/projects';
+import { useLanguage } from '../../context/LanguageContext';
 
 const ease = [0.16, 1, 0.3, 1];
 const camSpring = { stiffness: 70, damping: 20, mass: 0.8 };
@@ -26,6 +27,7 @@ const HailMap = () => {
   const isMd = useMediaQuery('(min-width: 768px)');
   const isLg = useMediaQuery('(min-width: 1024px)');
   const revealed = useInView(stageRef, { once: true, margin: '-15%' });
+  const { isEn, dir } = useLanguage();
 
   const [filter, setFilter] = useState('all');
   const [hovered, setHovered] = useState(null);
@@ -145,7 +147,7 @@ const HailMap = () => {
       <div className="grain" />
 
       {/* Heading */}
-      <div className="container-premium section-padding relative mb-10 md:mb-14 text-center" dir="rtl">
+      <div className="container-premium section-padding relative mb-10 md:mb-14 text-center" dir={dir}>
         <motion.span
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -153,7 +155,7 @@ const HailMap = () => {
           transition={{ duration: 0.8, ease }}
           className="inline-flex items-center gap-2 text-[12px] font-semibold tracking-[0.15em] uppercase text-map-gold mb-5"
         >
-          محفظة المشاريع
+          {isEn ? 'Venture Portfolio' : 'محفظة المشاريع'}
         </motion.span>
         <motion.h2
           initial={{ opacity: 0, y: 30, rotateX: -40 }}
@@ -162,7 +164,7 @@ const HailMap = () => {
           transition={{ duration: 1, ease }}
           className="text-3xl md:text-5xl font-heading font-[800] text-white"
         >
-          حائل، المملكة العربية السعودية
+          {isEn ? "Ha'il, Saudi Arabia" : 'حائل، المملكة العربية السعودية'}
         </motion.h2>
       </div>
 

@@ -2,10 +2,10 @@ import { motion } from 'framer-motion';
 import PageHero from '../components/fx/PageHero';
 import Reveal3D from '../components/fx/Reveal3D';
 import TiltCard from '../components/fx/TiltCard';
-import Magnetic from '../components/fx/Magnetic';
 import { SocialIcon } from '../components/SocialIcons';
 import FeedbackCard from '../components/FeedbackCard';
 import ReviewsCarousel from '../components/ReviewsCarousel';
+import { useLanguage } from '../context/LanguageContext';
 
 const socials = [
   { name: 'Instagram', url: 'https://www.instagram.com/nathe.els/' },
@@ -34,12 +34,16 @@ const CardHeading = ({ children }) => (
 );
 
 const Contact = () => {
+  const { isEn, dir } = useLanguage();
+
   return (
     <div className="bg-white">
       <PageHero
-        eyebrow="نتطلع للتواصل"
-        title="تواصل معنا"
-        subtitle="تابعنا على منصات التواصل الإجتماعي للإطلاع على كل جديد."
+        eyebrow={isEn ? 'Get in Touch' : 'نتطلع للتواصل'}
+        title={isEn ? 'Contact Us' : 'تواصل معنا'}
+        subtitle={isEn
+          ? 'Follow us on social media to stay updated with everything new.'
+          : 'تابعنا على منصات التواصل الإجتماعي للإطلاع على كل جديد.'}
         eyebrowClassName="inline-flex items-center gap-3 text-base md:text-lg font-semibold tracking-[0.2em] text-accent-light"
         subtitleClassName="text-xl md:text-2xl text-white/70 mt-6 max-w-xl leading-relaxed font-medium"
         variant={3}
@@ -51,22 +55,28 @@ const Contact = () => {
       <section className="relative py-24 lg:py-32 overflow-hidden">
         <div className="dot-field" />
         <div className="absolute top-10 right-1/4 w-[420px] h-[420px] rounded-full bg-accent/10 blur-[120px] pointer-events-none" />
-        <div className="w-full px-4 md:px-8 lg:px-12 section-padding relative" dir="rtl">
+        <div className="w-full px-4 md:px-8 lg:px-12 section-padding relative" dir={dir}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto">
 
             {/* Contact Info */}
             <Reveal3D rotateY={-14}>
               <TiltCard max={7} glare={false} className="glass-light rounded-[28px] p-8 md:p-10 h-full">
                 <div style={{ transform: 'translateZ(30px)' }}>
-                  <CardHeading>معلومات التواصل</CardHeading>
+                  <CardHeading>{isEn ? 'Contact Information' : 'معلومات التواصل'}</CardHeading>
 
                   <div className="space-y-8">
                     <div className="rounded-2xl bg-surface-warm/80 border border-border-light p-8">
-                      <p className="text-text-muted text-xs font-semibold tracking-wide uppercase mb-3">الموقع</p>
-                      <p className="text-text-primary text-base font-medium">حائل، المملكة العربية السعودية</p>
+                      <p className="text-text-muted text-xs font-semibold tracking-wide uppercase mb-3">
+                        {isEn ? 'Location' : 'الموقع'}
+                      </p>
+                      <p className="text-text-primary text-base font-medium">
+                        {isEn ? "Ha'il, Saudi Arabia" : 'حائل، المملكة العربية السعودية'}
+                      </p>
                     </div>
                     <div className="rounded-2xl bg-surface-warm/80 border border-border-light p-8">
-                      <p className="text-text-muted text-xs font-semibold tracking-wide uppercase mb-3">البريد الإلكتروني</p>
+                      <p className="text-text-muted text-xs font-semibold tracking-wide uppercase mb-3">
+                        {isEn ? 'Email' : 'البريد الإلكتروني'}
+                      </p>
                       <a href="mailto:contact@natheelco.com" className="text-accent text-base font-latin font-medium hover:text-accent-light transition-colors" dir="ltr">
                         contact@natheelco.com
                       </a>
@@ -80,7 +90,7 @@ const Contact = () => {
             <Reveal3D rotateY={14}>
               <TiltCard max={7} glare={false} className="glass-light rounded-[28px] p-8 md:p-10 h-full">
                 <div style={{ transform: 'translateZ(30px)' }}>
-                  <CardHeading>تابعنا</CardHeading>
+                  <CardHeading>{isEn ? 'Follow Us' : 'تابعنا'}</CardHeading>
 
                   <div className="grid grid-cols-2 gap-4">
                     {socials.map((social, i) => (

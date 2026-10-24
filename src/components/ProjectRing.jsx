@@ -3,6 +3,7 @@ import { useRef, useState, useMemo } from 'react';
 import ProjectCard from './ProjectCard';
 import TiltCard from './fx/TiltCard';
 import { useMediaQuery } from './fx/useCanHover';
+import { useLanguage } from '../context/LanguageContext';
 
 const CARD_W = 340;
 const RADIUS = 400; // Reduced radius brings cards much closer together
@@ -39,6 +40,7 @@ const RingCard = ({ project, index, count, rotation, onOpen, dragMoved }) => {
 };
 
 const ProjectRing = ({ projects, onOpen }) => {
+  const { dir } = useLanguage();
   const reduce = useReducedMotion();
   const isWide = useMediaQuery('(min-width: 900px)');
   const rotation = useMotionValue(0);
@@ -63,7 +65,7 @@ const ProjectRing = ({ projects, onOpen }) => {
 
   if (!isWide || reduce) {
     return (
-      <div className="flex gap-5 overflow-x-auto snap-x snap-mandatory no-scrollbar px-6 py-6" dir="rtl">
+      <div className="flex gap-5 overflow-x-auto snap-x snap-mandatory no-scrollbar px-6 py-6" dir={dir}>
         {projects.map((project, index) => (
           <TiltCard
             key={project.id}

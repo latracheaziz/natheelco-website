@@ -2,8 +2,10 @@ import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion
 import { useRef, useState, useEffect } from 'react';
 import RevealText from './RevealText';
 import RootsWindScene from './RootsWindScene';
+import { useLanguage } from '../../context/LanguageContext';
 
-const RootsAnimatedHero = ({ title, subtitle }) => {
+const RootsAnimatedHero = ({ title, subtitle, eyebrow }) => {
+  const { dir } = useLanguage();
   const ref = useRef(null);
   const reduceMotion = useReducedMotion();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -67,7 +69,7 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
       {/* Hero Text & Content */}
       <div
         className="container-premium section-padding relative z-10 flex min-h-full w-full flex-col justify-end pb-16 pt-32 lg:pb-32 lg:pt-48"
-        dir="rtl"
+        dir={dir}
       >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -76,7 +78,9 @@ const RootsAnimatedHero = ({ title, subtitle }) => {
           className="mb-8"
         >
           <div className="mb-4 inline-flex items-center gap-3 md:mb-6">
-            <span className="text-white/80 font-medium tracking-wide text-sm sm:text-base md:text-lg">قصتنا</span>
+            <span className="text-white/80 font-medium tracking-wide text-sm sm:text-base md:text-lg">
+              {eyebrow}
+            </span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[84px] font-heading font-[900] leading-tight md:leading-none mb-4 md:mb-6 text-white drop-shadow-xl">

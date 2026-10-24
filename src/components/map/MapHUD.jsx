@@ -2,14 +2,9 @@ import { motion } from 'framer-motion';
 import { LocateFixed, Minus, Plus, RotateCcw } from 'lucide-react';
 import TiltCard from '../fx/TiltCard';
 import { heroStats } from '../../data/projects';
+import { useLanguage } from '../../context/LanguageContext';
 
 const ease = [0.16, 1, 0.3, 1];
-
-const filters = [
-  { id: 'all', label: 'الكل' },
-  { id: 'نشط', label: 'نشط' },
-  { id: 'قيد التطوير', label: 'قيد التطوير' },
-];
 
 const Pill = ({ active, onClick, children, layoutId, gold = false }) => (
   <button
@@ -36,38 +31,50 @@ const Pill = ({ active, onClick, children, layoutId, gold = false }) => (
   </button>
 );
 
-export const TopPills = ({ items, focusedId, onFocus }) => (
-  <div className="flex gap-2 overflow-x-auto no-scrollbar px-4 justify-start md:justify-center" dir="rtl">
-    {items.map((item) => (
-      <Pill
-        key={item.id}
-        active={focusedId === item.id}
-        onClick={() => onFocus(item)}
-        layoutId="map-top-pill"
-        gold={item.id === 'hq'}
-      >
-        <span className="text-[12px] font-semibold">{item.nameAr}</span>
-      </Pill>
-    ))}
-  </div>
-);
+export const TopPills = ({ items, focusedId, onFocus }) => {
+  const { isEn, dir } = useLanguage();
+  return (
+    <div className="flex gap-2 overflow-x-auto no-scrollbar px-4 justify-start md:justify-center" dir={dir}>
+      {items.map((item) => (
+        <Pill
+          key={item.id}
+          active={focusedId === item.id}
+          onClick={() => onFocus(item)}
+          layoutId="map-top-pill"
+          gold={item.id === 'hq'}
+        >
+          <span className="text-[12px] font-semibold">{isEn ? item.nameEn : item.nameAr}</span>
+        </Pill>
+      ))}
+    </div>
+  );
+};
 
-export const FilterPills = ({ filter, setFilter }) => (
-  <div className="flex gap-2 overflow-x-auto no-scrollbar px-4 justify-center" dir="rtl">
-    {filters.map((f) => (
-      <Pill key={f.id} active={filter === f.id} onClick={() => setFilter(f.id)} layoutId="map-filter-pill">
-        {f.label}
-      </Pill>
-    ))}
-  </div>
-);
+export const FilterPills = ({ filter, setFilter }) => {
+  const { isEn, dir } = useLanguage();
+  const filters = [
+    { id: 'all', label: 'الكل', labelEn: 'All' },
+    { id: 'نشط', label: 'نشط', labelEn: 'Active' },
+    { id: 'قيد التطوير', label: 'قيد التطوير', labelEn: 'In Development' },
+  ];
+  return (
+    <div className="flex gap-2 overflow-x-auto no-scrollbar px-4 justify-center" dir={dir}>
+      {filters.map((f) => (
+        <Pill key={f.id} active={filter === f.id} onClick={() => setFilter(f.id)} layoutId="map-filter-pill">
+          {isEn ? f.labelEn : f.label}
+        </Pill>
+      ))}
+    </div>
+  );
+};
 
 export const Toolbar = ({ onRecenter, onZoomIn, onZoomOut, onReset }) => {
+  const { isEn } = useLanguage();
   const tools = [
-    { icon: LocateFixed, label: 'توسيط', onClick: onRecenter },
-    { icon: Plus, label: 'تكبير', onClick: onZoomIn },
-    { icon: Minus, label: 'تصغير', onClick: onZoomOut },
-    { icon: RotateCcw, label: 'إعادة الضبط', onClick: onReset },
+    { icon: LocateFixed, label: isEn ? 'Center' : 'توسيط', onClick: onRecenter },
+    { icon: Plus, label: isEn ? 'Zoom In' : 'تكبير', onClick: onZoomIn },
+    { icon: Minus, label: isEn ? 'Zoom Out' : 'تصغير', onClick: onZoomOut },
+    { icon: RotateCcw, label: isEn ? 'Reset' : 'إعادة الضبط', onClick: onReset },
   ];
   return (
     <div className="glass-panel rounded-2xl p-1.5 flex flex-col gap-1">
@@ -90,6 +97,7 @@ export const Toolbar = ({ onRecenter, onZoomIn, onZoomOut, onReset }) => {
 };
 
 export const Compass = ({ rotZ }) => {
+  const { isEn } = useLanguage();
   return (
     <div className="glass-panel rounded-full w-[92px] h-[92px] p-1.5">
       <motion.svg viewBox="0 0 100 100" className="w-full h-full" style={{ rotate: rotZ }}>
@@ -101,10 +109,21 @@ export const Compass = ({ rotZ }) => {
         <polygon points="50,14 56,50 50,46 44,50" fill="#E8B04A" style={{ filter: 'drop-shadow(0 0 4px #E8B04A)' }} />
         <polygon points="50,86 56,50 50,54 44,50" fill="rgba(255,255,255,0.35)" />
         <circle cx="50" cy="50" r="3" fill="#FFD27A" />
-        <text x="50" y="27" textAnchor="middle" fontSize="9" fontWeight="800" fill="#FFD27A">ش</text>
-        <text x="50" y="80" textAnchor="middle" fontSize="8" fontWeight="700" fill="rgba(255,255,255,0.5)">ج</text>
-        <text x="79" y="53" textAnchor="middle" fontSize="8" fontWeight="700" fill="rgba(255,255,255,0.5)">ق</text>
-        <text x="21" y="53" textAnchor="middle" fontSize="8" fontWeight="700" fill="rgba(255,255,255,0.5)">غ</text>
+        {isEn ? (
+          <>
+            <text x="50" y="27" textAnchor="middle" fontSize="8" fontWeight="800" fill="#FFD27A">N</text>
+            <text x="50" y="80" textAnchor="middle" fontSize="7" fontWeight="700" fill="rgba(255,255,255,0.5)">S</text>
+            <text x="79" y="53" textAnchor="middle" fontSize="7" fontWeight="700" fill="rgba(255,255,255,0.5)">E</text>
+            <text x="21" y="53" textAnchor="middle" fontSize="7" fontWeight="700" fill="rgba(255,255,255,0.5)">W</text>
+          </>
+        ) : (
+          <>
+            <text x="50" y="27" textAnchor="middle" fontSize="9" fontWeight="800" fill="#FFD27A">ش</text>
+            <text x="50" y="80" textAnchor="middle" fontSize="8" fontWeight="700" fill="rgba(255,255,255,0.5)">ج</text>
+            <text x="79" y="53" textAnchor="middle" fontSize="8" fontWeight="700" fill="rgba(255,255,255,0.5)">ق</text>
+            <text x="21" y="53" textAnchor="middle" fontSize="8" fontWeight="700" fill="rgba(255,255,255,0.5)">غ</text>
+          </>
+        )}
       </motion.svg>
     </div>
   );
@@ -123,24 +142,28 @@ const toPath = (values, w, h, pad = 6, range) => {
   return { line, area: `${line} L ${pts[pts.length - 1][0]} ${h} L ${pts[0][0]} ${h} Z`, pts };
 };
 
-const Panel = ({ title, children, delay = 0, revealed }) => (
-  <motion.div
-    initial={{ opacity: 0, x: -40, rotateY: 25 }}
-    animate={revealed ? { opacity: 1, x: 0, rotateY: 0 } : { opacity: 0, x: -40, rotateY: 25 }}
-    transition={{ duration: 1, delay, ease }}
-    style={{ transformPerspective: 900 }}
-  >
-    <TiltCard max={10} className="glass-panel rounded-2xl p-4 text-right" dir="rtl">
-      <p className="text-[11px] font-bold tracking-[0.12em] text-white/80 mb-3 flex items-center justify-between">
-        {title}
-        <span className="w-1.5 h-1.5 rounded-full bg-accent-glow shadow-[0_0_8px_#5FD4E6] animate-pulse" />
-      </p>
-      {children}
-    </TiltCard>
-  </motion.div>
-);
+const Panel = ({ title, children, delay = 0, revealed }) => {
+  const { isEn } = useLanguage();
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -40, rotateY: 25 }}
+      animate={revealed ? { opacity: 1, x: 0, rotateY: 0 } : { opacity: 0, x: -40, rotateY: 25 }}
+      transition={{ duration: 1, delay, ease }}
+      style={{ transformPerspective: 900 }}
+    >
+      <TiltCard max={10} className={`glass-panel rounded-2xl p-4 ${isEn ? 'text-left' : 'text-right'}`} dir={isEn ? 'ltr' : 'rtl'}>
+        <p className="text-[11px] font-bold tracking-[0.12em] text-white/80 mb-3 flex items-center justify-between">
+          {title}
+          <span className="w-1.5 h-1.5 rounded-full bg-accent-glow shadow-[0_0_8px_#5FD4E6] animate-pulse" />
+        </p>
+        {children}
+      </TiltCard>
+    </motion.div>
+  );
+};
 
 export const StatusPanel = ({ projects, revealed, delay }) => {
+  const { isEn } = useLanguage();
   let a = 0;
   let d = 0;
   const active = [0];
@@ -156,7 +179,7 @@ export const StatusPanel = ({ projects, revealed, delay }) => {
   const D = toPath(dev, 200, 70, 6, range);
 
   return (
-    <Panel title="حالة المشاريع" revealed={revealed} delay={delay}>
+    <Panel title={isEn ? 'Project Status' : 'حالة المشاريع'} revealed={revealed} delay={delay}>
       <svg viewBox="0 0 200 70" className="w-full h-[70px] overflow-visible">
         {[0, 1, 2].map((i) => (
           <line key={i} x1="0" x2="200" y1={10 + i * 25} y2={10 + i * 25} stroke="rgba(255,255,255,0.06)" />
@@ -183,20 +206,21 @@ export const StatusPanel = ({ projects, revealed, delay }) => {
         />
       </svg>
       <div className="flex items-center justify-between mt-2 text-[11px] text-white/60">
-        <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-map-gold" /> نشط <b className="font-latin text-white">{a}</b></span>
-        <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-accent-glow" /> قيد التطوير <b className="font-latin text-white">{d}</b></span>
+        <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-map-gold" /> {isEn ? 'Active' : 'نشط'} <b className="font-latin text-white">{a}</b></span>
+        <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-accent-glow" /> {isEn ? 'In Dev' : 'قيد التطوير'} <b className="font-latin text-white">{d}</b></span>
       </div>
     </Panel>
   );
 };
 
 export const GrowthPanel = ({ revealed, delay }) => {
+  const { isEn } = useLanguage();
   const sorted = [...heroStats].sort((x, y) => parseInt(x.value.replace(/\D/g, ''), 10) - parseInt(y.value.replace(/\D/g, ''), 10));
   const values = sorted.map((s) => Math.log10(parseInt(s.value.replace(/\D/g, ''), 10) + 1));
   const { line, area, pts } = toPath(values, 200, 80);
 
   return (
-    <Panel title="النمو" revealed={revealed} delay={delay}>
+    <Panel title={isEn ? 'Growth' : 'النمو'} revealed={revealed} delay={delay}>
       <svg viewBox="0 0 200 80" className="w-full h-[80px] overflow-visible">
         <defs>
           <linearGradient id="growth-fill" x1="0" x2="0" y1="0" y2="1">
@@ -240,7 +264,7 @@ export const GrowthPanel = ({ revealed, delay }) => {
         {sorted.map((s) => (
           <div key={s.label}>
             <p className="font-latin font-bold text-white text-[11px]">{s.value}</p>
-            <p className="text-white/40 text-[8px] leading-tight mt-0.5 line-clamp-2">{s.label}</p>
+            <p className="text-white/40 text-[8px] leading-tight mt-0.5 line-clamp-2">{isEn ? s.labelEn : s.label}</p>
           </div>
         ))}
       </div>
@@ -248,26 +272,29 @@ export const GrowthPanel = ({ revealed, delay }) => {
   );
 };
 
-export const VenturesPanel = ({ projects, revealed, delay, onHover, onSelect, hovered }) => (
-  <Panel title="مشاريع مميزة" revealed={revealed} delay={delay}>
-    <div className="grid grid-cols-3 gap-2">
-      {projects.map((p) => (
-        <button
-          key={p.id}
-          type="button"
-          onMouseEnter={() => onHover(p.id)}
-          onMouseLeave={() => onHover(null)}
-          onClick={() => onSelect(p)}
-          className={`group flex flex-col items-center gap-1 rounded-xl py-2 border transition-all duration-300 ${
-            hovered === p.id ? 'border-accent-light/60 bg-accent/15' : 'border-white/5 bg-white/[0.03] hover:border-white/20'
-          }`}
-        >
-          <span className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center font-bold text-[8px] leading-none text-white/80 text-center whitespace-pre-line group-hover:border-accent-glow group-hover:text-accent-glow transition-colors">
-            {p.nameAr.split(' ')[0]}
-          </span>
-          <span className="text-[9px] text-white/50 leading-tight">{p.nameAr}</span>
-        </button>
-      ))}
-    </div>
-  </Panel>
-);
+export const VenturesPanel = ({ projects, revealed, delay, onHover, onSelect, hovered }) => {
+  const { isEn } = useLanguage();
+  return (
+    <Panel title={isEn ? 'Featured Ventures' : 'مشاريع مميزة'} revealed={revealed} delay={delay}>
+      <div className="grid grid-cols-3 gap-2">
+        {projects.map((p) => (
+          <button
+            key={p.id}
+            type="button"
+            onMouseEnter={() => onHover(p.id)}
+            onMouseLeave={() => onHover(null)}
+            onClick={() => onSelect(p)}
+            className={`group flex flex-col items-center gap-1 rounded-xl py-2 border transition-all duration-300 ${
+              hovered === p.id ? 'border-accent-light/60 bg-accent/15' : 'border-white/5 bg-white/[0.03] hover:border-white/20'
+            }`}
+          >
+            <span className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center font-bold text-[8px] leading-none text-white/80 text-center whitespace-pre-line group-hover:border-accent-glow group-hover:text-accent-glow transition-colors">
+              {isEn ? p.nameEn.split(' ')[0] : p.nameAr.split(' ')[0]}
+            </span>
+            <span className="text-[9px] text-white/50 leading-tight font-latin">{isEn ? p.nameEn : p.nameAr}</span>
+          </button>
+        ))}
+      </div>
+    </Panel>
+  );
+};

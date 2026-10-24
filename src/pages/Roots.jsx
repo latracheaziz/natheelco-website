@@ -5,14 +5,15 @@ import Reveal3D from '../components/fx/Reveal3D';
 import RevealText from '../components/fx/RevealText';
 import TiltCard from '../components/fx/TiltCard';
 import RootsShowcase from '../components/RootsShowcase';
+import { useLanguage } from '../context/LanguageContext';
 
 const VisionSection = () => {
   const ref = useRef(null);
+  const { isEn, dir } = useLanguage();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start end', 'end start'],
   });
-  // The route wrapper is transformed, which breaks position: fixed, so the image is counter-translated to stay pinned to the viewport.
   const y = useTransform(scrollYProgress, (p) => {
     const el = ref.current;
     if (!el) return 0;
@@ -24,7 +25,7 @@ const VisionSection = () => {
     <section
       ref={ref}
       className="relative flex flex-col items-center justify-center overflow-hidden py-32 md:py-48"
-      dir="rtl"
+      dir={dir}
     >
       <motion.div
         className="absolute inset-x-0 top-0 h-[100dvh] w-full will-change-transform"
@@ -40,20 +41,22 @@ const VisionSection = () => {
       <div className="container-premium section-padding relative z-10 text-center">
         <Reveal3D>
           <span className="mb-5 inline-flex items-center gap-3 text-[12px] font-semibold tracking-[0.15em] text-accent-light">
-            رؤيتنا
+            {isEn ? 'Our Vision' : 'رؤيتنا'}
             <span className="h-1.5 w-1.5 rounded-full bg-accent-glow shadow-[0_0_10px_#5FD4E6]" />
           </span>
         </Reveal3D>
 
         <Reveal3D delay={0.2}>
           <h2 className="mb-6 text-3xl font-heading font-bold text-white drop-shadow-lg md:text-5xl">
-            نبني المستقبل بأصالة الماضي
+            {isEn ? 'Building the Future on the Roots of Heritage' : 'نبني المستقبل بأصالة الماضي'}
           </h2>
         </Reveal3D>
 
         <Reveal3D delay={0.4}>
           <p className="mx-auto max-w-3xl text-lg leading-relaxed text-white/90 drop-shadow-md md:text-xl">
-            في نثيل، نبني مشاريعنا على جودة المنتج و الخدمة لكسب ثقة السوق
+            {isEn
+              ? 'At Natheel, we build our ventures on superior product and service quality to earn lasting market trust.'
+              : 'في نثيل، نبني مشاريعنا على جودة المنتج و الخدمة لكسب ثقة السوق'}
           </p>
         </Reveal3D>
       </div>
@@ -62,89 +65,97 @@ const VisionSection = () => {
 };
 
 const Roots = () => {
+  const { isEn, dir } = useLanguage();
+
   return (
     <div className="bg-transparent relative z-0">
-      
       <RootsAnimatedHero
-        title="جذورنا"
+        title={isEn ? 'Our Roots' : 'جذورنا'}
+        eyebrow={isEn ? 'Our Story' : 'قصتنا'}
       />
 
-      {/* 2. Content Container scrolls over the Hero */}
+      {/* Content Container scrolls over the Hero */}
       <div className="relative z-10">
 
-      {/* Intro Section */}
-      <section className="relative py-20 lg:py-28 bg-surface-warm overflow-hidden" dir="rtl">
-        <div className="container-premium section-padding relative">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            
-            {/* Text */}
-            <div className="space-y-12">
-              <Reveal3D delay={0.2}>
-                <div>
-                  <h2 className="text-[2.125rem] md:text-[2.625rem] font-heading font-bold text-primary mb-4">
-                    حكايتنا بدأت من حائل
-                  </h2>
-                  <p className="text-xl md:text-[1.375rem] text-text-secondary leading-relaxed">
-                    في أرض تجمع بين الأصالة والطموح، بدأت نثيل في بناء مشاريع عصرية تنمو حسب احتياجات المجتمع وتواكب تطلعات المستقبل.
-                  </p>
-                </div>
+        {/* Intro Section */}
+        <section className="relative py-20 lg:py-28 bg-surface-warm overflow-hidden" dir={dir}>
+          <div className="container-premium section-padding relative">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+              {/* Text */}
+              <div className="space-y-12">
+                <Reveal3D delay={0.2}>
+                  <div>
+                    <h2 className="text-[2.125rem] md:text-[2.625rem] font-heading font-bold text-primary mb-4">
+                      {isEn ? "Our Story Began in Ha'il" : 'حكايتنا بدأت من حائل'}
+                    </h2>
+                    <p className="text-xl md:text-[1.375rem] text-text-secondary leading-relaxed">
+                      {isEn
+                        ? "Rooted in a region where heritage meets ambition, Natheel began building modern ventures shaped by the needs of the community and aligned with the aspirations of the future."
+                        : 'في أرض تجمع بين الأصالة والطموح، بدأت نثيل في بناء مشاريع عصرية تنمو حسب احتياجات المجتمع وتواكب تطلعات المستقبل.'}
+                    </p>
+                  </div>
+                </Reveal3D>
+
+                <Reveal3D delay={0.4}>
+                  <div>
+                    <h2 className="text-[2.125rem] md:text-[2.625rem] font-heading font-bold text-primary mb-4">
+                      {isEn ? "Ha'il Through Our Eyes" : 'حائل كما نراها'}
+                    </h2>
+                    <p className="text-xl md:text-[1.375rem] text-text-secondary leading-relaxed">
+                      {isEn
+                        ? "Ha'il is a region rich in its people, history, natural landscapes, and cultural heritage. We see it as a promising environment for building ventures, developing talent, and delivering services that create meaningful value for the community, while contributing to the region's tourism potential."
+                        : 'حائل منطقة غنية بتاريخها، وطبيعتها، وثقافتها، وأهلها. نرى فيها بيئة واعدة لصناعة المشاريع، وتنمية المواهب، وتقديم تجارب وخدمات تضيف قيمة حقيقية للمجتمع.'}
+                    </p>
+                  </div>
+                </Reveal3D>
+              </div>
+
+              {/* Image */}
+              <Reveal3D delay={0.3}>
+                <TiltCard className="rounded-[32px]">
+                  <div className="aspect-[4/3] rounded-[32px] overflow-hidden relative shadow-[var(--shadow-depth)] border border-white/20">
+                    <img src="/hail-night.jpg" alt={isEn ? "Ha'il City" : 'مدينة حائل'} className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-transparent" />
+                  </div>
+                </TiltCard>
               </Reveal3D>
 
-              <Reveal3D delay={0.4}>
-                <div>
-                  <h2 className="text-[2.125rem] md:text-[2.625rem] font-heading font-bold text-primary mb-4">
-                    حائل كما نراها
-                  </h2>
-                  <p className="text-xl md:text-[1.375rem] text-text-secondary leading-relaxed">
-                    حائل منطقة غنية بتاريخها، وطبيعتها، وثقافتها، وأهلها. نرى فيها بيئة واعدة لصناعة المشاريع، وتنمية المواهب، وتقديم تجارب وخدمات تضيف قيمة حقيقية للمجتمع.
-                  </p>
-                </div>
-              </Reveal3D>
             </div>
-
-            {/* Image */}
-            <Reveal3D delay={0.3}>
-              <TiltCard className="rounded-[32px]">
-                <div className="aspect-[4/3] rounded-[32px] overflow-hidden relative shadow-[var(--shadow-depth)] border border-white/20">
-                  <img src="/hail-night.jpg" alt="مدينة حائل" className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-transparent" />
-                </div>
-              </TiltCard>
-            </Reveal3D>
-
           </div>
-        </div>
-      </section>
+        </section>
 
-      <RootsShowcase />
+        <RootsShowcase />
 
-      <VisionSection />
+        <VisionSection />
 
-      <section className="relative overflow-hidden bg-surface py-20 lg:py-28" dir="rtl">
-        <div className="dot-field" />
-        <div className="absolute -left-32 top-1/4 h-[360px] w-[360px] rounded-full bg-accent/10 blur-[110px]" />
-        <div className="container-premium section-padding relative z-10">
-          <Reveal3D className="mx-auto max-w-5xl">
-            <div className="glass-light relative overflow-hidden rounded-[28px] px-7 py-10 text-center sm:rounded-[36px] sm:px-12 sm:py-14 lg:px-20 lg:py-16">
-              <div className="absolute inset-x-10 top-0 h-[2px] bg-gradient-to-l from-transparent via-accent-light to-transparent" />
-              <span className="mb-5 inline-flex items-center gap-3 text-sm font-semibold tracking-[0.15em] text-accent">
-                جذور نثيل
-                <span className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_10px_rgba(58,168,188,0.65)]" />
-              </span>
-              <h2 className="mt-3 text-4xl font-heading font-[800] leading-[1.3] text-primary md:text-[2.5rem] lg:text-[3.25rem]">
-                <RevealText text="الإنسان والمكان" />
-              </h2>
-              <div className="mx-auto my-6 h-[2px] w-16 rounded-full bg-gradient-to-l from-accent to-accent-light shadow-[0_0_12px_rgba(58,168,188,0.4)]" />
-              <p className="mx-auto max-w-3xl text-xl leading-[2] text-text-secondary md:text-[1.375rem]">
-                نؤمن ان مشاريع ناجحة تبدا من فهم متطلبات ناس و مكان و معتمد على قدرات شبابها و كذلك نجمع بين اصلة و اسلوب العصري
-              </p>
-              <h3 className="mt-8 text-[1.625rem] font-heading font-bold text-accent md:text-[2rem]">
-                ياهلا والله.....  الله يحييكم
-              </h3>
-            </div>
-          </Reveal3D>
-        </div>
-      </section>
+        <section className="relative overflow-hidden bg-surface py-20 lg:py-28" dir={dir}>
+          <div className="dot-field" />
+          <div className="absolute -left-32 top-1/4 h-[360px] w-[360px] rounded-full bg-accent/10 blur-[110px]" />
+          <div className="container-premium section-padding relative z-10">
+            <Reveal3D className="mx-auto max-w-5xl">
+              <div className="glass-light relative overflow-hidden rounded-[28px] px-7 py-10 text-center sm:rounded-[36px] sm:px-12 sm:py-14 lg:px-20 lg:py-16">
+                <div className="absolute inset-x-10 top-0 h-[2px] bg-gradient-to-l from-transparent via-accent-light to-transparent" />
+                <span className="mb-5 inline-flex items-center gap-3 text-sm font-semibold tracking-[0.15em] text-accent">
+                  {isEn ? "Natheel's Roots" : 'جذور نثيل'}
+                  <span className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_10px_rgba(58,168,188,0.65)]" />
+                </span>
+                <h2 className="mt-3 text-4xl font-heading font-[800] leading-[1.3] text-primary md:text-[2.5rem] lg:text-[3.25rem]">
+                  <RevealText text={isEn ? 'People & Place' : 'الإنسان والمكان'} />
+                </h2>
+                <div className="mx-auto my-6 h-[2px] w-16 rounded-full bg-gradient-to-l from-accent to-accent-light shadow-[0_0_12px_rgba(58,168,188,0.4)]" />
+                <p className="mx-auto max-w-3xl text-xl leading-[2] text-text-secondary md:text-[1.375rem]">
+                  {isEn
+                    ? 'We believe successful ventures start from understanding the needs of people and place, relying on the capabilities of our youth, and blending authentic heritage with modern excellence.'
+                    : 'نؤمن ان مشاريع ناجحة تبدا من فهم متطلبات ناس و مكان و معتمد على قدرات شبابها و كذلك نجمع بين اصلة و اسلوب العصري'}
+                </p>
+                <h3 className="mt-8 text-[1.625rem] font-heading font-bold text-accent md:text-[2rem]">
+                  {isEn ? "Welcome to Ha'il... Welcome to Natheel" : 'ياهلا والله.....  الله يحييكم'}
+                </h3>
+              </div>
+            </Reveal3D>
+          </div>
+        </section>
       </div> {/* End Content Container */}
     </div>
   );

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 const DEFAULT_COLOR = '#2E8B9C';
 const INK = [10, 22, 40];
@@ -16,6 +17,7 @@ const deepen = ([r, g, b], amount) =>
 const luminance = ([r, g, b]) => (0.299 * r + 0.587 * g + 0.114 * b) / 255;
 
 const ProjectCard = ({ project, index }) => {
+  const { isEn, dir } = useLanguage();
   const [hovered, setHovered] = useState(false);
   const color = project.color || DEFAULT_COLOR;
   const rgbArr = hexToRgbArray(color);
@@ -26,6 +28,7 @@ const ProjectCard = ({ project, index }) => {
   return (
     <div
       className="psc-card-inner"
+      dir={dir}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
@@ -92,7 +95,7 @@ const ProjectCard = ({ project, index }) => {
                   : undefined
             }
           >
-            {project.category}
+            {isEn ? (project.categoryEn || project.category) : project.category}
           </span>
           <span
             className="psc-index"
@@ -124,13 +127,13 @@ const ProjectCard = ({ project, index }) => {
             } : hasCover ? { boxShadow: '0 12px 30px -10px rgba(10,22,40,0.45)', borderColor: 'rgba(255,255,255,0.9)' } : undefined}
           >
             <span
-              className={`${project.logoSize} font-bold text-center leading-tight whitespace-pre-line font-latin transition-colors duration-500`}
+              className={`${isEn ? 'text-lg md:text-xl tracking-wider' : project.logoSize} font-bold text-center leading-tight whitespace-pre-line font-latin transition-colors duration-500`}
               style={{
                 color: hovered ? (luminance(rgbArr) > 0.6 ? '#0A1628' : '#ffffff') : undefined,
                 textShadow: 'none',
               }}
             >
-              {project.logo}
+              {isEn ? (project.nameEn || project.logo) : project.logo}
             </span>
           </div>
         </div>
@@ -141,10 +144,14 @@ const ProjectCard = ({ project, index }) => {
             className="text-xl font-heading font-[700] text-primary mb-2 transition-colors duration-400"
             style={hovered ? { color: hasCover ? ink : color } : undefined}
           >
-            {project.nameAr}
+            {isEn ? project.nameEn : project.nameAr}
           </h3>
-          <p className={`text-[13px] font-latin font-semibold mb-1 tracking-wide ${hasCover ? 'text-primary/65' : 'text-text-muted'}`}>{project.nameEn}</p>
-          <p className={`text-sm mt-4 mb-8 leading-relaxed line-clamp-2 ${hasCover ? 'text-primary/80 font-medium' : 'text-text-secondary'}`}>{project.shortDesc}</p>
+          <p className={`text-[13px] font-latin font-semibold mb-1 tracking-wide ${hasCover ? 'text-primary/65' : 'text-text-muted'}`}>
+            {isEn ? project.nameAr : project.nameEn}
+          </p>
+          <p className={`text-sm mt-4 mb-8 leading-relaxed line-clamp-2 ${hasCover ? 'text-primary/80 font-medium' : 'text-text-secondary'}`}>
+            {isEn ? (project.shortDescEn || project.shortDesc) : project.shortDesc}
+          </p>
 
           <div
             className="psc-cta"
@@ -156,10 +163,14 @@ const ProjectCard = ({ project, index }) => {
                   : undefined
             }
           >
-            <span>اعرف أكثر</span>
+            <span>{isEn ? 'Learn More' : 'اعرف أكثر'}</span>
             <svg
-              className="w-4 h-4 rotate-180 transition-transform duration-400"
-              style={{ transform: hovered ? 'rotate(180deg) translateX(-6px)' : 'rotate(180deg)' }}
+              className={`w-4 h-4 transition-transform duration-400 ${isEn ? '' : 'rotate-180'}`}
+              style={{
+                transform: hovered
+                  ? (isEn ? 'translateX(6px)' : 'rotate(180deg) translateX(-6px)')
+                  : (isEn ? 'none' : 'rotate(180deg)'),
+              }}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

@@ -1,5 +1,6 @@
 import { motion, useTransform } from 'framer-motion';
 import { Briefcase, CakeSlice, Coffee, Croissant, Landmark, Palette, Store } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 const icons = {
   croissant: Croissant,
@@ -70,6 +71,9 @@ const MapPin = ({
   const Icon = icons[item.icon] ?? Landmark;
   const isHq = item.id === 'hq';
   const isHot = hovered || focused;
+  const { isEn } = useLanguage();
+  const displayName = isEn ? item.nameEn : item.nameAr;
+  const displayCategory = isEn ? (item.categoryEn ?? item.category) : item.category;
 
   const transform = useTransform(
     [tilt, rotZ],
@@ -94,16 +98,16 @@ const MapPin = ({
         {/* Label */}
         {showLabel && (
           <motion.div
-            className="map-label absolute bottom-full mb-3 left-1/2 rounded-xl px-3 py-2 whitespace-nowrap text-right pointer-events-none"
-            dir="rtl"
+            className={`map-label absolute bottom-full mb-3 left-1/2 rounded-xl px-3 py-2 whitespace-nowrap ${isEn ? 'text-left' : 'text-right'} pointer-events-none`}
+            dir={isEn ? 'ltr' : 'rtl'}
             initial={false}
-            animate={{ x: isHq ? '-50%' : '-10%', scale: isHot ? 1.08 : 1, opacity: dimmed ? 0 : 1 }}
+            animate={{ x: isHq ? '-50%' : isEn ? '-50%' : '-10%', scale: isHot ? 1.08 : 1, opacity: dimmed ? 0 : 1 }}
             transition={{ type: 'spring', stiffness: 300, damping: 24 }}
           >
             <p className={`font-bold leading-tight ${isHq ? 'text-[13px]' : 'text-[12px]'} ${tone.text}`}>
-              {item.nameAr}
+              {displayName}
             </p>
-            <p className="text-white/70 text-[10px] font-medium leading-tight mt-0.5">{item.category}</p>
+            <p className="text-white/70 text-[10px] font-medium leading-tight mt-0.5">{displayCategory}</p>
           </motion.div>
         )}
 
@@ -115,7 +119,7 @@ const MapPin = ({
           onMouseLeave={() => onHover(null)}
           onFocus={() => onHover(item.id)}
           onBlur={() => onHover(null)}
-          aria-label={item.nameAr}
+          aria-label={displayName}
           className="relative block focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-glow rounded-full cursor-pointer"
         >
           <span
@@ -126,7 +130,9 @@ const MapPin = ({
             <span className="absolute inset-[3px] rounded-full rounded-br-none bg-gradient-to-br from-white/35 to-transparent" />
             <span className="-rotate-45 relative flex items-center justify-center rounded-full bg-primary-deep/85 border border-white/20 w-[70%] h-[70%]">
               {isHq ? (
-                <span className="font-bold text-lg text-map-gold-light drop-shadow-[0_0_6px_rgba(232,176,74,0.9)]">ن</span>
+                <span className="font-bold text-lg text-map-gold-light drop-shadow-[0_0_6px_rgba(232,176,74,0.9)]">
+                  {isEn ? 'N' : 'ن'}
+                </span>
               ) : (
                 <Icon className={`w-4 h-4 ${tone.text}`} strokeWidth={2.2} />
               )}

@@ -1,21 +1,36 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
 import FluidWaveBackground from './FluidWaveBackground';
+import { useLanguage } from '../../context/LanguageContext';
 
-const slides = [
-  {
-    id: 1,
-    eyebrow: "من نحن",
-    title: "في نثيل",
-    subtitle: "نعمل على تحويل الأفكار الواعدة إلى مشاريع منظّمة قابلة للنمو. نطوّر نموذج العمل، ونبني الفريق والأنظمة، ونقود التنفيذ للوصول إلى نمو وربحية مستدامة.",
-  }
-];
+const getSlides = (isEn) =>
+  isEn
+    ? [
+        {
+          id: 1,
+          eyebrow: 'About Natheel',
+          title: 'At Natheel',
+          subtitle:
+            'Natheel develops promising ideas into structured, scalable ventures, drawing on more than 30 years of combined experience and the expertise of partners with complementary capabilities.',
+        },
+      ]
+    : [
+        {
+          id: 1,
+          eyebrow: 'من نحن',
+          title: 'في نثيل',
+          subtitle:
+            'نعمل على تحويل الأفكار الواعدة إلى مشاريع منظّمة قابلة للنمو. نطوّر نموذج العمل، ونبني الفريق والأنظمة، ونقود التنفيذ للوصول إلى نمو وربحية مستدامة.',
+        },
+      ];
 
 const AboutHeroSlider = () => {
+  const { isEn, dir } = useLanguage();
   const [active, setActive] = useState(0);
   const ref = useRef(null);
-  
+
+  const slides = getSlides(isEn);
+
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
   const rotateX = useTransform(scrollYProgress, [0, 1], [0, 22]);
   const y = useTransform(scrollYProgress, [0, 1], [0, 120]);
@@ -23,10 +38,10 @@ const AboutHeroSlider = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setActive(prev => (prev + 1) % slides.length);
+      setActive((prev) => (prev + 1) % slides.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [slides.length]);
 
   const handleScenicMove = (event) => {
     const bounds = event.currentTarget.getBoundingClientRect();
@@ -41,7 +56,7 @@ const AboutHeroSlider = () => {
     event.currentTarget.style.setProperty('--roots-pointer-y', '0px');
   };
 
-  const slide = slides[active];
+  const slide = slides[active] || slides[0];
 
   return (
     <section
@@ -55,11 +70,11 @@ const AboutHeroSlider = () => {
       <motion.div
         style={{ rotateX, y, opacity, transformPerspective: 1200, transformOrigin: '50% 0%' }}
         className="container-premium section-padding pt-40 pb-32 lg:pt-48 lg:pb-40 relative z-10 w-full"
-        dir="rtl"
+        dir={dir}
       >
         <AnimatePresence mode="wait">
           <motion.div
-            key={slide.id}
+            key={`${slide.id}-${isEn}`}
             initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             exit={{ opacity: 0, y: -20, filter: 'blur(10px)' }}
@@ -76,9 +91,7 @@ const AboutHeroSlider = () => {
 
             {/* Title */}
             <h1 className="text-5xl md:text-6xl lg:text-8xl font-heading font-[900] leading-[1.1] mb-6 text-white fluid-wave-heading">
-              <span className="fluid-wave-title pb-2 inline-block">
-                {slide.title}
-              </span>
+              <span className="fluid-wave-title pb-2 inline-block">{slide.title}</span>
             </h1>
 
             {/* Subtitle */}
@@ -87,27 +100,28 @@ const AboutHeroSlider = () => {
             </p>
 
             {/* Progress indicators */}
-            <div className="flex gap-3 mt-12 md:mt-16">
-              {slides.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActive(i)}
-                  className="relative h-1.5 rounded-full overflow-hidden transition-all duration-300 bg-white/20 hover:bg-white/40"
-                  style={{ width: active === i ? '48px' : '24px' }}
-                >
-                  {active === i && (
-                    <motion.div
-                      layoutId="slider-progress"
-                      className="absolute inset-0 bg-white"
-                      initial={{ scaleX: 0, originX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ duration: 5, ease: "linear" }}
-                    />
-                  )}
-                </button>
-              ))}
-            </div>
-
+            {slides.length > 1 && (
+              <div className="flex gap-3 mt-12 md:mt-16">
+                {slides.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActive(i)}
+                    className="relative h-1.5 rounded-full overflow-hidden transition-all duration-300 bg-white/20 hover:bg-white/40 cursor-pointer"
+                    style={{ width: active === i ? '48px' : '24px' }}
+                  >
+                    {active === i && (
+                      <motion.div
+                        layoutId="slider-progress"
+                        className="absolute inset-0 bg-white"
+                        initial={{ scaleX: 0, originX: 0 }}
+                        animate={{ scaleX: 1 }}
+                        transition={{ duration: 5, ease: 'linear' }}
+                      />
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
           </motion.div>
         </AnimatePresence>
       </motion.div>

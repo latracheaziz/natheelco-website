@@ -3,6 +3,7 @@ import { Star, ArrowLeft, Send } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { submitReview } from '../api/reviews';
+import { useLanguage } from '../context/LanguageContext';
 
 const triggerFireworks = () => {
   const duration = 3 * 1000;
@@ -39,6 +40,7 @@ export default function FeedbackCard() {
   const [opinion, setOpinion] = useState('');
   const [status, setStatus] = useState('idle');
   const [error, setError] = useState('');
+  const { isEn, dir } = useLanguage();
 
   useEffect(() => {
     if (status === 'success') {
@@ -56,14 +58,14 @@ export default function FeedbackCard() {
       setStatus('success');
     } catch (submitError) {
       setStatus('idle');
-      setError(submitError.message || 'تعذر إرسال الرأي. حاول مرة أخرى.');
+      setError(submitError.message || (isEn ? 'Failed to submit. Please try again.' : 'تعذر إرسال الرأي. حاول مرة أخرى.'));
     }
   };
 
   return (
-    <div className="w-full h-full mx-auto rounded-[32px] overflow-hidden flex flex-col md:flex-row shadow-[0_20px_60px_-15px_rgba(10,22,40,0.15)] bg-[#FDFDFD] border border-border-light relative z-20" dir="rtl">
+    <div className="w-full h-full mx-auto rounded-[32px] overflow-hidden flex flex-col md:flex-row shadow-[0_20px_60px_-15px_rgba(10,22,40,0.15)] bg-[#FDFDFD] border border-border-light relative z-20" dir={dir}>
       
-      {/* Dark Side (Right in RTL layout) */}
+      {/* Dark Side */}
       <div className="md:w-[40%] bg-primary relative p-10 md:p-12 text-white flex flex-col justify-between overflow-hidden min-h-[400px]">
         {/* Background Image / Overlay */}
         <div className="absolute inset-0 z-0 opacity-20 pointer-events-none mix-blend-screen" style={{ backgroundImage: "url('/roots-hero.jpeg')", backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
@@ -74,10 +76,12 @@ export default function FeedbackCard() {
 
           <div className="mt-16 mb-16">
             <h2 className="text-3xl md:text-4xl font-heading font-bold leading-tight mb-4 text-white">
-              رأيك يساعدنا على التطور.
+              {isEn ? 'Your feedback helps us grow.' : 'رأيك يساعدنا على التطور.'}
             </h2>
             <p className="text-white/70 text-sm md:text-base leading-relaxed max-w-xs font-medium">
-              شاركنا تجربتك وساعدنا على بناء فرص أفضل معاً.
+              {isEn
+                ? 'Share your experience and help us build better opportunities together.'
+                : 'شاركنا تجربتك وساعدنا على بناء فرص أفضل معاً.'}
             </p>
           </div>
 
@@ -88,7 +92,7 @@ export default function FeedbackCard() {
         </div>
       </div>
 
-      {/* Light Side (Left in RTL layout) */}
+      {/* Light Side */}
       <div className="md:w-[60%] p-10 md:p-12 relative z-10 flex flex-col justify-center min-h-[450px]">
         <div className="w-full max-w-md mx-auto">
           <AnimatePresence mode="wait">
@@ -102,24 +106,28 @@ export default function FeedbackCard() {
               >
                 <div className="mb-8">
                   <p className="text-[10px] font-bold tracking-[0.15em] text-text-muted uppercase mb-3 font-latin">
-                    آراء العملاء
+                    {isEn ? 'Client Reviews' : 'آراء العملاء'}
                   </p>
                   <h3 className="text-3xl font-heading font-bold text-primary mb-3">
-                    شاركنا رأيك
+                    {isEn ? 'Share Your Thoughts' : 'شاركنا رأيك'}
                   </h3>
                   <p className="text-text-secondary text-sm font-medium">
-                    رأيك يهمنا. يرجى أخذ لحظة لتقييم تجربتك وترك رسالة لنا.
+                    {isEn
+                      ? 'Your opinion matters. Take a moment to rate your experience and leave us a message.'
+                      : 'رأيك يهمنا. يرجى أخذ لحظة لتقييم تجربتك وترك رسالة لنا.'}
                   </p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
-                    <label htmlFor="reviewer-name" className="block text-sm font-bold text-primary mb-3 font-heading">الاسم</label>
+                    <label htmlFor="reviewer-name" className="block text-sm font-bold text-primary mb-3 font-heading">
+                      {isEn ? 'Name' : 'الاسم'}
+                    </label>
                     <input
                       id="reviewer-name"
                       value={name}
                       onChange={(e) => setName(e.target.value.slice(0, 80))}
-                      placeholder="اسمك"
+                      placeholder={isEn ? 'Your name' : 'اسمك'}
                       required
                       minLength={2}
                       className="w-full bg-[#FAFAFA] border border-border-light rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 text-primary placeholder:text-text-muted"
@@ -127,7 +135,9 @@ export default function FeedbackCard() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-bold text-primary mb-3 font-heading">قيّم تجربتك</label>
+                    <label className="block text-sm font-bold text-primary mb-3 font-heading">
+                      {isEn ? 'Rate Your Experience' : 'قيّم تجربتك'}
+                    </label>
                     <div className="flex items-center gap-2">
                       {[1, 2, 3, 4, 5].map((star) => (
                         <button
@@ -151,13 +161,15 @@ export default function FeedbackCard() {
                   </div>
 
                   <div>
-                    <label htmlFor="opinion" className="block text-sm font-bold text-primary mb-3 font-heading">رأيك</label>
+                    <label htmlFor="opinion" className="block text-sm font-bold text-primary mb-3 font-heading">
+                      {isEn ? 'Your Thoughts' : 'رأيك'}
+                    </label>
                     <div className="relative">
                       <textarea
                         id="opinion"
                         value={opinion}
                         onChange={(e) => setOpinion(e.target.value.slice(0, 500))}
-                        placeholder="أخبرنا عن تجربتك..."
+                        placeholder={isEn ? 'Tell us about your experience...' : 'أخبرنا عن تجربتك...'}
                         rows="3"
                         className="w-full bg-[#FAFAFA] border border-border-light rounded-xl p-4 pb-8 text-sm resize-none focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition-shadow text-primary placeholder:text-text-muted"
                       ></textarea>
@@ -172,8 +184,8 @@ export default function FeedbackCard() {
                     disabled={!rating || name.trim().length < 2 || opinion.trim().length < 2}
                     className="group mt-2 flex items-center gap-3 bg-[#1B2A2F] hover:bg-primary text-white text-sm font-medium px-8 py-3.5 rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
                   >
-                    إرسال الرأي
-                    <ArrowLeft className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-2 group-hover:scale-110" />
+                    {isEn ? 'Submit Review' : 'إرسال الرأي'}
+                    <ArrowLeft className={`w-4 h-4 transition-transform duration-300 group-hover:scale-110 ${isEn ? 'rotate-180 group-hover:translate-x-2' : 'group-hover:-translate-x-2'}`} />
                   </button>
                   {error && <p className="text-sm text-rose-600">{error}</p>}
                 </form>
@@ -225,8 +237,14 @@ export default function FeedbackCard() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </motion.div>
-                <h3 className="text-2xl font-heading font-bold text-primary mb-2">شكرًا لك!</h3>
-                <p className="text-text-secondary text-sm max-w-sm">تم إرسال رأيك بنجاح، نقدر وقتك ومساهمتك في تطوير خدماتنا.</p>
+                <h3 className="text-2xl font-heading font-bold text-primary mb-2">
+                  {isEn ? 'Thank you!' : 'شكرًا لك!'}
+                </h3>
+                <p className="text-text-secondary text-sm max-w-sm">
+                  {isEn
+                    ? 'Your review was submitted successfully. We appreciate your time and contribution.'
+                    : 'تم إرسال رأيك بنجاح، نقدر وقتك ومساهمتك في تطوير خدماتنا.'}
+                </p>
                 <button
                   type="button"
                   onClick={() => {
@@ -237,7 +255,7 @@ export default function FeedbackCard() {
                   }}
                   className="mt-6 text-accent text-sm font-medium hover:underline underline-offset-4"
                 >
-                  إرسال تقييم آخر
+                  {isEn ? 'Submit Another Review' : 'إرسال تقييم آخر'}
                 </button>
               </motion.div>
             )}

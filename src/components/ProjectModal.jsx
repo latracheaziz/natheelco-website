@@ -2,6 +2,7 @@ import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { X, ArrowUpLeft } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const ease = [0.16, 1, 0.3, 1];
 
@@ -17,6 +18,7 @@ const itemVariants = {
 
 const ProjectModal = ({ project, isOpen, onClose }) => {
   const cardRef = useRef(null);
+  const { isEn, dir } = useLanguage();
 
   // Mouse position state for 3D parallax
   const mouseX = useMotionValue(0);
@@ -43,7 +45,6 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
-      // Reset mouse position when opened
       mouseX.set(0);
       mouseY.set(0);
     } else {
@@ -71,11 +72,21 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
 
   if (!project) return null;
 
-  const stats = [
-    { label: 'الموقع', value: project.location },
-    { label: 'التأسيس', value: project.year },
-    { label: 'الحالة', value: project.status },
-  ];
+  const stats = isEn
+    ? [
+        { label: 'Location', value: project.locationEn ?? project.location },
+        { label: 'Founded', value: project.year },
+        { label: 'Status', value: project.statusEn ?? project.status },
+      ]
+    : [
+        { label: 'الموقع', value: project.location },
+        { label: 'التأسيس', value: project.year },
+        { label: 'الحالة', value: project.status },
+      ];
+
+  const displayName = isEn ? project.nameEn : project.nameAr;
+  const displayCategory = isEn ? (project.categoryEn ?? project.category) : project.category;
+  const displayDescription = isEn ? (project.descriptionEn ?? project.description) : project.description;
 
   return createPortal(
     <AnimatePresence>
@@ -91,7 +102,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
           onMouseLeave={handleMouseLeave}
           role="dialog"
           aria-modal="true"
-          aria-label={project.nameAr}
+          aria-label={displayName}
         >
           {/* Backdrop with intense blur */}
           <motion.div
@@ -115,7 +126,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
             exit={{ opacity: 0, scale: 0.8, rotateX: 20, rotateY: 20, y: -100 }}
             transition={{ type: 'spring', damping: 25, stiffness: 120, mass: 0.8 }}
             style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-            dir="rtl"
+            dir={dir}
           >
             {/* Glare */}
             <motion.div className="absolute inset-0 pointer-events-none z-40 mix-blend-soft-light" style={{ background: glare }} />
@@ -127,7 +138,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
               style={{ translateZ: 50 }}
               whileHover={{ scale: 1.1, rotate: 90 }}
               whileTap={{ scale: 0.9 }}
-              aria-label="إغلاق"
+              aria-label={isEn ? 'Close' : 'إغلاق'}
             >
               <X size={24} strokeWidth={2.5} />
             </motion.button>
@@ -136,7 +147,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
             <div className="w-full md:w-1/2 relative h-[300px] sm:h-[400px] md:h-auto md:min-h-[600px] bg-primary overflow-hidden" style={{ transformStyle: 'preserve-3d' }}>
               <motion.img
                 src={project.image || '/slides/office.jpg'}
-                alt={project.nameAr}
+                alt={displayName}
                 className="absolute inset-[-10%] w-[120%] h-[120%] object-cover"
                 initial={{ scale: 1.3 }}
                 animate={{ scale: 1.1 }}
@@ -175,10 +186,10 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
             >
               <motion.div className="mb-6" style={{ translateZ: 40 }} variants={itemVariants}>
                 <span className="inline-block px-5 py-2 bg-accent/10 text-accent rounded-full text-sm font-bold tracking-widest mb-6 border border-accent/20 shadow-sm">
-                  {project.category}
+                  {displayCategory}
                 </span>
                 <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-[900] text-primary mb-2 leading-tight">
-                  {project.nameAr}
+                  {isEn ? project.nameEn : project.nameAr}
                 </h2>
                 <h3 className="text-2xl md:text-3xl font-latin font-black text-transparent bg-clip-text bg-gradient-to-r from-text-muted/40 to-accent tracking-widest uppercase">
                   {project.nameEn}
@@ -192,7 +203,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
               />
 
               <motion.p className="text-text-secondary text-lg md:text-xl leading-relaxed mb-12 font-medium" style={{ translateZ: 30 }} variants={itemVariants}>
-                {project.description}
+                {displayDescription}
               </motion.p>
 
               <motion.div className="grid grid-cols-3 gap-4 md:gap-6 mb-12" style={{ translateZ: 50 }} variants={itemVariants}>
@@ -216,7 +227,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                   {/* Dynamic background sweep */}
                   <div className="absolute inset-0 bg-gradient-to-r from-accent via-primary-light to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                  <span className="relative z-10">استكشف المشروع</span>
+                  <span className="relative z-10">{isEn ? 'Explore Venture' : 'استكشف المشروع'}</span>
                   <div className="relative z-10 w-10 h-10 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-white group-hover:text-primary transition-all duration-500">
                     <ArrowUpLeft size={20} className="group-hover:-translate-y-0.5 group-hover:-translate-x-0.5 transition-transform" />
                   </div>

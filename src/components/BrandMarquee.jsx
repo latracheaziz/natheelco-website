@@ -9,8 +9,10 @@ import {
   useVelocity,
 } from 'framer-motion';
 import { useRef } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
-const brands = ['أودن', 'هاجس', 'غالية'];
+const brandsAr = ['أودن', 'هاجس', 'غالية'];
+const brandsEn = ['ÖDÜN', 'HAJISS', 'GHALIA'];
 
 const BASE_SPEED = 3.2; // % of track per second
 
@@ -19,7 +21,7 @@ const wrap = (min, max, v) => {
   return ((((v - min) % range) + range) % range) + min;
 };
 
-const Row = ({ lit = false }) => (
+const Row = ({ brands, lit = false }) => (
   <div className="flex w-max" aria-hidden={lit || undefined}>
     {[0, 1].map((g) => (
       <div key={g} className="mq-group flex min-w-[100vw] justify-around px-8 md:px-16">
@@ -35,6 +37,8 @@ const Row = ({ lit = false }) => (
 );
 
 const BrandMarquee = () => {
+  const { isEn } = useLanguage();
+  const brands = isEn ? brandsEn : brandsAr;
   const reduce = useReducedMotion();
   const baseX = useMotionValue(0);
   const direction = useRef(-1);
@@ -59,7 +63,7 @@ const BrandMarquee = () => {
 
       <div className="mq-band relative" dir="ltr">
         <motion.div style={{ x }}>
-          <Row lit />
+          <Row brands={brands} lit />
         </motion.div>
       </div>
 
