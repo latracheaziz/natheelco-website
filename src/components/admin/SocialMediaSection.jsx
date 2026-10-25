@@ -347,6 +347,10 @@ export const SocialMediaSection = ({ posts = [], postsError = '', analytics = {}
               <Share2 className="w-3 h-3" />
             </div>
           </div>
+                <div className="text-xs text-[#64748B] flex items-center gap-1.5">
+                            <a  href="https://social.zoho.com/social/natheelco2030" target="_blank" rel="noopener noreferrer"
+                    className="text-[11px] px-2 py-0.5 rounded-md bg-[#EFF6FF] text-[#1D6FD9] border border-[#BFDBFE] hover:bg-[#DBEAFE] font-medium transition-colors">ZOHO نشر عبر</a>
+                          </div>   
           <p className="text-xs text-[#64748B] mt-1 font-medium">
             صياغة ونشر المحتوى فورياً على قنوات نثيل السبع عبر خادم النشر
           </p>
