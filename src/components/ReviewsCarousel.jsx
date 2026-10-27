@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ChevronLeft, Star, Quote } from 'lucide-react';
 import TiltCard from './fx/TiltCard';
 import { fetchPublicReviews } from '../api/reviews';
-import { useLanguage } from '../context/LanguageContext';
 
 const initialsOf = (name) => name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]).join('.');
 
@@ -13,7 +12,6 @@ export default function ReviewsCarousel() {
   const [direction, setDirection] = useState(1);
   const [isHovered, setIsHovered] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const { isEn, dir } = useLanguage();
 
   useEffect(() => {
     let stop = false;
@@ -24,7 +22,7 @@ export default function ReviewsCarousel() {
           const next = (data.reviews || []).map((review) => ({
             id: review.id,
             name: review.name,
-            role: review.role || (isEn ? 'Client' : 'عميل'),
+            role: review.role || 'عميل',
             review: review.comment,
             rating: review.rating,
             initials: initialsOf(review.name),
@@ -45,7 +43,7 @@ export default function ReviewsCarousel() {
       stop = true;
       window.clearInterval(timer);
     };
-  }, [isEn]);
+  }, []);
 
   useEffect(() => {
     if (isHovered || reviews.length < 2) return;
@@ -99,7 +97,7 @@ export default function ReviewsCarousel() {
       className="w-full h-full relative overflow-hidden bg-[#0A1320] flex flex-col justify-center rounded-[32px] p-8 md:p-12 shadow-[0_30px_60px_-15px_rgba(10,22,40,0.5)] border border-white/5 perspective-[2000px]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      dir={dir}
+      dir="rtl"
     >
       {/* Subtle Animated Background Elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
@@ -134,15 +132,13 @@ export default function ReviewsCarousel() {
             transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
           >
             <p className="text-accent text-sm font-bold mb-2 font-heading tracking-wide drop-shadow-[0_0_8px_rgba(58,168,188,0.3)]">
-              {isEn ? 'Testimonials' : 'قالوا عنا'}
+              قالوا عنا
             </p>
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-3 drop-shadow-md">
-              {isEn ? 'Partner & Client Reviews' : 'آراء شركاء النجاح'}
+              آراء شركاء النجاح
             </h2>
             <p className="text-white/70 text-sm max-w-md mx-auto leading-relaxed">
-              {isEn
-                ? 'Discover our clients’ experiences and inspiring success stories with Natheel.'
-                : 'اكتشف تجارب عملائنا وقصص نجاحهم الملهمة مع فريق نثيل.'}
+              اكتشف تجارب عملائنا وقصص نجاحهم الملهمة مع فريق نثيل.
             </p>
           </motion.div>
         </div>
@@ -150,12 +146,12 @@ export default function ReviewsCarousel() {
         {/* Carousel Content */}
         <div className="flex-1 relative flex items-center justify-center min-h-[340px] perspective-[1500px]">
           {isLoading ? (
-            <div role="status" aria-label={isEn ? "Loading reviews" : "جارٍ تحميل الآراء"} className="flex flex-col items-center gap-3">
+            <div role="status" aria-label="جارٍ تحميل الآراء" className="flex flex-col items-center gap-3">
               <span className="w-10 h-10 rounded-full border-2 border-white/15 border-t-accent animate-spin" />
-              <span className="text-white/60 text-xs">{isEn ? 'Loading reviews...' : 'جارٍ تحميل الآراء...'}</span>
+              <span className="text-white/60 text-xs">جارٍ تحميل الآراء...</span>
             </div>
           ) : reviews.length === 0 ? (
-            <p className="text-white/70 text-sm text-center">{isEn ? 'No reviews yet!' : 'لا توجد آراء بعد!'}</p>
+            <p className="text-white/70 text-sm text-center">لا توجد آراء بعد!</p>
           ) : (
           <AnimatePresence initial={false} custom={direction} mode="wait">
             <motion.div
@@ -186,7 +182,7 @@ export default function ReviewsCarousel() {
                     transition={{ type: "spring", delay: 0.2 }}
                     style={{ transform: 'translateZ(40px)' }}
                   >
-                    <Quote className={`absolute top-6 ${isEn ? 'right-6' : 'left-6'} w-12 h-12 text-white/5 group-hover:text-accent/30 transition-colors duration-500`} />
+                    <Quote className="absolute top-6 left-6 w-12 h-12 text-white/5 group-hover:text-accent/30 transition-colors duration-500" />
                   </motion.div>
 
                   {/* Stars */}
@@ -238,17 +234,15 @@ export default function ReviewsCarousel() {
           <div className="flex gap-2">
             <button 
               onClick={handlePrev}
-              aria-label={isEn ? "Previous review" : "الرأي السابق"}
-              className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
+              className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-110 active:scale-95"
             >
-              {isEn ? <ChevronLeft className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
+              <ChevronRight className="w-5 h-5" />
             </button>
             <button 
               onClick={handleNext}
-              aria-label={isEn ? "Next review" : "الرأي التالي"}
-              className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
+              className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-110 active:scale-95"
             >
-              {isEn ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
+              <ChevronLeft className="w-5 h-5" />
             </button>
           </div>
 

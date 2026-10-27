@@ -173,14 +173,14 @@ export const AdminBanner = () => {
 
           <p className="text-xs sm:text-sm text-[#BAE6FD] mt-2.5 font-medium leading-relaxed max-w-lg">
             تحكم كامل في إحصائيات الأداء، بث المنشورات المباشرة إلى{' '}
-            <span className="text-white font-bold">7 شبكات تواصل اجتماعي</span>،
+            <span className="text-white font-bold">9 شبكات تواصل اجتماعي</span>،
             واعتماد أو رفض تقييمات العملاء.
           </p>
 
           {/* Stats row */}
           <div className="flex items-center gap-5 mt-4 flex-wrap justify-end">
             {[
-              { label: 'منصة متصلة', value: '7' },
+              { label: 'منصة متصلة', value: '9' },
               { label: 'منشور مباشر', value: '3' },
               { label: 'رأي معلق',    value: '2' },
             ].map((s, i) => (

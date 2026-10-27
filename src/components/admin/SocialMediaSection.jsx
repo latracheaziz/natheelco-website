@@ -18,7 +18,8 @@ import {
   Repeat2,
   Bookmark,
   Play,
-  ThumbsUp
+  ThumbsUp,
+  ExternalLink,
 } from 'lucide-react';
 import { SOCIAL_PLATFORMS } from '../../data/adminMockData';
 import { SocialBrandIcon } from './SocialIconsAdmin';
@@ -32,7 +33,7 @@ import {
 
 const RESULT_LABELS = {
   published: 'تم النشر',
-  missing_credentials: 'أضف المفاتيح في social.env',
+  missing_credentials: 'إعداد الاعتماد غير مكتمل',
   unsupported: 'غير مدعوم بهذا المحتوى',
   failed: 'تعذر النشر',
 };
@@ -143,6 +144,28 @@ const LivePlatformPreview = ({ platform, caption, imagePreview, videoUrl, accoun
           <div className="mb-2 flex items-center justify-between"><button type="button" className="rounded-full bg-[#BD081C] px-4 py-2 text-xs font-bold text-white">حفظ</button>{account}</div>
           <p className="line-clamp-4 whitespace-pre-wrap text-xs leading-relaxed text-slate-700">{postText}</p>
         </div>
+      </article>
+    );
+  }
+
+  if (platform.id === 'facebook') {
+    return (
+      <article className="mx-auto w-full max-w-[410px] overflow-hidden rounded-lg border border-slate-200 bg-white text-right shadow-sm">
+        <div className="flex items-center justify-between p-3"><span className="text-slate-500">•••</span>{account}</div>
+        <p className="whitespace-pre-wrap px-3 pb-3 text-xs leading-relaxed text-slate-800">{postText}</p>
+        <div className="max-h-[230px] overflow-hidden bg-slate-100">{renderMedia('أضف صورة أو فيديو لمنشور فيسبوك')}</div>
+        <div className="flex items-center justify-around border-t border-slate-200 px-2 py-2 text-[10px] font-semibold text-slate-600"><span className="flex items-center gap-1"><ThumbsUp className="h-4 w-4" />أعجبني</span><span>تعليق</span><span>مشاركة</span></div>
+      </article>
+    );
+  }
+
+  if (platform.id === 'threads') {
+    return (
+      <article className="mx-auto w-full max-w-[410px] rounded-xl border border-slate-200 bg-white p-4 text-right shadow-sm">
+        <div className="flex items-start justify-between"><span className="text-lg font-bold text-slate-900">@</span>{account}</div>
+        <p className="my-3 whitespace-pre-wrap text-sm leading-relaxed text-slate-900">{postText}</p>
+        {(imagePreview || videoUrl) && <div className="mb-3 max-h-[230px] overflow-hidden rounded-2xl border border-slate-200">{renderMedia('')}</div>}
+        <div className="border-t border-slate-100 pt-3 text-[10px] text-slate-500">معاينة قبل النشر</div>
       </article>
     );
   }
@@ -347,12 +370,8 @@ export const SocialMediaSection = ({ posts = [], postsError = '', analytics = {}
               <Share2 className="w-3 h-3" />
             </div>
           </div>
-                <div className="text-xs text-[#64748B] flex items-center gap-1.5">
-                            <a  href="https://social.zoho.com/social/natheelco2030" target="_blank" rel="noopener noreferrer"
-                    className="text-[11px] px-2 py-0.5 rounded-md bg-[#EFF6FF] text-[#1D6FD9] border border-[#BFDBFE] hover:bg-[#DBEAFE] font-medium transition-colors">ZOHO نشر عبر</a>
-                          </div>   
           <p className="text-xs text-[#64748B] mt-1 font-medium">
-            صياغة ونشر المحتوى فورياً على قنوات نثيل السبع عبر خادم النشر
+            صياغة ونشر المحتوى فورياً على قنوات نثيل التسع عبر خادم النشر
           </p>
           {hubStatus?.details?.snapchat && !hubStatus.details.snapchat.ok && (
             <p className="mt-2 max-w-xl text-[11px] leading-relaxed text-rose-700">
@@ -366,6 +385,74 @@ export const SocialMediaSection = ({ posts = [], postsError = '', analytics = {}
           <span>جاهز للنشر: {selectedPlatforms.length} منصات محددة</span>
         </div>
       </div>
+
+      {/* ─── ZOHO SOCIAL — accounts already connected there, fetched live, not from .env ─── */}
+      {hubStatus?.details?.zoho_social && (
+        <div className="rounded-2xl bg-white border border-[#E2E8F0] p-4 shadow-sm">
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <h3 className="font-heading font-bold text-sm text-[#0F172A] flex items-center gap-2">
+              <Share2 className="w-4 h-4 text-[#1D6FD9]" />
+              <span>الحسابات المتصلة عبر Zoho Social</span>
+            </h3>
+            <div className="flex items-center gap-2">
+              <span
+                className={`text-[11px] font-semibold ${
+                  hubStatus.details.zoho_social.ok ? 'text-emerald-600' : 'text-rose-600'
+                }`}
+              >
+                {hubStatus.details.zoho_social.message}
+              </span>
+              {hubStatus.details.zoho_social.dashboard_url && (
+                <a
+                  href={hubStatus.details.zoho_social.dashboard_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#1D6FD9] text-white text-[11px] font-bold hover:bg-[#165AB8] transition-colors"
+                >
+                  <ExternalLink className="w-3 h-3" />
+                  <span>فتح لوحة Zoho Social</span>
+                </a>
+              )}
+            </div>
+          </div>
+          {hubStatus.details.zoho_social.channels?.length > 0 ? (
+            <div className="flex flex-wrap gap-2">
+              {hubStatus.details.zoho_social.channels.map((channel) => {
+                const href = channel.profile_url || hubStatus.details.zoho_social.dashboard_url;
+                return (
+                  <a
+                    key={channel.id}
+                    href={href || undefined}
+                    target="_blank"
+                    rel="noreferrer"
+                    title={channel.profile_url ? 'فتح الحساب على المنصة' : 'فتح داخل لوحة Zoho Social'}
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] hover:border-[#1D6FD9]/50 hover:bg-[#EFF6FF] transition-colors"
+                  >
+                    {channel.image_url && (
+                      <img src={channel.image_url} alt="" className="w-5 h-5 rounded-full object-cover" />
+                    )}
+                    <span className="text-xs font-bold text-[#0F172A]">{channel.name}</span>
+                    <span className="text-[10px] text-[#64748B] uppercase">{channel.network}</span>
+                    <span
+                      className={`w-1.5 h-1.5 rounded-full ${
+                        channel.status === 'token_active' ? 'bg-emerald-500' : 'bg-amber-500'
+                      }`}
+                      title={channel.status}
+                    />
+                    <ExternalLink className="w-3 h-3 text-[#94A3B8]" />
+                  </a>
+                );
+              })}
+            </div>
+          ) : (
+            hubStatus.details.zoho_social.ok && (
+              <p className="text-[11px] text-[#64748B]">
+                لا توجد حسابات مرتبطة بهذا الـ brand في Zoho Social بعد.
+              </p>
+            )
+          )}
+        </div>
+      )}
 
       {/* Main Grid: Formulaire (Left) + Live Mockup (Right) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -550,7 +637,7 @@ export const SocialMediaSection = ({ posts = [], postsError = '', analytics = {}
               <div className="flex items-center justify-between mb-2.5">
                 <label className="text-xs font-bold text-[#334155] flex items-center gap-1.5">
                   <Layers className="w-4 h-4 text-[#1D6FD9]" />
-                  <span>تحديد المنصات المستهدفة للنشر (المنصات السبع):</span>
+                  <span>تحديد المنصات المستهدفة للنشر (المنصات التسع):</span>
                 </label>
                 <button
                   type="button"
@@ -564,17 +651,17 @@ export const SocialMediaSection = ({ posts = [], postsError = '', analytics = {}
               </div>
 
               {/* 7 Platforms Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
+              <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-2">
                 {SOCIAL_PLATFORMS.map((platform) => {
                   const isSelected = selectedPlatforms.includes(platform.id);
                   const ready = hubStatus?.platforms?.[platform.id];
                   const check = hubStatus?.details?.[platform.id];
                   const connectionLabel = check
-                    ? (check.ok ? 'متصل' : 'الرمز مرفوض')
+                    ? (check.ok ? 'متصل' : 'غير متصل')
                     : ready
                       ? 'متصل'
                       : hubStatus
-                        ? 'social.env'
+                        ? 'غير متصل'
                         : 'جارٍ التحقق';
                   return (
                     <button
@@ -698,7 +785,7 @@ export const SocialMediaSection = ({ posts = [], postsError = '', analytics = {}
               <div>
                 <h3 className="font-heading font-bold text-base text-[#0F172A] flex items-center gap-2">
                   <Share2 className="w-4 h-4 text-[#1D6FD9]" />
-                  <span>تأكيد خيارات النشر عبر المنصات السبع</span>
+                  <span>تأكيد خيارات النشر عبر المنصات التسع</span>
                 </h3>
                 <p className="text-xs text-[#64748B] mt-0.5">
                   اختر المنصات التي ترغب ببث المنشور إليها فورياً:
@@ -827,9 +914,19 @@ export const SocialMediaSection = ({ posts = [], postsError = '', analytics = {}
             </p>
           )}
           {posts.map((post) => {
-            const metrics = aggregatePublicationMetrics(
-              (analytics.publications || []).filter((item) => item.hub_post_id === post.id),
-            );
+            // Posts sourced live from Zoho Social already carry their own real engagement
+            // numbers (post.stats); our local posts get theirs from the analytics join.
+            const metrics = post.source === 'zoho'
+              ? {
+                  available: Object.values(post.stats || {}).some((value) => value != null),
+                  likes_count: post.stats?.likes_count ?? null,
+                  comments_count: post.stats?.comments_count ?? null,
+                  shares_count: post.stats?.shares_count ?? null,
+                  views_count: post.stats?.views_count ?? null,
+                }
+              : aggregatePublicationMetrics(
+                  (analytics.publications || []).filter((item) => item.hub_post_id === post.id),
+                );
             return (
               <div
               key={post.id}
@@ -888,12 +985,21 @@ export const SocialMediaSection = ({ posts = [], postsError = '', analytics = {}
                   )}
 
                   <div className="pt-2 border-t border-slate-200 flex items-center justify-between text-[11px] text-[#64748B]">
-                    <span>{post.status === 'published' ? 'نُشر' : post.status === 'partial' ? 'نشر جزئي' : 'محفوظ'}</span>
+                    <span className="flex items-center gap-1.5">
+                      <span>{post.status === 'published' ? 'نُشر' : post.status === 'partial' ? 'نشر جزئي' : 'محفوظ'}</span>
+                      {post.source === 'zoho' && (
+                        <span className="px-1.5 py-0.5 rounded bg-[#EFF6FF] text-[#1D6FD9] text-[9px] font-bold">Zoho</span>
+                      )}
+                    </span>
                     <button
                       type="button"
-                      onClick={() => onDeletePost(post.id)}
+                      onClick={() => onDeletePost(post)}
                       className="text-rose-500 hover:text-rose-700 p-1 rounded"
-                      title="حذف المنشور"
+                      title={
+                        post.source === 'zoho'
+                          ? 'إزالة من القائمة وفتح المنشور لحذفه من Zoho Social أو المنصة'
+                          : 'حذف من سجلنا المحلي وفتح المنشور لحذفه من المنصة'
+                      }
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>

@@ -18,6 +18,8 @@ const platformNames = {
   twitter:   'تويتر (X)',
   pinterest: 'بنترست',
   youtube:   'يوتيوب',
+  facebook:  'فيسبوك',
+  threads:   'ثريدز',
 };
 
 const platformColors = {
@@ -28,6 +30,8 @@ const platformColors = {
   twitter:   '#1DA1F2',
   pinterest: '#BD081C',
   youtube:   '#FF0000',
+  facebook:  '#1877F2',
+  threads:   '#000000',
 };
 
 /* ── Main Modal ───────────────────────────────────────────────────────── */

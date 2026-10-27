@@ -249,45 +249,46 @@ const DetailPanel = ({ pillar, dir, isAr }) => {
 
   return (
     <motion.div
-      className="relative w-full my-auto flex flex-col items-center justify-center"
+      className="relative h-full flex flex-col justify-center"
       onMouseMove={onMove}
       onMouseLeave={onLeave}
       style={{ perspective: 1200 }}
     >
       <motion.div
-        className="relative w-full my-auto flex flex-col items-center justify-center text-center"
+        className="relative h-full flex flex-col justify-center"
         style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
       >
         {/* Floating icon orb */}
-        <div className="relative flex justify-center items-center mb-2.5 sm:mb-3" style={{ height: 68 }}>
+        <div className="relative flex justify-center mb-8" style={{ height: 140 }}>
           {/* Orbit rings */}
-          <OrbitRing radius={34} duration={12} opacity={0.5} />
-          <OrbitRing radius={48} duration={18} opacity={0.25} reversed />
+          <OrbitRing radius={70} duration={12} opacity={0.6} />
+          <OrbitRing radius={100} duration={18} opacity={0.35} reversed />
+          <OrbitRing radius={130} duration={26} opacity={0.2} />
 
           {/* Central icon */}
           <motion.div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-2xl flex items-center justify-center bg-white shadow-lg"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-18 h-18 rounded-[22px] flex items-center justify-center bg-white shadow-xl"
             style={{
               background: `radial-gradient(135deg at 30% 30%, ${pillar.accent}20, #ffffff)`,
               border: `1.5px solid ${pillar.accent}45`,
-              boxShadow: `0 8px 24px ${pillar.accent}25, 0 2px 8px rgba(10,22,40,0.05)`,
-              transform: 'translateZ(40px)',
+              boxShadow: `0 12px 35px ${pillar.accent}25, 0 4px 12px rgba(10,22,40,0.06)`,
+              transform: 'translateZ(50px)',
             }}
-            animate={{ scale: [1, 1.05, 1] }}
+            animate={{ scale: [1, 1.06, 1] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           >
-            <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" stroke={pillar.accent} strokeWidth="1.6">
+            <svg viewBox="0 0 24 24" fill="none" className="w-8 h-8" stroke={pillar.accent} strokeWidth="1.5">
               {icons[pillar.id]}
             </svg>
           </motion.div>
         </div>
 
         {/* Number */}
-        <motion.div className="text-center mb-1.5 sm:mb-2" style={{ transform: 'translateZ(25px)' }}>
+        <motion.div className="text-center mb-2" style={{ transform: 'translateZ(30px)' }}>
           <span
-            className="font-mono text-2xl sm:text-3xl font-black tracking-wider leading-none select-none"
+            className="font-mono text-[70px] font-black leading-none select-none"
             style={{
-              background: `linear-gradient(135deg, ${pillar.accent}, ${pillar.accent}80)`,
+              background: `linear-gradient(135deg, ${pillar.accent}35, ${pillar.accent}10)`,
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
             }}
@@ -297,21 +298,21 @@ const DetailPanel = ({ pillar, dir, isAr }) => {
         </motion.div>
 
         {/* Title */}
-        <div className="text-center mb-2.5 sm:mb-3 px-4" dir={dir} style={{ transform: 'translateZ(35px)' }}>
-          <h3 className="text-2xl sm:text-3xl lg:text-[32px] font-heading font-[900] leading-tight text-primary max-w-xl mx-auto">
+        <div className="text-center mb-5" dir={dir} style={{ transform: 'translateZ(40px)' }}>
+          <h3 className="text-3xl md:text-4xl lg:text-[44px] font-heading font-[900] leading-tight text-primary">
             {pillar.title}
           </h3>
         </div>
 
         {/* Tags */}
-        <div className="flex justify-center flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4 px-2" dir={dir}>
+        <div className="flex justify-center flex-wrap gap-2 mb-6" dir={dir}>
           {pillar.tags.map((tag, i) => (
             <motion.span
               key={tag}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4, delay: i * 0.08, ease }}
-              className="px-3 py-0.5 rounded-full text-xs font-semibold border"
+              className="px-3.5 py-1 rounded-full text-xs sm:text-sm font-semibold border"
               style={{
                 backgroundColor: `${pillar.accent}12`,
                 borderColor: `${pillar.accent}35`,
@@ -325,20 +326,19 @@ const DetailPanel = ({ pillar, dir, isAr }) => {
 
         {/* Short text */}
         <p
-          className="text-center text-text-secondary text-sm sm:text-base leading-relaxed mb-3 sm:mb-4 max-w-xl mx-auto font-medium px-4"
+          className="text-center text-text-secondary text-lg md:text-xl leading-[1.7] mb-5 max-w-lg mx-auto font-medium"
           dir={dir}
-          style={{ transform: 'translateZ(15px)' }}
+          style={{ transform: 'translateZ(20px)' }}
         >
           {pillar.text}
         </p>
 
         {/* Divider */}
         <motion.div
-          className="mx-auto mb-3 sm:mb-4 h-px"
+          className="mx-auto mb-4 h-px"
           style={{
             background: `linear-gradient(90deg, transparent, ${pillar.accent}40, transparent)`,
-            width: '45%',
-            maxWidth: 160,
+            width: '60%',
           }}
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
@@ -347,7 +347,7 @@ const DetailPanel = ({ pillar, dir, isAr }) => {
 
         {/* Detail */}
         <p
-          className="text-center text-text-muted text-xs sm:text-sm md:text-[15px] leading-relaxed max-w-xl mx-auto px-4"
+          className="text-center text-text-muted text-sm sm:text-base leading-[1.8] max-w-lg mx-auto"
           dir={dir}
           style={{ transform: 'translateZ(10px)' }}
         >
@@ -568,7 +568,7 @@ const CoreFocus = () => {
 
           {/* RIGHT — detail panel */}
           <div
-            className="relative lg:sticky lg:top-28 min-h-[640px] sm:min-h-[680px] md:min-h-[700px] lg:min-h-[720px] lg:h-[720px] rounded-3xl overflow-hidden bg-white shadow-[0_20px_50px_-15px_rgba(10,22,40,0.08)]"
+            className="relative lg:sticky lg:top-28 h-[520px] md:h-[580px] rounded-3xl overflow-hidden bg-white shadow-[0_20px_50px_-15px_rgba(10,22,40,0.08)]"
             style={{
               border: `1px solid ${activePillar.accent}30`,
             }}
@@ -600,7 +600,7 @@ const CoreFocus = () => {
             </div>
 
             {/* Prev / Next arrows */}
-            <div className="absolute top-1/2 -translate-y-1/2 inset-x-2 sm:inset-x-3 flex justify-between z-10 pointer-events-none">
+            <div className="absolute top-1/2 -translate-y-1/2 inset-x-3 flex justify-between z-10 pointer-events-none">
               {[
                 [-1, 'M15 18l-6-6 6-6'],
                 [1, 'M9 18l6-6-6-6'],
@@ -631,7 +631,7 @@ const CoreFocus = () => {
                 animate="center"
                 exit="exit"
                 transition={{ duration: 0.5, ease }}
-                className="absolute inset-0 px-6 sm:px-10 md:px-14 py-6 sm:py-8 overflow-y-auto overflow-x-hidden scrollbar-none flex flex-col justify-center"
+                className="absolute inset-0 px-6 py-8"
               >
                 <DetailPanel pillar={activePillar} dir={dir} isAr={isAr} />
               </motion.div>

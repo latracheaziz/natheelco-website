@@ -35,7 +35,7 @@ export const AdminHeader = ({ activeTab, setActiveTab, pendingReviewsCount = 0 }
   const navItems = [
     { id: 'all', label: 'نظرة شاملة', icon: LayoutDashboard },
     { id: 'statistics', label: 'الإحصائيات والتحليلات', icon: BarChart3, badge: 'مباشر' },
-    { id: 'social', label: 'منشورات التواصل الاجتماعي', icon: Share2, badge: '7 منصات' },
+    { id: 'social', label: 'منشورات التواصل الاجتماعي', icon: Share2, badge: '9 منصات' },
     { id: 'opinions', label: 'آراء ومراجعات العملاء', icon: MessageSquare, badge: pendingReviewsCount > 0 ? `${pendingReviewsCount} معلق` : null, badgeColor: 'bg-amber-500/20 text-amber-300 border-amber-500/30' },
   ];
 

@@ -38,10 +38,37 @@ export function syncHubAnalytics() {
   }).then(readBody);
 }
 
+// Posts sourced live from Zoho Social (GET /api/hub/posts merges these in) carry one
+// network per entry instead of our local "platforms" + "results" shape — normalize both
+// shapes into the same object the admin UI already knows how to render.
 export function toAdminPost(post) {
+  if (post.source === 'zoho') {
+    const manageUrl = post.manage_url || post.permalink || '';
+    return {
+      id: post.id,
+      source: 'zoho',
+      caption: post.caption || '',
+      mediaType: post.media_type || 'text',
+      mediaUrl: post.media_url || '',
+      videoUrl: post.media_type === 'video' ? (post.media_url || '') : '',
+      platforms: post.platform ? [post.platform] : [],
+      status: 'published',
+      publishedAt: post.created_at ? new Date(post.created_at).toLocaleString('ar') : 'الآن',
+      results: [{
+        platform: post.platform,
+        status: 'published',
+        message: post.from_name ? `نُشر عبر Zoho Social (${post.from_name})` : 'نُشر عبر Zoho Social',
+        url: manageUrl || null,
+      }],
+      stats: post.stats || {},
+      manageLinks: manageUrl ? [manageUrl] : [],
+    };
+  }
   const publishedAt = post.published_at || post.publishedAt;
+  const results = post.results || [];
   return {
     id: post.id,
+    source: post.source || 'local',
     caption: post.caption,
     mediaType: post.media_type || post.mediaType || 'text',
     mediaUrl: post.media_url || post.mediaUrl || '',
@@ -49,8 +76,9 @@ export function toAdminPost(post) {
     platforms: post.platforms || [],
     status: post.status || 'saved',
     publishedAt: publishedAt ? new Date(publishedAt).toLocaleString('ar') : 'الآن',
-    results: post.results || [],
+    results,
     stats: post.stats || {},
+    manageLinks: results.map((item) => item.url).filter(Boolean),
   };
 }
 
@@ -84,13 +112,21 @@ export async function publishHubPost({ caption, platforms, imageFile, videoFile,
   return readBody(response);
 }
 
-export async function deleteHubPost(id) {
-  const response = await fetch(`${API_BASE}/api/hub/posts/${id}`, {
+// Zoho Social has no API to delete an already-published post (only drafts/schedules) — so
+// posts sourced live from Zoho have nothing local to delete. We only call DELETE for posts
+// that exist in our own local record, and in both cases hand back the links the caller
+// should open so the admin can finish the deletion manually on Zoho/the network.
+export async function deleteHubPost(post) {
+  if (post.source === 'zoho') {
+    return { manageLinks: post.manageLinks || [] };
+  }
+  const response = await fetch(`${API_BASE}/api/hub/posts/${post.id}`, {
     method: 'DELETE',
     headers: adminHeaders(),
   });
-  if (response.status === 404) return;
-  await readBody(response);
+  if (response.status === 404) return { manageLinks: [] };
+  const data = await readBody(response);
+  return { manageLinks: data.manage_links || post.manageLinks || [] };
 }
 
 export async function fileFromUrl(url, filename) {

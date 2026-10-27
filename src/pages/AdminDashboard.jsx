@@ -133,13 +133,20 @@ export default function AdminDashboard() {
     setPosts((prev) => [newPost, ...prev]);
   };
 
-  const handleDeletePost = async (id) => {
+  // Zoho Social has no API to delete an already-published post, so deleting here always:
+  // 1) removes it from this dashboard's list (permanently for our own local posts; for
+  //    posts sourced live from Zoho it comes back on the next refresh until deleted there), and
+  // 2) opens the real post on Zoho/the network in a new tab so it can be deleted there too.
+  const handleDeletePost = async (post) => {
+    let manageLinks = [];
     try {
-      await deleteHubPost(id);
+      const result = await deleteHubPost(post);
+      manageLinks = result?.manageLinks || [];
     } catch {
       return;
     }
-    setPosts((prev) => prev.filter((p) => p.id !== id));
+    setPosts((prev) => prev.filter((p) => p.id !== post.id));
+    manageLinks.forEach((link) => window.open(link, '_blank', 'noopener,noreferrer'));
   };
 
   const pendingCount = opinions.filter((o) => o.status === 'pending').length;

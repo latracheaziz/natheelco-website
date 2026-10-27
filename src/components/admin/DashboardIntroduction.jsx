@@ -171,7 +171,7 @@ export const DashboardIntroduction = ({
     },
     {
       id: 'social',
-      title: 'بث ونشر المحتوى لـ 7 منصات',
+      title: 'بث ونشر المحتوى لـ 9 منصات',
       statBadge: `${connectedCount} منصات متصلة`,
       actionLabel: 'نموذج النشر',
       tabTarget: 'social',

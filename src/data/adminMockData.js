@@ -64,4 +64,22 @@ export const SOCIAL_PLATFORMS = [
     activeBg: 'bg-[#FF0000]/15 border-[#FF0000] text-[#FF0000]',
     iconKey: 'YouTube',
   },
+  {
+    id: 'facebook',
+    name: 'فيسبوك',
+    enName: 'Facebook',
+    color: '#1877F2',
+    hoverBg: 'hover:border-[#1877F2]/50 hover:bg-[#1877F2]/10',
+    activeBg: 'bg-[#1877F2]/15 border-[#1877F2] text-[#1877F2]',
+    iconKey: 'Facebook',
+  },
+  {
+    id: 'threads',
+    name: 'ثريدز',
+    enName: 'Threads',
+    color: '#000000',
+    hoverBg: 'hover:border-[#000000]/50 hover:bg-[#000000]/10',
+    activeBg: 'bg-[#000000]/15 border-[#000000] text-[#000000]',
+    iconKey: 'Threads',
+  },
 ];
