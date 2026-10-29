@@ -9,6 +9,9 @@ import { ClientOpinionSection } from '../components/admin/ClientOpinionSection';
 import { SocialMediaSection } from '../components/admin/SocialMediaSection';
 import { StatisticsSection } from '../components/admin/StatisticsSection';
 import { PostDetailModal } from '../components/admin/PostDetailModal';
+import { NewsSection } from '../components/admin/NewsSection';
+import { fetchNewsCounters } from '../api/news';
+import { EmailsSection } from '../components/admin/EmailsSection';
 import { decideReview, fetchAdminReviews, submitReview, toOpinion } from '../api/reviews';
 import {
   deleteHubPost,
@@ -34,6 +37,27 @@ export default function AdminDashboard() {
   const [analytics, setAnalytics] = useState({ accounts: [], publications: [], history: [] });
   const [analyticsError, setAnalyticsError] = useState('');
   const [analyticsLoading, setAnalyticsLoading] = useState(true);
+  const [newsCounts, setNewsCounts] = useState(null);
+
+  // Only the badge numbers, so the sidebar shows newly published news without opening the tab.
+  // Polled like the reviews above, so the badge stays current while the dashboard sits open.
+  useEffect(() => {
+    let stop = false;
+    const load = () => {
+      if (document.hidden) return;
+      fetchNewsCounters()
+        .then((data) => {
+          if (!stop) setNewsCounts(data.counts || null);
+        })
+        .catch(() => {});
+    };
+    load();
+    const timer = window.setInterval(load, 60000);
+    return () => {
+      stop = true;
+      window.clearInterval(timer);
+    };
+  }, []);
 
   useEffect(() => {
     let stop = false;
@@ -165,6 +189,7 @@ export default function AdminDashboard() {
         mobileOpen={mobileOpen}
         setMobileOpen={setMobileOpen}
         pendingCount={pendingCount}
+        newsNewCount={newsCounts?.new_unread || 0}
       />
 
       {/* ─── 2. MAIN CONTENT AREA (Left side in RTL) ─── */}
@@ -315,6 +340,32 @@ export default function AdminDashboard() {
                   </div>
                 ))}
               </div>
+            </motion.div>
+          )}
+
+          {/* TAB 6: أخبار وزارة السياحة (Ministry of Tourism news, read-only) */}
+          {activeTab === 'news' && (
+            <motion.div
+              key="news"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25 }}
+            >
+              <NewsSection onCountsChange={setNewsCounts} />
+            </motion.div>
+          )}
+
+          {/* TAB 7: البريد الإلكتروني (Mailbox, read-only via the provider's API) */}
+          {activeTab === 'emails' && (
+            <motion.div
+              key="emails"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25 }}
+            >
+              <EmailsSection />
             </motion.div>
           )}
 

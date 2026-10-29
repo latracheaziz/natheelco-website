@@ -1,21 +1,25 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Home, 
-  Megaphone, 
-  Star, 
+  Home,
+  Inbox,
+  Megaphone,
+  Newspaper,
+  Star,
   Share2, 
   BarChart3, 
   ShieldCheck, 
   X 
 } from 'lucide-react';
 
-const SidebarInner = ({ activeTab, onSelectTab, onCloseMobile, pendingCount = 0 }) => {
+const SidebarInner = ({ activeTab, onSelectTab, onCloseMobile, pendingCount = 0, newsNewCount = 0 }) => {
   const navItems = [
     { id: 'overview', label: 'الرئيسية', icon: Home },
     { id: 'opinions', label: 'آراء وتقييمات العملاء', icon: Star, badge: pendingCount > 0 ? `${pendingCount} معلق` : null },
     { id: 'social', label: 'التواصل الاجتماعي', icon: Share2 },
     { id: 'posts', label: 'سجل المنشورات', icon: Megaphone },
+    { id: 'news', label: 'أخبار وزارة السياحة', icon: Newspaper, badge: newsNewCount > 0 ? `${newsNewCount} جديد` : null },
+    { id: 'emails', label: 'البريد الإلكتروني', icon: Inbox },
     { id: 'statistics', label: 'الإحصائيات والتحليلات', icon: BarChart3 },
   ];
 
@@ -87,12 +91,13 @@ const SidebarInner = ({ activeTab, onSelectTab, onCloseMobile, pendingCount = 0 
   );
 };
 
-export const AdminSidebar = ({ 
-  activeTab, 
-  setActiveTab, 
-  mobileOpen = false, 
+export const AdminSidebar = ({
+  activeTab,
+  setActiveTab,
+  mobileOpen = false,
   setMobileOpen = () => {},
   pendingCount = 0,
+  newsNewCount = 0,
 }) => {
   const handleSelectTab = (id) => {
     setActiveTab(id);
@@ -107,6 +112,7 @@ export const AdminSidebar = ({
           activeTab={activeTab} 
           onSelectTab={handleSelectTab}
           pendingCount={pendingCount}
+          newsNewCount={newsNewCount}
         />
       </aside>
 
@@ -136,6 +142,7 @@ export const AdminSidebar = ({
                 onSelectTab={handleSelectTab} 
                 onCloseMobile={() => setMobileOpen(false)}
                 pendingCount={pendingCount}
+                newsNewCount={newsNewCount}
               />
             </motion.aside>
           </div>
