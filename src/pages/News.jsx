@@ -11,11 +11,15 @@ import {
 import { useLanguage } from '../context/LanguageContext';
 
 const PAGE_SIZE = 9;
+// Temporary switch: set to true to display Ministry of Tourism news alongside Natheel blog
+const SHOW_MINISTRY_NEWS = false;
 
 const COPY = {
   ar: {
     title: 'الأخبار',
-    lead: 'أخبار نثيل وأحدث ما ينشره المركز الإعلامي لوزارة السياحة.',
+    lead: SHOW_MINISTRY_NEWS
+      ? 'أخبار نثيل وأحدث ما ينشره المركز الإعلامي لوزارة السياحة.'
+      : 'أخبار ومقالات نثيل وكل جديد عن مشاريعنا.',
     all: 'الكل',
     natheel: 'أخبار نثيل',
     ministry: 'وزارة السياحة',
@@ -34,7 +38,9 @@ const COPY = {
   },
   en: {
     title: 'News',
-    lead: "Natheel's news, alongside the latest from the Ministry of Tourism newsroom.",
+    lead: SHOW_MINISTRY_NEWS
+      ? "Natheel's news, alongside the latest from the Ministry of Tourism newsroom."
+      : "Natheel's news, articles, and latest project updates.",
     all: 'All',
     natheel: 'Natheel news',
     ministry: 'Ministry of Tourism',
@@ -274,17 +280,20 @@ const News = () => {
   const load = useCallback(() => {
     setLoading(true);
     setError('');
-    Promise.allSettled([
-      fetchPublicPosts({ limit: 50 }),
-      fetchPublicMinistryNews({ limit: 50, locale }),
-    ])
+    const requests = [fetchPublicPosts({ limit: 50 })];
+    if (SHOW_MINISTRY_NEWS) {
+      requests.push(fetchPublicMinistryNews({ limit: 50, locale }));
+    }
+    Promise.allSettled(requests)
       .then(([own, ministry]) => {
         const ownItems = own.status === 'fulfilled' ? own.value.items || [] : [];
         const ministryItems =
-          ministry.status === 'fulfilled' && !ministry.value.unavailable
+          SHOW_MINISTRY_NEWS && ministry?.status === 'fulfilled' && !ministry.value.unavailable
             ? ministry.value.items || []
             : [];
-        setMinistryDown(ministry.status !== 'fulfilled' || Boolean(ministry.value?.unavailable));
+        setMinistryDown(
+          SHOW_MINISTRY_NEWS && (ministry?.status !== 'fulfilled' || Boolean(ministry?.value?.unavailable))
+        );
         if (own.status === 'rejected' && ministryItems.length === 0) {
           setError(copy.error);
         }
@@ -304,11 +313,13 @@ const News = () => {
   const filtered = items.filter((item) => filter === 'all' || item.origin === filter);
   const page = filtered.slice(0, visible);
 
-  const tabs = [
-    { id: 'all', label: copy.all },
-    { id: 'natheel', label: copy.natheel },
-    { id: 'ministry', label: copy.ministry },
-  ];
+  const tabs = SHOW_MINISTRY_NEWS
+    ? [
+        { id: 'all', label: copy.all },
+        { id: 'natheel', label: copy.natheel },
+        { id: 'ministry', label: copy.ministry },
+      ]
+    : [];
 
   return (
     <div dir={dir} className="bg-white">
@@ -328,25 +339,27 @@ const News = () => {
       </section>
 
       <section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
-        <div className="mb-6 flex flex-wrap justify-center gap-2">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              type="button"
-              onClick={() => setFilter(tab.id)}
-              aria-pressed={filter === tab.id}
-              className={`rounded-full border px-5 py-2 text-xs font-bold transition-colors ${
-                filter === tab.id
-                  ? 'border-[#0B3B46] bg-[#0B3B46] text-white'
-                  : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
+        {SHOW_MINISTRY_NEWS && tabs.length > 0 && (
+          <div className="mb-6 flex flex-wrap justify-center gap-2">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setFilter(tab.id)}
+                aria-pressed={filter === tab.id}
+                className={`rounded-full border px-5 py-2 text-xs font-bold transition-colors ${
+                  filter === tab.id
+                    ? 'border-[#0B3B46] bg-[#0B3B46] text-white'
+                    : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        )}
 
-        {ministryDown && !loading && (
+        {SHOW_MINISTRY_NEWS && ministryDown && !loading && (
           <div className="mx-auto mb-6 flex max-w-2xl items-center gap-2 rounded-xl border border-amber-200 bg-amber-50 px-4 py-2.5 text-xs text-amber-800">
             <AlertTriangle className="h-4 w-4 flex-shrink-0" />
             <span>{copy.ministryDown}</span>
