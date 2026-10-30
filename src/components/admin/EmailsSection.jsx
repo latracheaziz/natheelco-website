@@ -465,20 +465,6 @@ export const EmailsSection = () => {
 
   return (
     <div className="space-y-4">
-      {/* Work-in-progress notice: the UI is complete but no mailbox is attached yet. */}
-      <div className="flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3">
-        <AlertTriangle className="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-600" />
-        <div>
-          <p className="text-sm font-bold text-amber-900">
-            هذا القسم قيد التطوير ولا يعمل بعد
-          </p>
-          <p className="mt-0.5 text-[11px] leading-relaxed text-amber-800">
-            الواجهة جاهزة، ويتبقّى ربط صندوق البريد بالخادم. ما يظهر أدناه هو شكل القسم بعد
-            اكتمال الربط.
-          </p>
-        </div>
-      </div>
-
       {/* Header */}
       <div className="flex flex-col gap-3 pb-1 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">

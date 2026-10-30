@@ -10,6 +10,7 @@ import About from './pages/About';
 import HowWeWork from './pages/HowWeWork';
 import Roots from './pages/Roots';
 import Contact from './pages/Contact';
+import News from './pages/News';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminLogin from './pages/AdminLogin';
 import { ADMIN_TOKEN_KEY } from './api/reviews';
@@ -79,6 +80,8 @@ const AnimatedRoutes = () => {
             <Route path="/how-we-work" element={<HowWeWork />} />
             <Route path="/جذورنا" element={<Roots />} />
             <Route path="/roots" element={<Roots />} />
+            <Route path="/الأخبار" element={<News />} />
+            <Route path="/news" element={<News />} />
             <Route path="/اتصل-بنا" element={<Contact />} />
             <Route path="/contact" element={<Contact />} />
 

@@ -9,7 +9,7 @@ import { ClientOpinionSection } from '../components/admin/ClientOpinionSection';
 import { SocialMediaSection } from '../components/admin/SocialMediaSection';
 import { StatisticsSection } from '../components/admin/StatisticsSection';
 import { PostDetailModal } from '../components/admin/PostDetailModal';
-import { NewsSection } from '../components/admin/NewsSection';
+import { AdminNewsPanel } from '../components/admin/AdminNewsPanel';
 import { fetchNewsCounters } from '../api/news';
 import { EmailsSection } from '../components/admin/EmailsSection';
 import { decideReview, fetchAdminReviews, submitReview, toOpinion } from '../api/reviews';
@@ -352,7 +352,7 @@ export default function AdminDashboard() {
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.25 }}
             >
-              <NewsSection onCountsChange={setNewsCounts} />
+              <AdminNewsPanel onCountsChange={setNewsCounts} />
             </motion.div>
           )}
 

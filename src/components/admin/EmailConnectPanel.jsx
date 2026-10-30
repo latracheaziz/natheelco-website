@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
   AlertTriangle,
   Check,
-  ChevronDown,
-  Copy,
   ExternalLink,
   Link2,
   Loader2,
@@ -14,59 +12,20 @@ import {
 } from 'lucide-react';
 import { startMailboxConnect } from '../../api/emails';
 
-const CopyRow = ({ value }) => {
-  const [copied, setCopied] = useState(false);
-  const copy = () => {
-    navigator.clipboard?.writeText(value).then(
-      () => {
-        setCopied(true);
-        window.setTimeout(() => setCopied(false), 1800);
-      },
-      () => {},
-    );
-  };
-  return (
-    <div className="flex items-center gap-2 rounded-lg border border-[#E2E8F0] bg-white px-3 py-2">
-      <code dir="ltr" className="min-w-0 flex-1 truncate font-mono text-[11px] text-[#0F172A]">
-        {value}
-      </code>
-      <button
-        type="button"
-        onClick={copy}
-        aria-label="نسخ"
-        className="flex-shrink-0 rounded-md p-1 text-[#64748B] hover:bg-[#F1F5F9] hover:text-[#0F172A]"
-      >
-        {copied ? <Check className="h-3.5 w-3.5 text-emerald-600" /> : <Copy className="h-3.5 w-3.5" />}
-      </button>
-    </div>
-  );
-};
-
-const Step = ({ n, title, children }) => (
-  <li className="flex gap-3">
-    <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-[#1D6FD9] text-[11px] font-bold text-white">
-      {n}
-    </span>
-    <div className="min-w-0 flex-1 space-y-1.5 pb-1">
-      <p className="text-xs font-bold text-[#0F172A]">{title}</p>
-      <div className="space-y-1.5 text-[11px] leading-relaxed text-[#475569]">{children}</div>
-    </div>
-  </li>
-);
-
 /* ── Layout preview ──────────────────────────────────────────────────────
    The same row structure EmailsSection renders once a mailbox is attached, with the field
-   names in place of content. Deliberately not sample messages: nothing here should read as
-   real mail. */
+   names standing in for content. Deliberately not sample messages: nothing here should read
+   as real mail. The full setup instructions live in backend/.env.example. */
 const PLACEHOLDER_ROWS = [
   { unread: true, attachment: true },
   { unread: true, attachment: false },
   { unread: false, attachment: false },
+  { unread: false, attachment: true },
 ];
 
 const InboxPreview = () => (
   <div className="space-y-2">
-    <div className="flex items-center justify-between gap-2">
+    <div className="flex flex-wrap items-center justify-between gap-2">
       <p className="text-xs font-bold text-[#0F172A]">شكل صندوق الوارد بعد الربط</p>
       <span className="rounded-full bg-[#F1F5F9] px-2 py-0.5 text-[10px] font-bold text-[#64748B]">
         معاينة للتنسيق — ليست رسائل حقيقية
@@ -107,7 +66,11 @@ const InboxPreview = () => (
               <span dir="ltr" className="truncate text-[10px] text-[#94A3B8]">
                 sender@example.com
               </span>
-              <span className={`truncate text-xs ${row.unread ? 'font-bold text-[#0F172A]' : 'text-[#475569]'}`}>
+              <span
+                className={`truncate text-xs ${
+                  row.unread ? 'font-bold text-[#0F172A]' : 'text-[#475569]'
+                }`}
+              >
                 موضوع الرسالة
               </span>
               <span className="text-[11px] leading-relaxed text-[#64748B]">
@@ -141,17 +104,15 @@ const InboxPreview = () => (
   </div>
 );
 
-/** Shown whenever no mailbox is attached. Every instruction comes from the backend's status
- *  payload, so the page never implies a connection that does not exist. */
+/** Shown whenever no mailbox is attached: a slim status line plus what the page will look
+ *  like once it is. The server-side setup steps are documented in backend/.env.example. */
 export const EmailConnectPanel = ({ status, onRefresh }) => {
   const [connecting, setConnecting] = useState(false);
   const [error, setError] = useState('');
-  const [stepsOpen, setStepsOpen] = useState(false);
 
   const needsCredentials = status?.next_step === 'configure_credentials';
   const needsReconnect = status?.next_step === 'reconnect_mailbox';
-  const required = status?.required_settings || [];
-  const scopes = status?.scopes || [];
+  const missing = status?.required_settings || [];
 
   const connect = () => {
     setConnecting(true);
@@ -178,7 +139,6 @@ export const EmailConnectPanel = ({ status, onRefresh }) => {
       animate={{ opacity: 1, y: 0 }}
       className="space-y-5 rounded-2xl border border-[#E2E8F0] bg-white p-5 sm:p-6"
     >
-      {/* Compact status strip */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-start gap-3">
           <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-[#EFF6FF] text-[#1D6FD9]">
@@ -188,9 +148,15 @@ export const EmailConnectPanel = ({ status, onRefresh }) => {
             <h4 className="font-heading text-sm font-bold text-[#0F172A]">
               {needsReconnect ? 'يلزم إعادة ربط صندوق البريد' : 'صندوق البريد غير مرتبط بعد'}
             </h4>
-            <p className="mt-0.5 text-[11px] text-[#64748B]">
+            <p className="mt-0.5 text-[11px] leading-relaxed text-[#64748B]">
               المزوّد: {status?.provider_label || '—'}
-              {needsCredentials && ' · بانتظار إعداد المفاتيح على الخادم'}
+              {needsCredentials && missing.length > 0 && (
+                <>
+                  {' · '}
+                  بانتظار إعداد <span className="font-mono">{missing.join('، ')}</span> في
+                  ملف backend/.env على الخادم
+                </>
+              )}
             </p>
           </div>
         </div>
@@ -208,10 +174,14 @@ export const EmailConnectPanel = ({ status, onRefresh }) => {
             type="button"
             onClick={connect}
             disabled={connecting || needsCredentials}
-            title={needsCredentials ? 'أكمل خطوات الإعداد أولاً' : undefined}
+            title={needsCredentials ? 'بانتظار إعداد المفاتيح على الخادم' : undefined}
             className="inline-flex items-center gap-2 rounded-xl bg-[#1D6FD9] px-4 py-2 text-[11px] font-bold text-white hover:bg-[#1859B0] disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {connecting ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Link2 className="h-3.5 w-3.5" />}
+            {connecting ? (
+              <Loader2 className="h-3.5 w-3.5 animate-spin" />
+            ) : (
+              <Link2 className="h-3.5 w-3.5" />
+            )}
             {connecting ? 'جارٍ التحويل...' : 'ربط البريد'}
           </button>
         </div>
@@ -224,104 +194,7 @@ export const EmailConnectPanel = ({ status, onRefresh }) => {
         </div>
       )}
 
-      {/* What the page will look like — the point of this screen before connecting */}
       <InboxPreview />
-
-      {/* Setup steps: available, but folded away so they do not dominate the page */}
-      {needsCredentials && (
-        <div className="rounded-xl border border-[#E2E8F0] bg-[#F8FAFC]">
-          <button
-            type="button"
-            onClick={() => setStepsOpen((v) => !v)}
-            aria-expanded={stepsOpen}
-            className="flex w-full items-center justify-between gap-2 px-4 py-3 text-right"
-          >
-            <span className="text-xs font-bold text-[#0F172A]">
-              خطوات الإعداد المطلوبة مرة واحدة
-              <span className="mr-2 font-normal text-[#64748B]">
-                ({required.length} متغيرات بيئة على الخادم)
-              </span>
-            </span>
-            <ChevronDown
-              className={`h-4 w-4 flex-shrink-0 text-[#64748B] transition-transform ${
-                stepsOpen ? 'rotate-180' : ''
-              }`}
-            />
-          </button>
-
-          <AnimatePresence initial={false}>
-            {stepsOpen && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: 'auto', opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="overflow-hidden"
-              >
-                <ol className="space-y-4 border-t border-[#E2E8F0] px-4 py-4">
-                  <Step n="1" title="أنشئ أو افتح مشروعاً في Google Cloud Console">
-                    <a
-                      href="https://console.cloud.google.com/projectcreate"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 font-bold text-[#1D6FD9] hover:underline"
-                    >
-                      console.cloud.google.com <ExternalLink className="h-3 w-3" />
-                    </a>
-                  </Step>
-
-                  <Step n="2" title="فعّل Gmail API">
-                    <p>
-                      من <span className="font-mono">APIs &amp; Services → Library</span> ابحث عن
-                      «Gmail API» ثم اضغط Enable.
-                    </p>
-                  </Step>
-
-                  <Step n="3" title="أضف نطاق الصلاحية في تبويب Data access">
-                    <p>قراءة الرسائل وتغيير حالة القراءة فقط، بدون أي صلاحية إرسال:</p>
-                    {scopes.map((scope) => (
-                      <CopyRow key={scope} value={scope} />
-                    ))}
-                    <p>
-                      ومن تبويب <span className="font-mono">Audience</span> اختر نوع المستخدم
-                      (Internal إن كان المشروع ضمن مؤسسة Google Workspace، وإلا External مع إضافة
-                      بريدك في Test users).
-                    </p>
-                  </Step>
-
-                  <Step n="4" title="أنشئ عميل OAuth من تبويب Clients">
-                    <p>
-                      النوع <span className="font-mono">Web application</span>، وأضف هذا العنوان
-                      حرفياً في <span className="font-mono">Authorized redirect URIs</span>:
-                    </p>
-                    {status?.redirect_uri && <CopyRow value={status.redirect_uri} />}
-                    <p className="text-[#92400E]">
-                      يجب أن يكون مطابقاً تماماً، و HTTPS في بيئة الإنتاج.
-                    </p>
-                  </Step>
-
-                  <Step n="5" title="ضع المفاتيح في ملف backend/.env ثم أعد تشغيل الخادم">
-                    {required.map((name) => (
-                      <CopyRow key={name} value={`${name}=`} />
-                    ))}
-                    {status?.encryption_ready === false && (
-                      <div className="space-y-1.5 rounded-lg border border-amber-200 bg-amber-50 p-2.5">
-                        <p className="font-bold text-amber-900">
-                          ENCRYPTION_KEY فارغ، وهو مطلوب لتشفير رموز الوصول. أنشئ قيمة له:
-                        </p>
-                        <CopyRow value={'python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"'} />
-                        <p className="text-amber-800">
-                          احتفظ بالقيمة؛ تغييرها لاحقاً يستلزم إعادة الربط.
-                        </p>
-                      </div>
-                    )}
-                  </Step>
-                </ol>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      )}
     </motion.div>
   );
 };
