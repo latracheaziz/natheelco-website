@@ -16,38 +16,38 @@ const SHOW_MINISTRY_NEWS = false;
 
 const COPY = {
   ar: {
-    title: 'الأخبار',
+    title: 'مستجدات نثيل',
     lead: SHOW_MINISTRY_NEWS
-      ? 'أخبار نثيل وأحدث ما ينشره المركز الإعلامي لوزارة السياحة.'
-      : 'أخبار ومقالات نثيل وكل جديد عن مشاريعنا.',
+      ? 'مستجدات نثيل وأحدث ما ينشره المركز الإعلامي لوزارة السياحة.'
+      : 'مستجدات ومقالات نثيل وكل جديد عن مشاريعنا.',
     all: 'الكل',
-    natheel: 'أخبار نثيل',
+    natheel: 'مستجدات نثيل',
     ministry: 'وزارة السياحة',
     more: 'تحميل المزيد',
     loading: 'جارٍ التحميل...',
-    empty: 'لا توجد أخبار لعرضها حالياً.',
-    error: 'تعذر تحميل الأخبار. حاول مرة أخرى لاحقاً.',
+    empty: 'لا توجد مستجدات لعرضها حالياً.',
+    error: 'تعذر تحميل المستجدات. حاول مرة أخرى لاحقاً.',
     retry: 'إعادة المحاولة',
-    ministryDown: 'أخبار وزارة السياحة غير متاحة حالياً. تظهر أخبار نثيل فقط.',
-    read: 'اقرأ الخبر',
+    ministryDown: 'أخبار وزارة السياحة غير متاحة حالياً. تظهر مستجدات نثيل فقط.',
+    read: 'اقرأ المزيد',
     source: 'المصدر',
-    original: 'عرض الخبر الأصلي',
+    original: 'عرض المصدر الأصلي',
     close: 'إغلاق',
     noDate: 'بدون تاريخ',
     noImage: 'لا توجد صورة',
   },
   en: {
-    title: 'News',
+    title: 'Natheel Updates',
     lead: SHOW_MINISTRY_NEWS
-      ? "Natheel's news, alongside the latest from the Ministry of Tourism newsroom."
-      : "Natheel's news, articles, and latest project updates.",
+      ? "Natheel's updates, alongside the latest from the Ministry of Tourism newsroom."
+      : "Natheel's updates, articles, and latest project developments.",
     all: 'All',
-    natheel: 'Natheel news',
+    natheel: 'Natheel Updates',
     ministry: 'Ministry of Tourism',
     more: 'Load more',
     loading: 'Loading…',
-    empty: 'There are no news items to show yet.',
-    error: 'Could not load the news. Please try again later.',
+    empty: 'There are no updates to show yet.',
+    error: 'Could not load updates. Please try again later.',
     retry: 'Try again',
     ministryDown: 'Ministry of Tourism news is unavailable right now. Showing Natheel news only.',
     read: 'Read article',

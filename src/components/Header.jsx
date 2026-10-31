@@ -12,14 +12,14 @@ const getNavLinks = (isEn) =>
         { name: 'About Natheel', href: '/about', aliases: ['/about', '/عن-نثيل'] },
         { name: 'How We Work', href: '/how-we-work', aliases: ['/how-we-work', '/كيف-نعمل'] },
         { name: 'Our Roots', href: '/roots', aliases: ['/roots', '/جذورنا'] },
-        { name: 'News', href: '/news', aliases: ['/news', '/الأخبار'] },
+        { name: 'Natheel Updates', href: '/news', aliases: ['/news', '/الأخبار', '/مستجدات-نثيل'] },
       ]
     : [
         { name: 'الرئيسية', href: '/', aliases: ['/'] },
         { name: 'عن نثيل', href: '/عن-نثيل', aliases: ['/عن-نثيل', '/about'] },
         { name: 'كيف نعمل', href: '/كيف-نعمل', aliases: ['/كيف-نعمل', '/how-we-work'] },
         { name: 'جذورنا', href: '/جذورنا', aliases: ['/جذورنا', '/roots'] },
-        { name: 'الأخبار', href: '/الأخبار', aliases: ['/الأخبار', '/news'] },
+        { name: 'مستجدات نثيل', href: '/الأخبار', aliases: ['/الأخبار', '/news', '/مستجدات-نثيل'] },
       ];
 
 const isActivePath = (pathname, link) => {

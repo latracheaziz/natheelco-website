@@ -81,6 +81,7 @@ const AnimatedRoutes = () => {
             <Route path="/جذورنا" element={<Roots />} />
             <Route path="/roots" element={<Roots />} />
             <Route path="/الأخبار" element={<News />} />
+            <Route path="/مستجدات-نثيل" element={<News />} />
             <Route path="/news" element={<News />} />
             <Route path="/اتصل-بنا" element={<Contact />} />
             <Route path="/contact" element={<Contact />} />
