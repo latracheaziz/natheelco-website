@@ -38,6 +38,7 @@ const PageHero = ({
   useFluidWave = false,
   hideEyebrowLine = false,
   contentClassName = '',
+  dir = 'rtl',
   children,
 }) => {
   const ref = useRef(null);
@@ -87,7 +88,7 @@ const PageHero = ({
       <motion.div
         style={{ rotateX, y, opacity, transformPerspective: 1200, transformOrigin: '50% 0%' }}
         className={contentClassName || "container-premium section-padding pt-40 pb-24 lg:pt-48 lg:pb-32 relative z-10 w-full"}
-        dir="rtl"
+        dir={dir}
       >
         {eyebrow && (
           <motion.div
