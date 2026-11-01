@@ -1,168 +1,148 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
-// Generate subtle floating particles for a premium "dust" effect
-const particles = Array.from({ length: 15 }).map((_, i) => ({
-  id: i,
-  x: Math.random() * 1440,
-  y: Math.random() * 600,
-  size: Math.random() * 3 + 1,
-  duration: Math.random() * 15 + 15,
-  delay: Math.random() * 5,
-}));
+const DURATION = 16;
+
+const layers = {
+  far: [
+    'M-220 390 C160 250 430 540 760 430 C1080 325 1320 540 1820 395 L1820 900 L-220 900 Z',
+    'M-220 415 C180 275 455 555 780 450 C1100 350 1340 555 1820 420 L1820 900 L-220 900 Z',
+    'M-220 390 C160 250 430 540 760 430 C1080 325 1320 540 1820 395 L1820 900 L-220 900 Z',
+  ],
+  mid: [
+    'M-220 310 C200 175 460 470 790 355 C1110 245 1360 455 1820 310 L1820 900 L-220 900 Z',
+    'M-220 335 C220 195 485 490 810 375 C1130 270 1380 475 1820 335 L1820 900 L-220 900 Z',
+    'M-220 310 C200 175 460 470 790 355 C1110 245 1360 455 1820 310 L1820 900 L-220 900 Z',
+  ],
+  silk: [
+    'M-260 175 C90 35 370 285 680 165 C990 45 1270 250 1880 130 L1880 310 C1270 430 990 225 680 345 C370 465 90 215 -260 355 Z',
+    'M-260 200 C110 55 390 305 700 185 C1010 70 1290 270 1880 155 L1880 335 C1290 450 1010 250 700 365 C390 480 110 235 -260 380 Z',
+    'M-260 175 C90 35 370 285 680 165 C990 45 1270 250 1880 130 L1880 310 C1270 430 990 225 680 345 C370 465 90 215 -260 355 Z',
+  ],
+  crest: [
+    'M-260 175 C90 35 370 285 680 165 C990 45 1270 250 1880 130',
+    'M-260 200 C110 55 390 305 700 185 C1010 70 1290 270 1880 155',
+    'M-260 175 C90 35 370 285 680 165 C990 45 1270 250 1880 130',
+  ],
+  near: [
+    'M-220 545 C210 455 500 680 850 585 C1190 495 1430 685 1820 540 L1820 900 L-220 900 Z',
+    'M-220 565 C230 475 520 695 870 605 C1210 515 1450 700 1820 560 L1820 900 L-220 900 Z',
+    'M-220 545 C210 455 500 680 850 585 C1190 495 1430 685 1820 540 L1820 900 L-220 900 Z',
+  ],
+  foam: [
+    'M-220 605 C250 545 540 720 880 635 C1220 555 1460 720 1820 600',
+    'M-220 625 C270 565 560 735 900 650 C1240 575 1480 735 1820 620',
+    'M-220 605 C250 545 540 720 880 635 C1220 555 1460 720 1820 600',
+  ],
+};
 
 const BlueWaveBackground = () => {
+  const reduceMotion = useReducedMotion();
+  const animatePath = (frames) => (reduceMotion ? { d: frames[0] } : { d: frames });
+  const wave = (duration, delay = 0) =>
+    reduceMotion
+      ? { duration: 0 }
+      : { duration, delay, repeat: Infinity, ease: 'easeInOut' };
+
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 bg-[#0A1628]">
-      {/* Ambient gradient glow in the background for volumetric feel */}
-      <div className="absolute top-[-20%] left-[-20%] w-[80%] h-[80%] bg-[#5FD4E6] rounded-full blur-[150px] opacity-35" />
-      <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-[#3AA8BC] rounded-full blur-[150px] opacity-10" />
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 bg-[#0A1628]" aria-hidden="true">
+      <div className="absolute -top-[36%] left-[-10%] h-[70%] w-[62%] rounded-full bg-[#1B3A5C] opacity-40 blur-[130px]" />
+      <div className="absolute -bottom-[30%] right-[-14%] h-[58%] w-[50%] rounded-full bg-[#2E8B9C] opacity-[0.16] blur-[140px]" />
 
       <motion.svg
-        viewBox="0 0 1440 600"
+        viewBox="0 0 1600 800"
         preserveAspectRatio="xMidYMid slice"
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out"
+        className="absolute inset-0 h-full w-full"
         style={{
-          x: 'calc(var(--roots-pointer-x, 0px) * 2.5)',
-          y: 'calc(var(--roots-pointer-y, 0px) * 2.5)',
-          scale: 1.08
+          x: reduceMotion ? 0 : 'calc(var(--roots-pointer-x, 0px) * 2.2)',
+          y: reduceMotion ? 0 : 'calc(var(--roots-pointer-y, 0px) * 2.2)',
+          scale: 1.06,
         }}
       >
         <defs>
-          <linearGradient id="darkBg" x1="0%" y1="100%" x2="100%" y2="0%">
+          <linearGradient id="bw-base" x1="0%" y1="100%" x2="70%" y2="0%">
+            <stop offset="0%" stopColor="#060E1A" />
+            <stop offset="55%" stopColor="#0A1628" />
+            <stop offset="100%" stopColor="#132240" />
+          </linearGradient>
+          <linearGradient id="bw-far" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#132240" />
+            <stop offset="100%" stopColor="#0A1628" />
+          </linearGradient>
+          <linearGradient id="bw-mid" x1="8%" y1="0%" x2="92%" y2="100%">
+            <stop offset="0%" stopColor="#1B3A5C" />
+            <stop offset="48%" stopColor="#164456" />
+            <stop offset="100%" stopColor="#0A1628" />
+          </linearGradient>
+          <linearGradient id="bw-silk" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#2E8B9C" />
+            <stop offset="22%" stopColor="#1B3A5C" />
+            <stop offset="100%" stopColor="#0A1628" />
+          </linearGradient>
+          <linearGradient id="bw-near" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#0A1628" />
-            <stop offset="100%" stopColor="#1B3A5C" />
+            <stop offset="100%" stopColor="#060E1A" />
           </linearGradient>
-          
-          <linearGradient id="topBlue" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#306090" />
-            <stop offset="50%" stopColor="#1E3A68" />
-            <stop offset="100%" stopColor="#122545" />
+          <linearGradient id="bw-crest" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#3AA8BC" stopOpacity="0.1" />
+            <stop offset="38%" stopColor="#5FD4E6" />
+            <stop offset="52%" stopColor="#EAFBFF" />
+            <stop offset="68%" stopColor="#5FD4E6" />
+            <stop offset="100%" stopColor="#2E8B9C" stopOpacity="0.15" />
           </linearGradient>
-
-          <linearGradient id="waveLine" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#3AA8BC" />
-            <stop offset="50%" stopColor="#2E8B9C" />
-            <stop offset="100%" stopColor="#3AA8BC" />
+          <linearGradient id="bw-foam" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#3AA8BC" stopOpacity="0" />
+            <stop offset="50%" stopColor="#5FD4E6" stopOpacity="0.35" />
+            <stop offset="100%" stopColor="#2E8B9C" stopOpacity="0" />
           </linearGradient>
-
-          <filter id="waveGlow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="15" result="blur" />
-            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          <filter id="bw-glow" x="-8%" y="-40%" width="116%" height="180%" colorInterpolationFilters="sRGB">
+            <feGaussianBlur stdDeviation="6" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
           </filter>
-          
-          <filter id="dropShadow" x="-10%" y="-10%" width="120%" height="120%">
-            <feDropShadow dx="0" dy="25" stdDeviation="25" floodColor="#000" floodOpacity="0.8"/>
+          <filter id="bw-shadow" x="-6%" y="-12%" width="112%" height="130%" colorInterpolationFilters="sRGB">
+            <feDropShadow dx="0" dy="22" stdDeviation="16" floodColor="#02060d" floodOpacity="0.45" />
           </filter>
         </defs>
 
-        {/* Base dark background */}
-        <rect width="1440" height="600" fill="url(#darkBg)" />
+        <rect width="1600" height="800" fill="url(#bw-base)" />
 
-        {/* Particles */}
-        {particles.map(p => (
-          <motion.circle
-            key={p.id}
-            cx={p.x}
-            cy={p.y}
-            r={p.size}
-            fill="#5FD4E6"
-            opacity={0.3}
-            filter="url(#waveGlow)"
-            animate={{
-              y: [p.y, p.y - 200],
-              x: [p.x, p.x + 80],
-              opacity: [0, 0.5, 0]
-            }}
-            transition={{
-              duration: p.duration,
-              repeat: Infinity,
-              ease: "linear",
-              delay: p.delay
-            }}
-          />
-        ))}
-
-        {/* Top bright blue area (extended beyond edges to prevent clipping during parallax) */}
+        <motion.path d={layers.far[0]} animate={animatePath(layers.far)} transition={wave(DURATION + 4)} fill="url(#bw-far)" />
+        <motion.path d={layers.mid[0]} animate={animatePath(layers.mid)} transition={wave(DURATION + 1, 0.4)} fill="url(#bw-mid)" opacity="0.92" />
+        <motion.path d={layers.silk[0]} animate={animatePath(layers.silk)} transition={wave(DURATION)} fill="url(#bw-silk)" filter="url(#bw-shadow)" />
         <motion.path
-          animate={{
-            d: [
-              "M-100,-100 L1540,-100 L1540,50 C1100,350 400,200 -100,0 Z",
-              "M-100,-100 L1540,-100 L1540,80 C950,320 450,180 -100,20 Z",
-              "M-100,-100 L1540,-100 L1540,50 C1100,350 400,200 -100,0 Z",
-            ]
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-          fill="url(#topBlue)"
-          filter="url(#dropShadow)"
-        />
-
-        {/* Deep background shadow line for extreme 3D effect */}
-        <motion.path
-          animate={{
-            d: [
-              "M-100,10 C400,210 1100,360 1540,60",
-              "M-100,30 C450,190 950,330 1540,90",
-              "M-100,10 C400,210 1100,360 1540,60",
-            ]
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          d={layers.crest[0]}
+          animate={animatePath(layers.crest)}
+          transition={wave(DURATION)}
           fill="none"
-          stroke="#000"
-          strokeWidth="30"
-          opacity="0.3"
-          filter="url(#waveGlow)"
+          stroke="url(#bw-crest)"
+          strokeWidth="6"
+          strokeLinecap="round"
+          filter="url(#bw-glow)"
         />
-
-        {/* Glowing wave line */}
         <motion.path
-          animate={{
-            d: [
-              "M-100,0 C400,200 1100,350 1540,50",
-              "M-100,20 C450,180 950,320 1540,80",
-              "M-100,0 C400,200 1100,350 1540,50",
-            ]
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          d={layers.crest[0]}
+          animate={animatePath(layers.crest)}
+          transition={wave(DURATION)}
           fill="none"
-          stroke="url(#waveLine)"
-          strokeWidth="14"
-          filter="url(#waveGlow)"
+          stroke="#F4FDFF"
+          strokeWidth="1.6"
+          opacity="0.7"
+          strokeLinecap="round"
         />
-        
-        {/* Core bright white line (gives it that hot neon center) */}
+        <motion.path d={layers.near[0]} animate={animatePath(layers.near)} transition={wave(DURATION + 2, 0.8)} fill="url(#bw-near)" opacity="0.88" />
         <motion.path
-          animate={{
-            d: [
-              "M-100,0 C400,200 1100,350 1540,50",
-              "M-100,20 C450,180 950,320 1540,80",
-              "M-100,0 C400,200 1100,350 1540,50",
-            ]
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          d={layers.foam[0]}
+          animate={animatePath(layers.foam)}
+          transition={wave(DURATION + 3, 1.1)}
           fill="none"
-          stroke="#5FD4E6"
-          strokeWidth="3"
-          opacity="0.6"
-        />
-
-        {/* Secondary subtle line for liquid depth */}
-        <motion.path
-          animate={{
-            d: [
-              "M-100,15 C400,215 1100,365 1540,65",
-              "M-100,35 C450,195 950,335 1540,95",
-              "M-100,15 C400,215 1100,365 1540,65",
-            ]
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-          fill="none"
-          stroke="#2E8B9C"
-          strokeWidth="4"
-          opacity="0.4"
-          filter="url(#waveGlow)"
+          stroke="url(#bw-foam)"
+          strokeWidth="2.5"
         />
       </motion.svg>
+
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/80 via-[#0A1628]/15 to-[#0A1628]/25" />
     </div>
   );
 };
