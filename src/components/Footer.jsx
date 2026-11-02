@@ -49,8 +49,15 @@ const Footer = () => {
 
             {/* Col 1: About */}
             <motion.div className="lg:col-span-1" variants={colVariants} custom={0} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-              <div className="mb-6">
-                <img src="/logo.png" alt="نثيل Natheel" className="h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.9)]" />
+              <div className="mb-6 relative inline-block">
+                {/* Soft light halo so the dark parts of the logo read on navy */}
+                <div className="absolute -inset-x-6 -inset-y-3 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(180,215,255,0.35),transparent_70%)] blur-md pointer-events-none" />
+                <img
+                  src="/logo.png"
+                  alt="نثيل Natheel"
+                  className="relative h-12 w-auto object-contain"
+                  style={{ filter: 'drop-shadow(0 0 0.5px rgba(255,255,255,0.95)) drop-shadow(0 0 0.5px rgba(255,255,255,0.95)) drop-shadow(0 0 6px rgba(255,255,255,0.45))' }}
+                />
               </div>
               <p className="text-white/90 text-base leading-relaxed max-w-xs font-medium">
                 {isEn
