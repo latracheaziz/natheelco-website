@@ -48,14 +48,14 @@ const VisionSection = () => {
 
         <Reveal3D delay={0.2}>
           <h2 className="mb-6 text-3xl font-heading font-bold text-white drop-shadow-lg md:text-5xl">
-            {isEn ? 'Building the Future on the Roots of Heritage' : 'نبني المستقبل بأصالة الماضي'}
+            {isEn ? 'Hail as We See It' : 'نبني المستقبل بأصالة الماضي'}
           </h2>
         </Reveal3D>
 
         <Reveal3D delay={0.4}>
           <p className="mx-auto max-w-3xl text-lg leading-relaxed text-white/90 drop-shadow-md md:text-xl">
             {isEn
-              ? 'At Natheel, we build our ventures on superior product and service quality to earn lasting market trust.'
+              ? "Hail is a region rich in history, nature, natural beauty, cultural heritage, and human potential. It offers a promising environment for developing projects, nurturing local talent, and delivering services that create meaningful value to the community while supporting the growth of tourism in the region."
               : 'في نثيل، نبني مشاريعنا على جودة المنتج و الخدمة لكسب ثقة السوق'}
           </p>
         </Reveal3D>
@@ -87,28 +87,29 @@ const Roots = () => {
                 <Reveal3D delay={0.2}>
                   <div>
                     <h2 className="text-[2.125rem] md:text-[2.625rem] font-heading font-bold text-primary mb-4">
-                      {isEn ? "Our Story Began in Ha'il" : 'حكايتنا بدأت من حائل'}
+                      {isEn ? 'Our Story Began in Hail' : 'حكايتنا بدأت من حائل'}
                     </h2>
                     <p className="text-xl md:text-[1.375rem] text-text-secondary leading-relaxed">
                       {isEn
-                        ? "Rooted in a region where heritage meets ambition, Natheel began building modern ventures shaped by the needs of the community and aligned with the aspirations of the future."
+                        ? 'In Hail, where heritage meets ambition, Natheel began its journey of developing modern projects that evolve in response to community needs and align with future aspirations.'
                         : 'في أرض تجمع بين الأصالة والطموح، بدأت نثيل في بناء مشاريع عصرية تنمو حسب احتياجات المجتمع وتواكب تطلعات المستقبل.'}
                     </p>
                   </div>
                 </Reveal3D>
 
-                <Reveal3D delay={0.4}>
-                  <div>
-                    <h2 className="text-[2.125rem] md:text-[2.625rem] font-heading font-bold text-primary mb-4">
-                      {isEn ? "Ha'il Through Our Eyes" : 'حائل كما نراها'}
-                    </h2>
-                    <p className="text-xl md:text-[1.375rem] text-text-secondary leading-relaxed">
-                      {isEn
-                        ? "Ha'il is a region rich in its people, history, natural landscapes, and cultural heritage. We see it as a promising environment for building ventures, developing talent, and delivering services that create meaningful value for the community, while contributing to the region's tourism potential."
-                        : 'حائل منطقة غنية بتاريخها، وطبيعتها، وثقافتها، وأهلها. نرى فيها بيئة واعدة لصناعة المشاريع، وتنمية المواهب، وتقديم تجارب وخدمات تضيف قيمة حقيقية للمجتمع.'}
-                    </p>
-                  </div>
-                </Reveal3D>
+                {!isEn && (
+                  <Reveal3D delay={0.4}>
+                    <div>
+                      <h2 className="text-[2.125rem] md:text-[2.625rem] font-heading font-bold text-primary mb-4">
+                        حائل كما نراها
+                      </h2>
+                      <p className="text-xl md:text-[1.375rem] text-text-secondary leading-relaxed">
+                        حائل منطقة غنية بتاريخها، وطبيعتها، وثقافتها، وأهلها. نرى فيها بيئة واعدة لصناعة المشاريع،
+                        وتنمية المواهب، وتقديم تجارب وخدمات تضيف قيمة حقيقية للمجتمع.
+                      </p>
+                    </div>
+                  </Reveal3D>
+                )}
               </div>
 
               {/* Image */}
@@ -141,17 +142,19 @@ const Roots = () => {
                   <span className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_10px_rgba(58,168,188,0.65)]" />
                 </span>
                 <h2 className="mt-3 text-4xl font-heading font-[800] leading-[1.3] text-primary md:text-[2.5rem] lg:text-[3.25rem]">
-                  <RevealText text={isEn ? 'People & Place' : 'الإنسان والمكان'} />
+                  <RevealText text={isEn ? 'People and Place' : 'الإنسان والمكان'} />
                 </h2>
                 <div className="mx-auto my-6 h-[2px] w-16 rounded-full bg-gradient-to-l from-accent to-accent-light shadow-[0_0_12px_rgba(58,168,188,0.4)]" />
                 <p className="mx-auto max-w-3xl text-xl leading-[2] text-text-secondary md:text-[1.375rem]">
                   {isEn
-                    ? 'We believe successful ventures start from understanding the needs of people and place, relying on the capabilities of our youth, and blending authentic heritage with modern excellence.'
+                    ? 'We believe meaningful development begins with empowering local talent and investing in the unique strengths of our community to create lasting value.'
                     : 'نؤمن ان مشاريع ناجحة تبدا من فهم متطلبات ناس و مكان و معتمد على قدرات شبابها و كذلك نجمع بين اصلة و اسلوب العصري'}
                 </p>
-                <h3 className="mt-8 text-[1.625rem] font-heading font-bold text-accent md:text-[2rem]">
-                  {isEn ? "Welcome to Ha'il... Welcome to Natheel" : 'ياهلا والله.....  الله يحييكم'}
-                </h3>
+                {!isEn && (
+                  <h3 className="mt-8 text-[1.625rem] font-heading font-bold text-accent md:text-[2rem]">
+                    ياهلا والله.....  الله يحييكم
+                  </h3>
+                )}
               </div>
             </Reveal3D>
           </div>

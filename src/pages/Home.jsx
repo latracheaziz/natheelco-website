@@ -58,13 +58,12 @@ const Home = () => {
       id: 'who-we-are',
       label: isEn ? 'Who We Are' : 'من نحن؟',
       eyebrow: isEn ? 'Who We Are' : 'من نحن',
-      titleLine1: isEn ? 'Building Structured Ventures' : 'نبني مشاريع منظّمة',
-      titleLine2: isEn ? 'Designed to Scale and Grow' : 'قابلة للتوسع والنمو',
+      titleLine1: isEn ? 'We Develop Structured, Scalable Projects' : 'نبني مشاريع منظّمة',
+      titleLine2: isEn ? 'Designed for Sustainable Expansion and Growth' : 'قابلة للتوسع والنمو',
       text: isEn ? (
         <>
-          <strong className="font-semibold text-primary">Natheel</strong> develops promising ideas into structured,
-          scalable ventures, drawing on more than 30 years of combined experience and the expertise of partners with
-          complementary capabilities.
+          <strong className="font-semibold text-primary">Natheel</strong> transforms promising ideas into structured,
+          scalable ventures, leveraging over 30 years of experience and partners with complementary expertise.
         </>
       ) : (
         <>
@@ -353,14 +352,14 @@ const Home = () => {
                 </span>
               </motion.div>
 
-              {/* Main headline - VERBATIM FROM USER REQUEST IN ENGLISH */}
+              {/* Main headline */}
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-[900] text-white leading-[1.15] mb-8 text-balance">
                 {isEn ? (
                   <>
-                    <RevealText text="Building Structured Ventures" immediate delay={0.35} stagger={0.06} />
+                    <RevealText text="We Develop Structured, Scalable Projects" immediate delay={0.35} stagger={0.06} />
                     <br />
                     <RevealText
-                      text="Designed to Scale and Grow"
+                      text="Designed for Sustainable Expansion and Growth"
                       immediate
                       delay={0.65}
                       stagger={0.06}
@@ -369,14 +368,20 @@ const Home = () => {
                   </>
                 ) : (
                   <>
-                    <RevealText text="نحوّل الأفكار إلى" immediate delay={0.35} stagger={0.09} />
+                    <RevealText text="نبني مشاريع منظمة" immediate delay={0.35} stagger={0.09} />
                     <br />
-                    <RevealText text="مشاريع قابلة للنمو" immediate delay={0.65} stagger={0.09} wordClassName="text-white" />
+                    <RevealText
+                      text="قابلة للتوسع والنمو"
+                      immediate
+                      delay={0.65}
+                      stagger={0.09}
+                      wordClassName="text-white"
+                    />
                   </>
                 )}
               </h1>
 
-              {/* Sub text - VERBATIM FROM USER REQUEST IN ENGLISH */}
+              {/* Hero description */}
               <motion.p
                 initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
                 animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
@@ -384,8 +389,8 @@ const Home = () => {
                 className="text-2xl md:text-3xl text-white leading-relaxed max-w-2xl mb-12 font-medium"
               >
                 {isEn
-                  ? 'Natheel develops promising ideas into structured, scalable ventures, drawing on more than 30 years of combined experience and the expertise of partners with complementary capabilities.'
-                  : 'نطور الفكرة، ونبني الفريق والأنظمة، ونقود التنفيذ نحو نمو وربحية مستدامة.'}
+                  ? 'Natheel transforms promising ideas into structured, scalable ventures, leveraging over 30 years of experience and partners with complementary expertise.'
+                  : 'تعمل نثيل على تطوير الأفكار الواعدة وتحويلها إلى مشاريع منظمة وقابلة للتوسع، مستندةً إلى خبرات تمتد لأكثر من 30 عامًا وشراكات تجمع تخصصات متكاملة.'}
               </motion.p>
 
               {/* CTA Row */}

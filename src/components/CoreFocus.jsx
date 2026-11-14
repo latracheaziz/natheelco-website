@@ -58,50 +58,50 @@ const getPillars = (isEn) =>
         {
           id: 'team',
           index: '01',
-          title: 'Building High-Performing Teams',
-          text: 'Selecting the right talent for every project to achieve high performance.',
+          title: 'Building an Empowered Team',
+          text: 'We recruit young talents and develop skills tailored to each project’s needs to ensure optimal performance.',
           detail:
-            'We identify, develop, and equip talent suited to each project’s specific needs. We foster a high-performance culture that drives excellence at every stage, supported by tailored objectives and incentive structures aligned with key performance indicators (KPIs).',
+            'We foster a high-performance culture that drives our teams toward excellence at every stage of project development, supported by clearly defined goals and KPI-based incentives.',
           accent: '#3AA8BC',
           tags: ['Recruitment', 'Development', 'Performance'],
         },
         {
           id: 'brand',
           index: '02',
-          title: 'Brand Development & Growth',
-          text: 'Developing cohesive brand identities and supporting marketing & growth.',
+          title: 'Brand Identity and Growth',
+          text: 'We develop a cohesive visual identity for each project.',
           detail:
-            'We develop cohesive brand identities for each venture and support them with strategic marketing plans designed to strengthen market presence, build brand recognition, and cultivate lasting customer relationships.',
+            'We support it with strategic marketing plans designed to establish a strong market presence and build lasting customer loyalty.',
           accent: '#2E8B9C',
-          tags: ['Brand Identity', 'Marketing', 'Growth'],
+          tags: ['Visual Identity', 'Marketing', 'Growth'],
         },
         {
           id: 'operation',
           index: '03',
-          title: 'Our Ventures',
-          text: 'Focusing on high-efficiency service-based ventures.',
+          title: 'Our Projects',
+          text: 'We focus on developing high-performing service ventures.',
           detail:
-            'We focus on high-efficiency service-based ventures, continuously improving operational processes and performance to achieve optimal results while maintaining cost efficiency.',
+            'We continuously optimize operations to maximize efficiency, enhance profitability, and achieve sustainable growth.',
           accent: '#3AA8BC',
-          tags: ['Efficiency', 'Profitability', 'Development'],
+          tags: ['Efficiency', 'Profitability', 'Growth'],
         },
         {
           id: 'performance',
           index: '04',
-          title: 'Performance Measurement & Development',
-          text: 'Measuring performance and driving continuous improvement through meaningful incentives.',
+          title: 'Performance Management and Development',
+          text: 'We continuously monitor and evaluate performance using clearly defined KPIs.',
           detail:
-            'We establish clear performance indicators for productivity, creativity, and commitment, linking them to incentive structures that reward team members, encourage continuous development, and support the achievement and surpassing of established targets.',
+            'These KPIs measure productivity, creativity, and commitment. By linking performance outcomes to meaningful incentives, we encourage professional development and motivate our teams to achieve and exceed their goals.',
           accent: '#2E8B9C',
           tags: ['KPIs', 'Incentives', 'Continuous Improvement'],
         },
         {
           id: 'execution',
           index: '05',
-          title: 'Precision in Execution',
-          text: 'Executing every initiative with precision, professionalism, and regulatory compliance.',
+          title: 'Operational Excellence',
+          text: 'We execute our projects with precision and professionalism, ensuring full compliance with applicable regulations and standards.',
           detail:
-            'We ensure that every stage of execution adheres to high standards of quality and compliance, while maintaining the flexibility needed to adapt to changing operational conditions.',
+            'Every operational stage is guided by a commitment to quality, while maintaining the flexibility to adapt to evolving market conditions and operational requirements.',
           accent: '#3AA8BC',
           tags: ['Compliance', 'Quality', 'Professionalism'],
         },
@@ -109,9 +109,9 @@ const getPillars = (isEn) =>
           id: 'systems',
           index: '06',
           title: 'Advanced Automation Systems',
-          text: 'Leveraging advanced systems to streamline operations and improve efficiency.',
+          text: 'We leverage advanced automation systems to streamline workflows, minimize human error, and enhance operational efficiency.',
           detail:
-            'We implement digital tools and intelligent automation to reduce human error, accelerate workflows, and provide accurate, reliable data that supports informed decision-making.',
+            'These technologies provide reliable data and valuable insights to support informed decision-making.',
           accent: '#2E8B9C',
           tags: ['Automation', 'Artificial Intelligence', 'Data'],
         },
@@ -119,83 +119,83 @@ const getPillars = (isEn) =>
           id: 'success',
           index: '07',
           title: 'Shared Success',
-          text: 'Sharing success and value creation with project teams.',
+          text: 'We believe that success is a collective achievement.',
           detail:
-            'We believe that project success should be shared. By enabling teams to participate in the value they help create, we foster a motivating work environment and build genuine, long-term partnerships.',
+            'By sharing the rewards of our projects with our teams, we foster a motivating work environment and build lasting partnerships based on trust and mutual growth.',
           accent: '#3AA8BC',
-          tags: ['Partnership', 'Incentives', 'Sustainability'],
+          tags: ['Partnership', 'Motivation', 'Sustainability'],
         },
       ]
     : [
         {
           id: 'team',
           index: '01',
-          title: 'بناء فرق عمل عالية الأداء',
-          text: 'اختيار الكفاءات المناسبة لكل مشروع لتحقيق أداء عالي.',
+          title: 'بناء فريق متمكن',
+          text: 'نختار الكفاءات الشابة المناسبة لطبيعة كل مشروع، ونؤهلها لتحقيق أعلى مستويات الأداء.',
           detail:
-            'نحدد ونطور ونجهز الكفاءات المناسبة لاحتياجات كل مشروع. نعزز ثقافة الأداء العالي التي تدفع نحو التميز في كل مرحلة، مدعومة بأهداف محددة وهياكل حوافز متوافقة مع مؤشرات الأداء الرئيسية (KPIs).',
+            'كما نعمل على بناء ثقافة عمل تحفز التميز في مختلف مراحل المشروع، من خلال تحديد أهداف واضحة وحوافز مخصصة تستند إلى مؤشرات الأداء الرئيسية (KPIs).',
           accent: '#3AA8BC',
-          tags: ['توظيف', 'تطوير', 'أداء'],
+          tags: ['توظيف', 'تأهيل', 'أداء'],
         },
         {
           id: 'brand',
           index: '02',
-          title: 'تطوير وتنمية الهوية التجارية',
+          title: 'العلامة التجارية والنمو',
           text: 'بناء العلامة التجارية ودعم خطط التسويق والنمو.',
           detail:
-            'نطور هوية تجارية متماسكة لكل مشروع وندعمها بخطط تسويقية استراتيجية مصممة لتعزيز الحضور السوقي، وبناء الاعتراف بالعلامة التجارية، وتنمية علاقات دائمة مع العملاء.',
+            'نحرص على تطوير هوية بصرية متكاملة لكل مشروع، مدعومة بخطط تسويقية مدروسة تعزز حضوره في السوق، وتساهم في بناء قاعدة عملاء قوية ومستدامة.',
           accent: '#2E8B9C',
-          tags: ['هوية تجارية', 'تسويق', 'نمو'],
+          tags: ['هوية بصرية', 'تسويق', 'نمو'],
         },
         {
           id: 'operation',
           index: '03',
           title: 'مشاريعنا',
-          text: 'التركيز على المشاريع الخدمية عالية الكفاءة.',
+          text: 'نركز على تطوير مشاريع خدمية عالية الكفاءة.',
           detail:
-            'نركز على مشاريع خدمية عالية الكفاءة، مع التحسين المستمر للعمليات التشغيلية والأداء لتحقيق النتائج المثلى مع الحفاظ على كفاءة التكاليف.',
+            'نعمل باستمرار على تحسين أدائها التشغيلي لتحقيق أفضل النتائج مع الاستخدام الأمثل للموارد والتكاليف.',
           accent: '#3AA8BC',
-          tags: ['كفاءة', 'ربحية', 'تطوير'],
+          tags: ['كفاءة', 'هامش ربح', 'تطوير'],
         },
         {
           id: 'performance',
           index: '04',
           title: 'قياس الأداء والتطوير',
-          text: 'قياس الأداء ودفع التحسين المستمر من خلال حوافز مجزية.',
+          text: 'نعتمد مؤشرات أداء واضحة لقياس الإنتاجية والإبداع.',
           detail:
-            'نضع مؤشرات أداء واضحة للإنتاجية والإبداع والالتزام، ونربطها بهياكل حوافز تكافئ أعضاء الفريق، وتشجع التطوير المستمر، وتدعم تحقيق وتجاوز الأهداف المحددة.',
+            'نربط نتائجها بحوافز مجزية تشجع أعضاء الفريق على التطور المستمر وتحقيق الأهداف وتجاوزها.',
           accent: '#2E8B9C',
-          tags: ['مؤشرات أداء', 'حوافز', 'تحسين مستمر'],
+          tags: ['مؤشرات', 'حوافز', 'تطوير'],
         },
         {
           id: 'execution',
           index: '05',
-          title: 'الدقة في التنفيذ',
-          text: 'تنفيذ كل مبادرة بدقة واحترافية وامتثال تنظيمي.',
+          title: 'تنفيذ دقيق',
+          text: 'نعتمد أنظمة ولوائح دقيقة لضمان تنفيذ كل مرحلة وفق أعلى معايير الجودة والامتثال.',
           detail:
-            'نضمن التزام كل مرحلة تنفيذية بأعلى معايير الجودة والامتثال، مع الحفاظ على المرونة اللازمة للتكيف مع الظروف التشغيلية المتغيرة.',
+            'ونحافظ على المرونة اللازمة للتكيف مع المتغيرات الميدانية.',
           accent: '#3AA8BC',
           tags: ['امتثال', 'جودة', 'احترافية'],
         },
         {
           id: 'systems',
           index: '06',
-          title: 'أنظمة أتمتة متقدمة',
-          text: 'توظيف الأنظمة المتقدمة لتبسيط العمليات وتحسين الكفاءة.',
+          title: 'أنظمة آلية متطورة',
+          text: 'نوظف الأدوات الرقمية والأتمتة الذكية لتسهيل العمليات.',
           detail:
-            'نطبق الأدوات الرقمية والأتمتة الذكية للحد من الأخطاء البشرية، وتسريع سير العمل، وتوفير بيانات دقيقة وموثوقة تدعم اتخاذ قرارات مستنيرة.',
+            'وتسهم هذه الأدوات في الحد من الأخطاء البشرية، وتسريع الإنجاز، وتوفير بيانات دقيقة تدعم اتخاذ القرار.',
           accent: '#2E8B9C',
           tags: ['أتمتة', 'ذكاء اصطناعي', 'بيانات'],
         },
         {
           id: 'success',
           index: '07',
-          title: 'النجاح المشترك',
-          text: 'مشاركة النجاح وخلق القيمة مع فرق العمل.',
+          title: 'مشاركة النجاح',
+          text: 'نؤمن بأن نجاح المشاريع ثمرة جهود مشتركة.',
           detail:
-            'نؤمن بأن نجاح المشاريع يجب أن يكون مشتركاً. من خلال تمكين الفرق من المشاركة في القيمة التي يساهمون في صنعها، نخلق بيئة عمل محفزة ونبني شراكات حقيقية طويلة الأمد.',
+            'لذا نحرص على مشاركة فرق العمل في مكتسبات النجاح، بما يعزز التحفيز والانتماء، ويبني شراكات مهنية مستدامة.',
           accent: '#3AA8BC',
-          tags: ['شراكة', 'حوافز', 'استدامة'],
+          tags: ['شراكة', 'تحفيز', 'استدامة'],
         },
       ];
 
@@ -525,9 +525,9 @@ const CoreFocus = () => {
         </div>
 
         {/* ── Split layout ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-6 lg:gap-10 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] gap-6 lg:gap-10 items-start">
           {/* LEFT — pillar list */}
-          <div className="flex flex-col gap-1.5" dir={dir}>
+          <div className="flex min-w-0 flex-col gap-1.5" dir={dir}>
             {pillars.map((p, i) => (
               <PillarListItem
                 key={p.id}
@@ -568,7 +568,7 @@ const CoreFocus = () => {
 
           {/* RIGHT — detail panel */}
           <div
-            className="relative lg:sticky lg:top-28 h-[520px] md:h-[580px] rounded-3xl overflow-hidden bg-white shadow-[0_20px_50px_-15px_rgba(10,22,40,0.08)]"
+            className="relative min-w-0 lg:sticky lg:top-28 h-[520px] md:h-[580px] rounded-3xl overflow-hidden bg-white shadow-[0_20px_50px_-15px_rgba(10,22,40,0.08)]"
             style={{
               border: `1px solid ${activePillar.accent}30`,
             }}

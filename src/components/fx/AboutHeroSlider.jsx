@@ -11,7 +11,7 @@ const getSlides = (isEn) =>
           eyebrow: 'About Natheel',
           title: 'At Natheel',
           subtitle:
-            'Natheel develops promising ideas into structured, scalable ventures, drawing on more than 30 years of combined experience and the expertise of partners with complementary capabilities.',
+            'Natheel transforms promising ideas into structured, scalable ventures, leveraging over 30 years of experience and partners with complementary expertise.',
         },
       ]
     : [

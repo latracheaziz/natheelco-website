@@ -97,43 +97,43 @@ const getStages = (isEn) =>
         {
           id: 'stage1',
           number: '01',
-          title: 'تقييم الأفكار',
-          text: 'نقوم بتقييم كل فكرة، ودراسة احتياج السوق، وتحديد الفرص للتحقق من جدواها قبل المضي قدماً.',
+          title: 'دراسة الفكرة',
+          text: 'نقيّم الفكرة واحتياجات السوق وفرص نجاح المشروع لتحديد جدواه قبل البدء.',
           color: '#3AA8BC',
         },
         {
           id: 'stage2',
           number: '02',
-          title: 'بناء نموذج العمل',
-          text: 'نحدد مفهوم المشروع، ونموذج العمل، والميزانية، ومؤشرات الأداء بدقة وإحكام.',
+          title: 'بناء النموذج',
+          text: 'نحدد مفهوم المشروع ونموذج العمل والميزانية ومؤشرات الأداء بدقة.',
           color: '#5FD4E6',
         },
         {
           id: 'stage3',
           number: '03',
-          title: 'تكوين الفريق',
-          text: 'نختار الكفاءات المؤهلة، ونحدد أهدافاً واضحة، ونوزع الأدوار والمسؤوليات لضمان تنفيذ فعال واستمرارية طويلة الأمد.',
+          title: 'تشكيل الفريق',
+          text: 'نختار الكفاءات المناسبة للتنفيذ، ونحدد الأهداف والمسؤوليات لضمان استمرارية العمل.',
           color: '#3AA8BC',
         },
         {
           id: 'stage4',
           number: '04',
-          title: 'التجهيز والانطلاق',
-          text: 'ندير التمويل، ونطور الهوية والعلامة التجارية، ونطلق المشروع وفق خطة تشغيلية واضحة ومحكمة.',
+          title: 'التجهيز والإطلاق',
+          text: 'ندير التمويل ونجهّز العلامة التجارية، ونطلق المشروع وفق خطة تشغيلية واضحة.',
           color: '#5FD4E6',
         },
         {
           id: 'stage5',
           number: '05',
           title: 'المتابعة والتطوير',
-          text: 'نتابع الأداء ونطور المشروع باستمرار استناداً إلى النتائج الفعلية والمؤشرات القابلة للقياس.',
+          text: 'نراقب الأداء ونطوّر المشروع باستمرار بناءً على النتائج ومؤشرات الأداء الفعلية.',
           color: '#3AA8BC',
         },
         {
           id: 'stage6',
           number: '06',
-          title: 'النمو والاستقلالية',
-          text: 'نوسع صلاحيات الفريق تدريجياً ونقود المشروع نحو نمو مستقر ومستدام واستقلالية تشغيلية كاملة.',
+          title: 'النمو والاستقلال',
+          text: 'نمنح الفريق صلاحيات أوسع تدريجيًا، ونقود المشروع نحو نمو مستقر ومستدام.',
           color: '#5FD4E6',
         },
       ];
@@ -203,16 +203,18 @@ const HowWeWorkProcess = () => {
       <div className="container-premium section-padding relative z-10 w-full" dir={dir}>
         {/* Section Header */}
         <div className="text-center mb-16 md:mb-20">
-          <motion.span
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 text-accent text-sm md:text-base font-bold tracking-[0.2em] uppercase mb-4"
-          >
-            {isEn ? 'Execution Stages' : 'المراحل'}
-          </motion.span>
+          {isEn && (
+            <motion.span
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="inline-flex items-center gap-2 text-accent text-sm md:text-base font-bold tracking-[0.2em] uppercase mb-4"
+            >
+              Execution Stages
+            </motion.span>
+          )}
           <h2 className="text-3xl md:text-5xl font-heading font-[900] text-primary">
-            <RevealText text={isEn ? 'How We Work at Natheel' : 'كيف نعمل في نثيل'} />
+            <RevealText text={isEn ? 'How We Work at Natheel' : 'في نثيل نعمل كالآتي'} />
           </h2>
         </div>
 
