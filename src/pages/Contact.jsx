@@ -70,15 +70,15 @@ const Contact = () => {
                         {isEn ? 'Location' : 'الموقع'}
                       </p>
                       <p className="text-text-primary text-base font-medium">
-                        {isEn ? "Ha'il, Saudi Arabia" : 'حائل، المملكة العربية السعودية'}
+                        {isEn ? "Hail, Kingdom of Saudi Arabia" : 'حائل، المملكة العربية السعودية'}
                       </p>
                     </div>
                     <div className="rounded-2xl bg-surface-warm/80 border border-border-light p-8">
                       <p className="text-text-muted text-xs font-semibold tracking-wide uppercase mb-3">
                         {isEn ? 'Email' : 'البريد الإلكتروني'}
                       </p>
-                      <a href="mailto:contact@natheelco.com" className="text-accent text-base font-latin font-medium hover:text-accent-light transition-colors" dir="ltr">
-                        contact@natheelco.com
+                      <a href="mailto:info@natheelco.com" className="text-accent text-base font-latin font-medium hover:text-accent-light transition-colors" dir="ltr">
+                        info@natheelco.com
                       </a>
                     </div>
                   </div>

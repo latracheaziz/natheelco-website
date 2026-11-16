@@ -1,4 +1,4 @@
-import { motion, useAnimationFrame, useMotionValue, useTransform, useReducedMotion } from 'framer-motion';
+import { motion, useAnimationFrame, useInView, useMotionValue, useTransform, useReducedMotion } from 'framer-motion';
 import { useRef, useState, useMemo } from 'react';
 import ProjectCard from './ProjectCard';
 import TiltCard from './fx/TiltCard';
@@ -48,6 +48,8 @@ const ProjectRing = ({ projects, onOpen }) => {
   const [paused, setPaused] = useState(false);
   const drag = useRef({ active: false, startX: 0, startRot: 0 });
   const dragMoved = useRef(false);
+  const stageRef = useRef(null);
+  const inView = useInView(stageRef);
 
   // Extend projects to make the ring fuller
   const extendedProjects = useMemo(() => {
@@ -59,7 +61,7 @@ const ProjectRing = ({ projects, onOpen }) => {
   }, [projects]);
 
   useAnimationFrame((_, delta) => {
-    if (paused || drag.current.active || reduce || !isWide) return;
+    if (paused || !inView || drag.current.active || reduce || !isWide) return;
     rotation.set(rotation.get() + AUTO_SPEED * delta);
   });
 
@@ -97,6 +99,7 @@ const ProjectRing = ({ projects, onOpen }) => {
 
   return (
     <div
+      ref={stageRef}
       className="ring-stage relative h-[640px] select-none cursor-grab active:cursor-grabbing"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => { setPaused(false); endDrag(); }}

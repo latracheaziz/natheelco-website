@@ -3,6 +3,7 @@ import {
   useAnimationFrame,
   useMotionValue,
   useReducedMotion,
+  useInView,
   useScroll,
   useSpring,
   useTransform,
@@ -42,13 +43,15 @@ const BrandMarquee = () => {
   const reduce = useReducedMotion();
   const baseX = useMotionValue(0);
   const direction = useRef(-1);
+  const stageRef = useRef(null);
+  const inView = useInView(stageRef);
   const { scrollY } = useScroll();
   const velocity = useSpring(useVelocity(scrollY), { damping: 50, stiffness: 400 });
   const boost = useTransform(velocity, [-1500, 0, 1500], [-5, 0, 5], { clamp: false });
   const x = useTransform(baseX, (v) => `${wrap(-50, 0, v)}%`);
 
   useAnimationFrame((_, delta) => {
-    if (reduce) return;
+    if (reduce || !inView) return;
     const b = boost.get();
     if (b < -0.1) direction.current = 1;
     else if (b > 0.1) direction.current = -1;
@@ -57,7 +60,7 @@ const BrandMarquee = () => {
   });
 
   return (
-    <div className="relative bg-primary overflow-hidden py-10 md:py-14 mq-stage">
+    <div ref={stageRef} className="relative bg-primary overflow-hidden py-10 md:py-14 mq-stage">
       <div className="grain" />
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-l from-transparent via-accent-light/40 to-transparent" />
 

@@ -51,7 +51,7 @@ const icons = {
   ),
 };
 
-/* ─── Pillars Data: Exact verbatim content for English & Arabic ─── */
+/* ─── Pillars Data ─── */
 const getPillars = (isEn) =>
   isEn
     ? [
@@ -59,9 +59,8 @@ const getPillars = (isEn) =>
           id: 'team',
           index: '01',
           title: 'Building an Empowered Team',
-          text: 'We recruit young talents and develop skills tailored to each project’s needs to ensure optimal performance.',
           detail:
-            'We foster a high-performance culture that drives our teams toward excellence at every stage of project development, supported by clearly defined goals and KPI-based incentives.',
+            'We recruit young talents and develop skills tailored to each project’s needs to ensure optimal performance. We foster a high-performance culture that drives our teams toward excellence at every stage of project development, supported by clearly defined goals and KPI-based incentives.',
           accent: '#3AA8BC',
           tags: ['Recruitment', 'Development', 'Performance'],
         },
@@ -69,9 +68,8 @@ const getPillars = (isEn) =>
           id: 'brand',
           index: '02',
           title: 'Brand Identity and Growth',
-          text: 'We develop a cohesive visual identity for each project.',
           detail:
-            'We support it with strategic marketing plans designed to establish a strong market presence and build lasting customer loyalty.',
+            'We develop a cohesive visual identity for each project, supported by strategic marketing plans designed to establish a strong market presence and build lasting customer loyalty.',
           accent: '#2E8B9C',
           tags: ['Visual Identity', 'Marketing', 'Growth'],
         },
@@ -79,9 +77,8 @@ const getPillars = (isEn) =>
           id: 'operation',
           index: '03',
           title: 'Our Projects',
-          text: 'We focus on developing high-performing service ventures.',
           detail:
-            'We continuously optimize operations to maximize efficiency, enhance profitability, and achieve sustainable growth.',
+            'We focus on developing high-performing service ventures, continuously optimizing operations to maximize efficiency, enhance profitability, and achieve sustainable growth.',
           accent: '#3AA8BC',
           tags: ['Efficiency', 'Profitability', 'Growth'],
         },
@@ -89,9 +86,8 @@ const getPillars = (isEn) =>
           id: 'performance',
           index: '04',
           title: 'Performance Management and Development',
-          text: 'We continuously monitor and evaluate performance using clearly defined KPIs.',
           detail:
-            'These KPIs measure productivity, creativity, and commitment. By linking performance outcomes to meaningful incentives, we encourage professional development and motivate our teams to achieve and exceed their goals.',
+            'We continuously monitor and evaluate performance using clearly defined KPIs that measure productivity, creativity, and commitment. By linking performance outcomes to meaningful incentives, we encourage professional development and motivate our teams to achieve and exceed their goals.',
           accent: '#2E8B9C',
           tags: ['KPIs', 'Incentives', 'Continuous Improvement'],
         },
@@ -99,9 +95,8 @@ const getPillars = (isEn) =>
           id: 'execution',
           index: '05',
           title: 'Operational Excellence',
-          text: 'We execute our projects with precision and professionalism, ensuring full compliance with applicable regulations and standards.',
           detail:
-            'Every operational stage is guided by a commitment to quality, while maintaining the flexibility to adapt to evolving market conditions and operational requirements.',
+            'We execute our projects with precision and professionalism, ensuring full compliance with applicable regulations and standards. Every operational stage is guided by a commitment to quality, while maintaining the flexibility to adapt to evolving market conditions and operational requirements.',
           accent: '#3AA8BC',
           tags: ['Compliance', 'Quality', 'Professionalism'],
         },
@@ -109,19 +104,17 @@ const getPillars = (isEn) =>
           id: 'systems',
           index: '06',
           title: 'Advanced Automation Systems',
-          text: 'We leverage advanced automation systems to streamline workflows, minimize human error, and enhance operational efficiency.',
           detail:
-            'These technologies provide reliable data and valuable insights to support informed decision-making.',
+            'We leverage advanced automation systems to streamline workflows, minimize human error, and enhance operational efficiency. These technologies provide reliable data and valuable insights to support informed decision-making.',
           accent: '#2E8B9C',
           tags: ['Automation', 'Artificial Intelligence', 'Data'],
         },
         {
           id: 'success',
           index: '07',
-          title: 'Shared Success',
-          text: 'We believe that success is a collective achievement.',
+          title: 'Sharing Success',
           detail:
-            'By sharing the rewards of our projects with our teams, we foster a motivating work environment and build lasting partnerships based on trust and mutual growth.',
+            'We believe that success is a collective achievement. By sharing the rewards of our projects with our teams, we foster a motivating work environment and build lasting partnerships based on trust and mutual growth.',
           accent: '#3AA8BC',
           tags: ['Partnership', 'Motivation', 'Sustainability'],
         },
@@ -131,9 +124,8 @@ const getPillars = (isEn) =>
           id: 'team',
           index: '01',
           title: 'بناء فريق متمكن',
-          text: 'نختار الكفاءات الشابة المناسبة لطبيعة كل مشروع، ونؤهلها لتحقيق أعلى مستويات الأداء.',
           detail:
-            'كما نعمل على بناء ثقافة عمل تحفز التميز في مختلف مراحل المشروع، من خلال تحديد أهداف واضحة وحوافز مخصصة تستند إلى مؤشرات الأداء الرئيسية (KPIs).',
+            'نختار الكفاءات الشابة المناسبة لطبيعة كل مشروع، ونؤهلها لتحقيق أعلى مستويات الأداء. كما نعمل على بناء ثقافة عمل تحفز التميز في مختلف مراحل المشروع، من خلال تحديد أهداف واضحة وحوافز مخصصة تستند إلى مؤشرات الأداء الرئيسية (KPIs).',
           accent: '#3AA8BC',
           tags: ['توظيف', 'تأهيل', 'أداء'],
         },
@@ -141,7 +133,6 @@ const getPillars = (isEn) =>
           id: 'brand',
           index: '02',
           title: 'العلامة التجارية والنمو',
-          text: 'بناء العلامة التجارية ودعم خطط التسويق والنمو.',
           detail:
             'نحرص على تطوير هوية بصرية متكاملة لكل مشروع، مدعومة بخطط تسويقية مدروسة تعزز حضوره في السوق، وتساهم في بناء قاعدة عملاء قوية ومستدامة.',
           accent: '#2E8B9C',
@@ -151,9 +142,8 @@ const getPillars = (isEn) =>
           id: 'operation',
           index: '03',
           title: 'مشاريعنا',
-          text: 'نركز على تطوير مشاريع خدمية عالية الكفاءة.',
           detail:
-            'نعمل باستمرار على تحسين أدائها التشغيلي لتحقيق أفضل النتائج مع الاستخدام الأمثل للموارد والتكاليف.',
+            'نركز على تطوير مشاريع خدمية عالية الكفاءة، ونعمل باستمرار على تحسين أدائها التشغيلي لتحقيق أفضل النتائج مع الاستخدام الأمثل للموارد والتكاليف.',
           accent: '#3AA8BC',
           tags: ['كفاءة', 'هامش ربح', 'تطوير'],
         },
@@ -161,9 +151,8 @@ const getPillars = (isEn) =>
           id: 'performance',
           index: '04',
           title: 'قياس الأداء والتطوير',
-          text: 'نعتمد مؤشرات أداء واضحة لقياس الإنتاجية والإبداع.',
           detail:
-            'نربط نتائجها بحوافز مجزية تشجع أعضاء الفريق على التطور المستمر وتحقيق الأهداف وتجاوزها.',
+            'نعتمد مؤشرات أداء واضحة لقياس الإنتاجية والإبداع، ونربط نتائجها بحوافز مجزية تشجع أعضاء الفريق على التطور المستمر وتحقيق الأهداف وتجاوزها.',
           accent: '#2E8B9C',
           tags: ['مؤشرات', 'حوافز', 'تطوير'],
         },
@@ -171,9 +160,8 @@ const getPillars = (isEn) =>
           id: 'execution',
           index: '05',
           title: 'تنفيذ دقيق',
-          text: 'نعتمد أنظمة ولوائح دقيقة لضمان تنفيذ كل مرحلة وفق أعلى معايير الجودة والامتثال.',
           detail:
-            'ونحافظ على المرونة اللازمة للتكيف مع المتغيرات الميدانية.',
+            'نعتمد أنظمة ولوائح دقيقة لضمان تنفيذ كل مرحلة وفق أعلى معايير الجودة والامتثال، مع الحفاظ على المرونة اللازمة للتكيف مع المتغيرات الميدانية.',
           accent: '#3AA8BC',
           tags: ['امتثال', 'جودة', 'احترافية'],
         },
@@ -181,9 +169,8 @@ const getPillars = (isEn) =>
           id: 'systems',
           index: '06',
           title: 'أنظمة آلية متطورة',
-          text: 'نوظف الأدوات الرقمية والأتمتة الذكية لتسهيل العمليات.',
           detail:
-            'وتسهم هذه الأدوات في الحد من الأخطاء البشرية، وتسريع الإنجاز، وتوفير بيانات دقيقة تدعم اتخاذ القرار.',
+            'نوظف الأدوات الرقمية والأتمتة الذكية لتسهيل العمليات، والحد من الأخطاء البشرية، وتسريع الإنجاز، وتوفير بيانات دقيقة تدعم اتخاذ القرار.',
           accent: '#2E8B9C',
           tags: ['أتمتة', 'ذكاء اصطناعي', 'بيانات'],
         },
@@ -191,9 +178,8 @@ const getPillars = (isEn) =>
           id: 'success',
           index: '07',
           title: 'مشاركة النجاح',
-          text: 'نؤمن بأن نجاح المشاريع ثمرة جهود مشتركة.',
           detail:
-            'لذا نحرص على مشاركة فرق العمل في مكتسبات النجاح، بما يعزز التحفيز والانتماء، ويبني شراكات مهنية مستدامة.',
+            'نؤمن بأن نجاح المشاريع ثمرة جهود مشتركة، لذا نحرص على مشاركة فرق العمل في مكتسبات النجاح، بما يعزز التحفيز والانتماء، ويبني شراكات مهنية مستدامة.',
           accent: '#3AA8BC',
           tags: ['شراكة', 'تحفيز', 'استدامة'],
         },
@@ -299,7 +285,7 @@ const DetailPanel = ({ pillar, dir, isAr }) => {
 
         {/* Title */}
         <div className="text-center mb-5" dir={dir} style={{ transform: 'translateZ(40px)' }}>
-          <h3 className="text-3xl md:text-4xl lg:text-[44px] font-heading font-[900] leading-tight text-primary">
+          <h3 className="text-2xl md:text-3xl lg:text-4xl font-heading font-[900] leading-tight text-primary">
             {pillar.title}
           </h3>
         </div>
@@ -324,18 +310,9 @@ const DetailPanel = ({ pillar, dir, isAr }) => {
           ))}
         </div>
 
-        {/* Short text */}
-        <p
-          className="text-center text-text-secondary text-lg md:text-xl leading-[1.7] mb-5 max-w-lg mx-auto font-medium"
-          dir={dir}
-          style={{ transform: 'translateZ(20px)' }}
-        >
-          {pillar.text}
-        </p>
-
         {/* Divider */}
         <motion.div
-          className="mx-auto mb-4 h-px"
+          className="mx-auto mb-5 h-px"
           style={{
             background: `linear-gradient(90deg, transparent, ${pillar.accent}40, transparent)`,
             width: '60%',
@@ -347,7 +324,7 @@ const DetailPanel = ({ pillar, dir, isAr }) => {
 
         {/* Detail */}
         <p
-          className="text-center text-text-muted text-sm sm:text-base leading-[1.8] max-w-lg mx-auto"
+          className="text-center text-text-secondary text-base md:text-lg leading-[1.9] max-w-xl mx-auto font-medium"
           dir={dir}
           style={{ transform: 'translateZ(10px)' }}
         >
@@ -411,7 +388,7 @@ const PillarListItem = ({ pillar, isActive, onClick, onHover, isAr }) => (
           animate={{ color: isActive ? '#3AA8BC' : 'rgba(10,22,40,0.45)' }}
           transition={{ duration: 0.3 }}
         >
-          {pillar.text}
+          {pillar.tags.join(' | ')}
         </motion.p>
       </div>
 
@@ -519,8 +496,8 @@ const CoreFocus = () => {
             className="text-text-secondary text-base max-w-md mx-auto"
           >
             {isEn
-              ? 'Hover or click on any pillar to explore its detailed framework'
-              : 'مرّر على أي ركيزة أو انقر عليها لاستكشاف تفاصيلها'}
+              ? 'Seven pillars that guide how we build and grow every project'
+              : 'سبع ركائز نعتمد عليها في بناء مشاريعنا وتنميتها'}
           </motion.p>
         </div>
 
@@ -568,7 +545,7 @@ const CoreFocus = () => {
 
           {/* RIGHT — detail panel */}
           <div
-            className="relative min-w-0 lg:sticky lg:top-28 h-[520px] md:h-[580px] rounded-3xl overflow-hidden bg-white shadow-[0_20px_50px_-15px_rgba(10,22,40,0.08)]"
+            className="relative min-w-0 lg:sticky lg:top-28 h-[600px] md:h-[620px] rounded-3xl overflow-hidden bg-white shadow-[0_20px_50px_-15px_rgba(10,22,40,0.08)]"
             style={{
               border: `1px solid ${activePillar.accent}30`,
             }}

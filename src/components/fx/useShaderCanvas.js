@@ -84,7 +84,7 @@ const createRenderer = (canvas, fragment, textures, dprCap) => {
  * Drives a full-screen fragment shader on a canvas. Pauses while off-screen or
  * when the tab is hidden; renders a single still frame when `still` is true.
  */
-const useShaderCanvas = ({ fragment, loadTextures, setUniforms, dprCap = 1.5, still = false, stillTime = 6 }) => {
+const useShaderCanvas = ({ fragment, loadTextures, setUniforms, dprCap = 1, still = false, stillTime = 6 }) => {
   const canvasRef = useRef(null);
   const [status, setStatus] = useState('loading');
   const setUniformsRef = useRef(setUniforms);

@@ -8,19 +8,19 @@ const getSlides = (isEn) =>
     ? [
         {
           id: 1,
-          eyebrow: 'About Natheel',
-          title: 'At Natheel',
+          eyebrow: 'Who We Are',
+          title: 'About Natheel',
           subtitle:
-            'Natheel transforms promising ideas into structured, scalable ventures, leveraging over 30 years of experience and partners with complementary expertise.',
+            'Natheel is a project development company dedicated to creating structured, high-performing service ventures in Hail and across the Kingdom, with a strong focus on operational excellence and long-term sustainability.',
         },
       ]
     : [
         {
           id: 1,
           eyebrow: 'من نحن',
-          title: 'في نثيل',
+          title: 'عن نثيل',
           subtitle:
-            'نعمل على تحويل الأفكار الواعدة إلى مشاريع منظّمة قابلة للنمو. نطوّر نموذج العمل، ونبني الفريق والأنظمة، ونقود التنفيذ للوصول إلى نمو وربحية مستدامة.',
+            'نثيل شركة متخصصة في تطوير المشاريع وبناء نماذج أعمال خدمية متكاملة في حائل ومختلف مناطق المملكة، ترتكز على التميز التشغيلي والاستدامة طويلة الأمد.',
         },
       ];
 
@@ -75,9 +75,9 @@ const AboutHeroSlider = () => {
         <AnimatePresence mode="wait">
           <motion.div
             key={`${slide.id}-${isEn}`}
-            initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, y: -20, filter: 'blur(10px)' }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="max-w-4xl"
           >
@@ -95,7 +95,7 @@ const AboutHeroSlider = () => {
             </h1>
 
             {/* Subtitle */}
-            <p className="text-2xl md:text-3xl lg:text-[34px] text-white/90 leading-[1.7] md:leading-[1.7] font-medium fluid-wave-subtitle">
+            <p className="text-xl md:text-2xl lg:text-[28px] text-white/90 leading-[1.8] max-w-3xl font-medium fluid-wave-subtitle">
               {slide.subtitle}
             </p>
 

@@ -1,44 +1,38 @@
-import { motion, useScroll, useTransform, useReducedMotion, useSpring } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 
+const ease = [0.16, 1, 0.3, 1];
+
+// One-shot reveal when the block enters the viewport. Runs once on the compositor
+// instead of recomputing transforms on every scroll frame.
 const Reveal3D = ({
   children,
   className = '',
-  rotateX = 18,
+  rotateX = 10,
   rotateY = 0,
-  distance = 80,
-  offset = ['start 0.95', 'start 0.45'],
+  distance = 60,
+  delay = 0,
   style,
+  ...rest
 }) => {
-  const ref = useRef(null);
   const reduce = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset });
-  const p = useSpring(scrollYProgress, { stiffness: 120, damping: 24, mass: 0.4 });
 
-  const rX = useTransform(p, [0, 1], [rotateX, 0]);
-  const rY = useTransform(p, [0, 1], [rotateY, 0]);
-  const y = useTransform(p, [0, 1], [distance, 0]);
-  const scale = useTransform(p, [0, 1], [0.92, 1]);
-  const opacity = useTransform(p, [0, 0.6], [0, 1]);
+  if (reduce) {
+    return (
+      <div className={className} style={style} {...rest}>
+        {children}
+      </div>
+    );
+  }
 
   return (
     <motion.div
-      ref={ref}
       className={className}
-      style={
-        reduce
-          ? style
-          : {
-              rotateX: rX,
-              rotateY: rY,
-              y,
-              scale,
-              opacity,
-              transformPerspective: 1400,
-              transformStyle: 'preserve-3d',
-              ...style,
-            }
-      }
+      style={{ transformPerspective: 1400, ...style }}
+      initial={{ opacity: 0, y: distance, rotateX, rotateY, scale: 0.96 }}
+      whileInView={{ opacity: 1, y: 0, rotateX: 0, rotateY: 0, scale: 1 }}
+      viewport={{ once: true, margin: '0px 0px -10% 0px' }}
+      transition={{ duration: 0.9, delay, ease }}
+      {...rest}
     >
       {children}
     </motion.div>

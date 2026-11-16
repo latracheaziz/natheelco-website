@@ -159,7 +159,7 @@ export const translations = {
       locationLabel: 'الموقع',
       locationValue: 'حائل، المملكة العربية السعودية',
       emailLabel: 'البريد الإلكتروني',
-      emailValue: 'contact@natheelco.com',
+      emailValue: 'info@natheelco.com',
       followUsTitle: 'تابعنا',
     },
 
@@ -393,7 +393,7 @@ export const translations = {
       locationLabel: 'Location',
       locationValue: 'Ha’il, Kingdom of Saudi Arabia',
       emailLabel: 'Email Address',
-      emailValue: 'contact@natheelco.com',
+      emailValue: 'info@natheelco.com',
       followUsTitle: 'Follow Us',
     },
 

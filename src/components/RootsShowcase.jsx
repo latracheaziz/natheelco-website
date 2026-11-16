@@ -17,9 +17,9 @@ import { useMediaQuery } from './fx/useCanHover';
 import { useLanguage } from '../context/LanguageContext';
 
 const slides = [
-  { src: '/roots/roots-oasis.jpeg', alt: 'واحة جبلية تحيط بها الصخور الحمراء والنخيل وينعكس المشهد على الماء', caption: 'واحة الجذور' },
-  { src: '/roots/roots-01.png', alt: 'وادي تحيط به الجبال والنخيل ومجرى الماء', caption: 'وادي النخيل' },
-  { src: '/roots/roots-03.png', alt: 'وادي جبلي ومجرى مائي وقت الغروب', caption: 'ضوء الغروب' },
+  { src: '/roots/roots-oasis.webp', alt: 'واحة جبلية تحيط بها الصخور الحمراء والنخيل وينعكس المشهد على الماء', caption: 'واحة الجذور' },
+  { src: '/roots/roots-01.webp', alt: 'وادي تحيط به الجبال والنخيل ومجرى الماء', caption: 'وادي النخيل' },
+  { src: '/roots/roots-03.webp', alt: 'وادي جبلي ومجرى مائي وقت الغروب', caption: 'ضوء الغروب' },
 ];
 
 const COPIES = 3;
@@ -198,7 +198,7 @@ const RootsShowcase = () => {
       <div className="container-premium section-padding relative z-10">
         <Reveal3D className="flex justify-start" dir={dir}>
           <span className="inline-flex items-center gap-3 text-[12px] font-semibold tracking-[0.16em] text-accent-light">
-            {isEn ? "Scenes from Ha'il's Nature" : 'مشاهد من طبيعة حائل'}
+            {isEn ? "Scenes from Hail's Nature" : 'مشاهد من طبيعة حائل'}
             <span className="h-1.5 w-1.5 rounded-full bg-accent-glow shadow-[0_0_12px_#5FD4E6]" />
           </span>
         </Reveal3D>

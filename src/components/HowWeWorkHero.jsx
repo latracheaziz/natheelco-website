@@ -36,7 +36,7 @@ const HowWeWorkHero = () => {
                 <RevealText text="Transforming Ideas Into" immediate delay={0.4} stagger={0.06} />
                 <br />
                 <RevealText
-                  text="Scalable Ventures"
+                  text="Scalable Projects"
                   immediate
                   delay={0.7}
                   stagger={0.06}
@@ -66,8 +66,8 @@ const HowWeWorkHero = () => {
             className="text-2xl md:text-3xl text-white leading-relaxed font-medium max-w-3xl drop-shadow-sm"
           >
             {isEn
-              ? 'How We Work at Natheel: A clear, structured methodology from initial evaluation to sustainable independence.'
-              : 'نعمل بخطوات واضحة، تبدأ بدراسة الفكرة وتنتهي ببناء مشروع منظم ومستدام.'}
+              ? 'Six clear steps that take every idea from initial assessment to operational independence and sustainable growth.'
+              : 'ست خطوات واضحة تبدأ بدراسة الفكرة وتنتهي بمشروع مستقل ونمو مستقر ومستدام.'}
           </motion.p>
         </motion.div>
       </div>

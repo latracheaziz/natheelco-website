@@ -164,7 +164,7 @@ const HailMap = () => {
           transition={{ duration: 1, ease }}
           className="text-3xl md:text-5xl font-heading font-[800] text-white"
         >
-          {isEn ? "Ha'il, Saudi Arabia" : 'حائل، المملكة العربية السعودية'}
+          {isEn ? "Hail, Kingdom of Saudi Arabia" : 'حائل، المملكة العربية السعودية'}
         </motion.h2>
       </div>
 

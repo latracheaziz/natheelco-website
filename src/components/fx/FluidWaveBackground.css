@@ -14,7 +14,6 @@
     radial-gradient(ellipse 58% 48% at 9% 19%, rgba(13, 78, 234, 0.25), transparent 78%),
     radial-gradient(ellipse 48% 54% at 88% 24%, rgba(5, 61, 205, 0.28), transparent 78%),
     radial-gradient(ellipse 64% 50% at 56% 77%, rgba(7, 79, 242, 0.2), transparent 78%);
-  filter: blur(54px);
   opacity: 0.72;
   transform: translate3d(
     calc(var(--roots-pointer-x, 0px) * 0.16),
@@ -86,7 +85,4 @@
     min-height: 92svh;
   }
 
-  .fluid-wave-atmosphere {
-    filter: blur(28px);
-  }
 }

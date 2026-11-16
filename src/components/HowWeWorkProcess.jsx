@@ -54,42 +54,42 @@ const getStages = (isEn) =>
           id: 'stage1',
           number: '01',
           title: 'Idea Assessment',
-          text: 'We evaluate each idea, assess market needs, and identify opportunities to determine its viability before moving forward.',
+          text: 'We assess each project idea, market demand, and its potential for success to determine feasibility before starting.',
           color: '#3AA8BC',
         },
         {
           id: 'stage2',
           number: '02',
-          title: 'Business Model Development',
-          text: 'We define the venture’s concept, business model, budget, and performance indicators with precision.',
+          title: 'Model Building',
+          text: 'We clearly define the project concept, business model, budget, and key performance indicators (KPIs).',
           color: '#5FD4E6',
         },
         {
           id: 'stage3',
           number: '03',
           title: 'Team Formation',
-          text: 'We select qualified professionals, establish clear objectives, and define roles and responsibilities to support effective execution and long-term continuity.',
+          text: 'We assemble skilled teams to execute each project, establishing clear roles, responsibilities, and objectives to ensure operational continuity.',
           color: '#3AA8BC',
         },
         {
           id: 'stage4',
           number: '04',
-          title: 'Preparation & Launch',
-          text: 'We manage funding, develop the brand, and launch the venture with a clear operational plan.',
+          title: 'Preparation and Launch',
+          text: 'We manage financing, develop the brand identity, and launch the project with a well-defined operational plan.',
           color: '#5FD4E6',
         },
         {
           id: 'stage5',
           number: '05',
-          title: 'Monitoring & Development',
-          text: 'We monitor performance and continuously refine the venture based on actual results and measurable indicators.',
+          title: 'Follow-up and Development',
+          text: 'We monitor project performance and continuously refine operations based on actual results and key performance indicators.',
           color: '#3AA8BC',
         },
         {
           id: 'stage6',
           number: '06',
-          title: 'Growth & Independence',
-          text: 'We progressively expand the team’s authority and lead the venture toward stable, sustainable growth and greater operational independence.',
+          title: 'Growth and Independence',
+          text: 'We gradually empower project teams with greater decision-making authority, guiding the project toward operational independence and sustainable growth.',
           color: '#5FD4E6',
         },
       ]
@@ -203,18 +203,16 @@ const HowWeWorkProcess = () => {
       <div className="container-premium section-padding relative z-10 w-full" dir={dir}>
         {/* Section Header */}
         <div className="text-center mb-16 md:mb-20">
-          {isEn && (
-            <motion.span
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="inline-flex items-center gap-2 text-accent text-sm md:text-base font-bold tracking-[0.2em] uppercase mb-4"
-            >
-              Execution Stages
-            </motion.span>
-          )}
+          <motion.span
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 text-accent text-sm md:text-base font-bold tracking-[0.2em] uppercase mb-4"
+          >
+            {isEn ? 'Our Process' : 'منهجية العمل'}
+          </motion.span>
           <h2 className="text-3xl md:text-5xl font-heading font-[900] text-primary">
-            <RevealText text={isEn ? 'How We Work at Natheel' : 'في نثيل نعمل كالآتي'} />
+            <RevealText text={isEn ? 'How We Work' : 'في نثيل نعمل كالآتي'} />
           </h2>
         </div>
 
@@ -319,9 +317,9 @@ const HowWeWorkProcess = () => {
             <AnimatePresence mode="wait">
               <motion.div
                 key={`${activeStage.id}-${isEn}`}
-                initial={{ opacity: 0, scale: 0.95, y: 20, filter: 'blur(8px)' }}
-                animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
-                exit={{ opacity: 0, scale: 1.05, y: -20, filter: 'blur(8px)' }}
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 1.05, y: -20 }}
                 transition={{ duration: 0.5, ease }}
                 className="relative px-5 py-8 sm:p-8 md:p-14 grid md:grid-cols-[1fr_2fr] gap-6 sm:gap-8 md:gap-12 items-center"
               >

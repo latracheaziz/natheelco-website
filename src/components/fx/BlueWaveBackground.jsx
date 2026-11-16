@@ -1,4 +1,5 @@
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
+import { useRef } from 'react';
 
 const DURATION = 16;
 
@@ -36,7 +37,10 @@ const layers = {
 };
 
 const BlueWaveBackground = () => {
-  const reduceMotion = useReducedMotion();
+  const ref = useRef(null);
+  const inView = useInView(ref);
+  // Freeze the morphing waves while off-screen (or for reduced motion).
+  const reduceMotion = useReducedMotion() || !inView;
   const animatePath = (frames) => (reduceMotion ? { d: frames[0] } : { d: frames });
   const wave = (duration, delay = 0) =>
     reduceMotion
@@ -44,9 +48,9 @@ const BlueWaveBackground = () => {
       : { duration, delay, repeat: Infinity, ease: 'easeInOut' };
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 bg-[#0A1628]" aria-hidden="true">
-      <div className="absolute -top-[36%] left-[-10%] h-[70%] w-[62%] rounded-full bg-[#1B3A5C] opacity-40 blur-[130px]" />
-      <div className="absolute -bottom-[30%] right-[-14%] h-[58%] w-[50%] rounded-full bg-[#2E8B9C] opacity-[0.16] blur-[140px]" />
+    <div ref={ref} className="absolute inset-0 overflow-hidden pointer-events-none z-0 bg-[#0A1628]" aria-hidden="true">
+      <div className="absolute -top-[36%] left-[-10%] h-[70%] w-[62%] rounded-full bg-[#1B3A5C] opacity-40 blur-[80px]" />
+      <div className="absolute -bottom-[30%] right-[-14%] h-[58%] w-[50%] rounded-full bg-[#2E8B9C] opacity-[0.16] blur-[80px]" />
 
       <motion.svg
         viewBox="0 0 1600 800"
@@ -110,16 +114,16 @@ const BlueWaveBackground = () => {
 
         <motion.path d={layers.far[0]} animate={animatePath(layers.far)} transition={wave(DURATION + 4)} fill="url(#bw-far)" />
         <motion.path d={layers.mid[0]} animate={animatePath(layers.mid)} transition={wave(DURATION + 1, 0.4)} fill="url(#bw-mid)" opacity="0.92" />
-        <motion.path d={layers.silk[0]} animate={animatePath(layers.silk)} transition={wave(DURATION)} fill="url(#bw-silk)" filter="url(#bw-shadow)" />
+        <motion.path d={layers.silk[0]} animate={animatePath(layers.silk)} transition={wave(DURATION)} fill="url(#bw-silk)" />
         <motion.path
           d={layers.crest[0]}
           animate={animatePath(layers.crest)}
           transition={wave(DURATION)}
           fill="none"
           stroke="url(#bw-crest)"
-          strokeWidth="6"
+          strokeWidth="14"
+          opacity="0.35"
           strokeLinecap="round"
-          filter="url(#bw-glow)"
         />
         <motion.path
           d={layers.crest[0]}

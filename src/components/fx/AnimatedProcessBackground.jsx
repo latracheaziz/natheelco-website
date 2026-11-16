@@ -104,7 +104,7 @@ void main() {
 
 const AnimatedProcessBackground = () => {
   const reduceMotion = useReducedMotion();
-  const { canvasRef, status } = useShaderCanvas({ fragment: FRAGMENT, still: !!reduceMotion, dprCap: 1.5 });
+  const { canvasRef, status } = useShaderCanvas({ fragment: FRAGMENT, still: !!reduceMotion, dprCap: 1 });
 
   return (
     <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-gradient-to-br from-primary-light via-primary to-primary-medium">

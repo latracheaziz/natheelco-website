@@ -2,12 +2,11 @@ import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion
 import { Fragment, useRef } from 'react';
 
 const wordVariants = {
-  hidden: { opacity: 0, y: '0.6em', rotateX: -80, filter: 'blur(8px)' },
+  hidden: { opacity: 0, y: '0.6em', rotateX: -80 },
   visible: (i) => ({
     opacity: 1,
     y: 0,
     rotateX: 0,
-    filter: 'blur(0px)',
     transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: i },
   }),
 };
@@ -31,7 +30,7 @@ const RevealText = ({
       {words.map((word, i) => (
         <Fragment key={`${word}-${i}`}>
           <motion.span
-            className={`inline-block will-change-transform ${wordClassName}`}
+            className={`inline-block ${wordClassName}`}
             style={{ transformOrigin: '50% 100%' }}
             variants={wordVariants}
             custom={delay + i * stagger}

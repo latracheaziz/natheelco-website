@@ -61,8 +61,8 @@ const Footer = () => {
               </div>
               <p className="text-white/90 text-base leading-relaxed max-w-xs font-medium">
                 {isEn
-                  ? 'Building structured ventures designed to scale and grow, drawing on more than 30 years of combined experience.'
-                  : 'تطوّر الأفكار الواعدة وتحولها إلى مشاريع منظّمة قابلة للتوسع، مستندين على خبرات تمتد لأكثر من 30 عاماً.'}
+                  ? 'Natheel transforms promising ideas into structured, scalable ventures, leveraging over 30 years of experience and partners with complementary expertise.'
+                  : 'تعمل نثيل على تطوير الأفكار الواعدة وتحويلها إلى مشاريع منظمة وقابلة للتوسع، مستندةً إلى خبرات تمتد لأكثر من 30 عامًا.'}
               </p>
             </motion.div>
 
@@ -95,13 +95,13 @@ const Footer = () => {
                 <div>
                   <p className="text-white/80 text-sm mb-1">{isEn ? 'Location' : 'الموقع'}</p>
                   <p className="text-white text-base font-medium">
-                    {isEn ? "Ha'il, Saudi Arabia" : 'حائل، المملكة العربية السعودية'}
+                    {isEn ? "Hail, Kingdom of Saudi Arabia" : 'حائل، المملكة العربية السعودية'}
                   </p>
                 </div>
                 <div>
                   <p className="text-white/80 text-sm mb-1">{isEn ? 'Email' : 'البريد الإلكتروني'}</p>
-                  <a href="mailto:contact@natheelco.com" className="text-white text-base font-latin font-medium hover:text-accent-light transition-colors" dir="ltr">
-                    contact@natheelco.com
+                  <a href="mailto:info@natheelco.com" className="text-white text-base font-latin font-medium hover:text-accent-light transition-colors" dir="ltr">
+                    info@natheelco.com
                   </a>
                 </div>
               </div>

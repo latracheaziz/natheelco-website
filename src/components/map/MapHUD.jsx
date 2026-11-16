@@ -55,7 +55,7 @@ export const FilterPills = ({ filter, setFilter }) => {
   const filters = [
     { id: 'all', label: 'الكل', labelEn: 'All' },
     { id: 'نشط', label: 'نشط', labelEn: 'Active' },
-    { id: 'قيد التطوير', label: 'قيد التطوير', labelEn: 'In Development' },
+    { id: 'قيد التطوير', label: 'قيد التطوير', labelEn: 'Under Development' },
   ];
   return (
     <div className="flex gap-2 overflow-x-auto no-scrollbar px-4 justify-center" dir={dir}>
@@ -207,7 +207,7 @@ export const StatusPanel = ({ projects, revealed, delay }) => {
       </svg>
       <div className="flex items-center justify-between mt-2 text-[11px] text-white/60">
         <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-map-gold" /> {isEn ? 'Active' : 'نشط'} <b className="font-latin text-white">{a}</b></span>
-        <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-accent-glow" /> {isEn ? 'In Dev' : 'قيد التطوير'} <b className="font-latin text-white">{d}</b></span>
+        <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-accent-glow" /> {isEn ? 'Under Dev.' : 'قيد التطوير'} <b className="font-latin text-white">{d}</b></span>
       </div>
     </Panel>
   );

@@ -1,4 +1,5 @@
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
+import { useRef } from 'react';
 import './FluidWaveBackground.css';
 
 const folds = {
@@ -25,7 +26,10 @@ const folds = {
 };
 
 const FluidWaveBackground = () => {
-  const reduceMotion = useReducedMotion();
+  const ref = useRef(null);
+  const inView = useInView(ref);
+  // Freeze the morphing waves while off-screen (or for reduced motion).
+  const reduceMotion = useReducedMotion() || !inView;
   const animatePath = (frames) => (reduceMotion ? { d: frames[0] } : { d: frames });
   const transition = (duration, delay = 0) =>
     reduceMotion ? { duration: 0 } : { duration, delay, repeat: Infinity, ease: 'easeInOut' };
@@ -47,7 +51,7 @@ const FluidWaveBackground = () => {
   );
 
   return (
-    <div className="fluid-wave-background absolute inset-x-0 top-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <div ref={ref} className="fluid-wave-background absolute inset-x-0 top-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
       <div className="fluid-wave-atmosphere absolute inset-[-8%]" />
       <motion.svg
         viewBox="0 0 1600 900"

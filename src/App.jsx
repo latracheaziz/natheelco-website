@@ -1,38 +1,34 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { AnimatePresence, MotionConfig, motion, useScroll, useSpring } from 'framer-motion';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Chatbot from './components/Chatbot';
 import BrandMarquee from './components/BrandMarquee';
 import Home from './pages/Home';
-import About from './pages/About';
-import HowWeWork from './pages/HowWeWork';
-import Roots from './pages/Roots';
-import Contact from './pages/Contact';
-import News from './pages/News';
-import AdminDashboard from './pages/AdminDashboard';
-import AdminLogin from './pages/AdminLogin';
+const About = lazy(() => import('./pages/About'));
+const HowWeWork = lazy(() => import('./pages/HowWeWork'));
+const Roots = lazy(() => import('./pages/Roots'));
+const Contact = lazy(() => import('./pages/Contact'));
+const News = lazy(() => import('./pages/News'));
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+const AdminLogin = lazy(() => import('./pages/AdminLogin'));
 import { ADMIN_TOKEN_KEY } from './api/reviews';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 
 const ADMIN_SESSION_KEY = 'natheel_admin_authenticated';
 
 const pageVariants = {
-  initial: { opacity: 0, y: 80, rotateX: 6, scale: 0.98 },
+  initial: { opacity: 0, y: 24 },
   enter: {
     opacity: 1,
     y: 0,
-    rotateX: 0,
-    scale: 1,
-    transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+    transitionEnd: { transform: 'none' },
   },
   exit: {
     opacity: 0,
-    y: -40,
-    rotateX: -4,
-    scale: 0.97,
-    transition: { duration: 0.45, ease: [0.7, 0, 0.84, 0] },
+    transition: { duration: 0.25, ease: [0.7, 0, 0.84, 0] },
   },
 };
 
@@ -70,8 +66,8 @@ const AnimatedRoutes = () => {
           initial="initial"
           animate="enter"
           exit="exit"
-          style={{ transformOrigin: '50% 0%', transformPerspective: 2000 }}
         >
+          <Suspense fallback={<div className="min-h-[100dvh] bg-primary" />}>
           <Routes location={location}>
             <Route path="/" element={<Home />} />
             <Route path="/عن-نثيل" element={<About />} />
@@ -89,6 +85,7 @@ const AnimatedRoutes = () => {
             {/* Fallback route just in case */}
             <Route path="*" element={<Home />} />
           </Routes>
+          </Suspense>
         </motion.div>
       </AnimatePresence>
     </>
@@ -111,6 +108,7 @@ const AppShell = () => {
 
   if (isAdmin) {
     return (
+      <Suspense fallback={null}>
       <Routes>
         <Route
           path="/adminnatheelcoir/login"
@@ -124,6 +122,7 @@ const AppShell = () => {
           element={isAdminAuthenticated ? <AdminDashboard /> : <Navigate to="/adminnatheelcoir/login" replace />}
         />
       </Routes>
+      </Suspense>
     );
   }
 

@@ -94,7 +94,7 @@ const Header = () => {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className={`relative overflow-hidden transition-[background,box-shadow,backdrop-filter] duration-700 ${
               light
-                ? 'bg-white/75 backdrop-blur-2xl backdrop-saturate-150 shadow-[0_20px_50px_-20px_rgba(10,22,40,0.35),inset_0_0_0_1px_rgba(255,255,255,0.6)]'
+                ? 'bg-white/85 backdrop-blur-md shadow-[0_20px_50px_-20px_rgba(10,22,40,0.35),inset_0_0_0_1px_rgba(255,255,255,0.6)]'
                 : 'bg-transparent'
             }`}
           >
@@ -321,7 +321,7 @@ const Header = () => {
               transition={{ delay: 0.5, duration: 0.4 }}
               className="relative pb-12 text-center"
             >
-              <p className="text-text-muted text-sm font-latin tracking-wide">contact@natheelco.com</p>
+              <p className="text-text-muted text-sm font-latin tracking-wide">info@natheelco.com</p>
             </motion.div>
           </motion.div>
         )}

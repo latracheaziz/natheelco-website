@@ -1,11 +1,11 @@
-import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
 import { useState, useCallback, useRef, useEffect } from 'react';
 import ProjectModal from '../components/ProjectModal';
 import ProjectRing from '../components/ProjectRing';
 import HailMap from '../components/map/HailMap';
 import RevealText from '../components/fx/RevealText';
 import Magnetic from '../components/fx/Magnetic';
-import TiltCard from '../components/fx/TiltCard';
 import Counter from '../components/fx/Counter';
 import Reveal3D from '../components/fx/Reveal3D';
 import { projects } from '../data/projects';
@@ -15,7 +15,7 @@ const ease = [0.16, 1, 0.3, 1];
 
 const heroSlides = [
   '/office.jpg', // Natheel HQ — shown first
-  '/slides/odun.png',
+  '/slides/odun.webp',
   '/slides/ghalia.jpg',
   '/slides/hajiss.jpg',
   '/slides/building.jpg',
@@ -38,95 +38,19 @@ const Eyebrow = ({ children, center = false, light = false }) => (
 );
 
 const Home = () => {
-  const { lang, isAr, isEn, dir } = useLanguage();
+  const { isAr, isEn, dir } = useLanguage();
   const [selectedProject, setSelectedProject] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [activeTab, setActiveTab] = useState(0);
-  const heroRef = useRef(null);
+    const heroRef = useRef(null);
   const officeRef = useRef(null);
 
-  const heroStats = [
-    { value: '+250', label: isEn ? 'Total Followers' : 'إجمالي المتابعين' },
-    { value: '+45', label: isEn ? 'Posts & Engagement' : 'المنشورات والتفاعلات' },
-    { value: '04', label: isEn ? 'Social Platforms' : 'منصات التواصل' },
-    { value: '+1200', label: isEn ? 'Page Reach' : 'وصول الصفحة' },
+  const countBy = (status) => projects.filter((p) => p.status === status).length;
+  const portfolioStatus = [
+    { value: String(countBy('نشط')), label: isEn ? 'Active Projects' : 'مشاريع قائمة' },
+    { value: String(countBy('قيد التطوير')), label: isEn ? 'Projects Under Development' : 'قيد التطوير', isHighlight: true },
+    { value: String(countBy('مرحلة التوسع')), label: isEn ? 'Projects In Expansion' : 'مرحلة التوسع' },
   ];
-
-  const aboutTabs = [
-    {
-      id: 'who-we-are',
-      label: isEn ? 'Who We Are' : 'من نحن؟',
-      eyebrow: isEn ? 'Who We Are' : 'من نحن',
-      titleLine1: isEn ? 'We Develop Structured, Scalable Projects' : 'نبني مشاريع منظّمة',
-      titleLine2: isEn ? 'Designed for Sustainable Expansion and Growth' : 'قابلة للتوسع والنمو',
-      text: isEn ? (
-        <>
-          <strong className="font-semibold text-primary">Natheel</strong> transforms promising ideas into structured,
-          scalable ventures, leveraging over 30 years of experience and partners with complementary expertise.
-        </>
-      ) : (
-        <>
-          <strong className="font-semibold text-primary">نثيل</strong> تطوّر الأفكار الواعدة وتحولها إلى مشاريع منظّمة
-          قابلة للتوسع، مستندين على خبرات تمتد لأكثر من 30 عاماً وشركاء ذو اختصاصات مكملة.
-        </>
-      ),
-    },
-    {
-      id: 'what-we-do',
-      label: isEn ? 'What We Do' : 'ماذا نعمل؟',
-      eyebrow: isEn ? 'What We Do' : 'ماذا نعمل؟',
-      titleLine1: isEn ? 'Transforming Concepts' : 'نحوّل الأفكار التجارية',
-      titleLine2: isEn ? 'Into Operating Ventures' : 'إلى مشاريع عاملة',
-      text: isEn ? (
-        <>
-          <strong className="font-semibold text-primary">We transform</strong> commercial concepts into active
-          operating ventures by refining the concept and business model, building high-performing teams and automated
-          systems, and managing disciplined execution toward profitability and long-term sustainability.
-        </>
-      ) : (
-        <>
-          <strong className="font-semibold text-primary">نحّول</strong> الأفكار التجارية إلى مشاريع عاملة، من خلال تطوير
-          المفهوم ونموذج العمل، وبناء الفريق والأنظمة، وإدارة التمويل والتنفيذ والتسويق.
-        </>
-      ),
-    },
-    {
-      id: 'how-we-work',
-      label: isEn ? 'How We Work' : 'كيف نعمل؟',
-      eyebrow: isEn ? 'How We Work' : 'كيف نعمل؟',
-      titleLine1: isEn ? 'Structured Methodology' : 'منهجية واضحة ومدروسة',
-      titleLine2: isEn ? 'From Idea to Launch' : 'من الفكرة حتى الإطلاق',
-      text: isEn ? (
-        <>
-          <strong className="font-semibold text-primary">We work</strong> with transparent, structured steps that start
-          with comprehensive idea assessment and culminate in building an organized, scalable, and sustainable venture
-          backed by advanced management and operational systems.
-        </>
-      ) : (
-        <>
-          <strong className="font-semibold text-primary">نعمل</strong> بخطوات واضحة تبدأ بدراسة الفكرة والجدوى وتنتهي
-          ببناء مشروع منظم ومستدام، مدعوم بأحدث الأنظمة الإدارية والتشغيلية.
-        </>
-      ),
-    },
-  ];
-
-  const howWeWorkSteps = isEn
-    ? [
-        { number: '01', title: 'Promising Concept' },
-        { number: '02', title: 'Clear Strategy' },
-        { number: '03', title: 'Qualified Youth Team' },
-        { number: '04', title: 'Disciplined Execution' },
-        { number: '05', title: 'Sustainable Growth', isHighlight: true },
-      ]
-    : [
-        { number: '01', title: 'فكرة واعدة' },
-        { number: '02', title: 'خطة واضحة' },
-        { number: '03', title: 'فريق مؤهل من الشباب' },
-        { number: '04', title: 'تنفيذ منضبط' },
-        { number: '05', title: 'نمو مستدام', isHighlight: true },
-      ];
 
   // Hero scroll exit
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
@@ -220,13 +144,13 @@ const Home = () => {
             x: bgX,
           }}
           key={heroSlides[currentSlide]}
-          initial={{ opacity: 0, scale: 1.22, filter: 'blur(16px)' }}
-          animate={{ opacity: 1, scale: 1.14, filter: 'blur(0px)' }}
+          initial={{ opacity: 0, scale: 1.2 }}
+          animate={{ opacity: 1, scale: 1.14 }}
           transition={{ duration: 1.4, ease }}
         />
 
         {/* Ambient layered gradients */}
-        <div className="absolute inset-0 bg-primary/75 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-primary/80" />
         <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-primary/30" />
         <div
           className={`absolute inset-0 ${
@@ -348,12 +272,12 @@ const Home = () => {
                     <span className="absolute inline-flex h-full w-full rounded-full bg-accent-glow opacity-75 animate-ping" />
                     <span className="relative inline-flex rounded-full w-2 h-2 bg-accent-glow" />
                   </span>
-                  {isEn ? 'Ha’il, Saudi Arabia' : 'حائل، المملكة العربية السعودية'}
+                  {isEn ? 'Hail, Kingdom of Saudi Arabia' : 'حائل، المملكة العربية السعودية'}
                 </span>
               </motion.div>
 
-              {/* Main headline */}
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-[900] text-white leading-[1.15] mb-8 text-balance">
+              {/* Main headline - VERBATIM FROM USER REQUEST IN ENGLISH */}
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[64px] font-heading font-[900] text-white leading-[1.2] mb-8 text-balance">
                 {isEn ? (
                   <>
                     <RevealText text="We Develop Structured, Scalable Projects" immediate delay={0.35} stagger={0.06} />
@@ -370,23 +294,17 @@ const Home = () => {
                   <>
                     <RevealText text="نبني مشاريع منظمة" immediate delay={0.35} stagger={0.09} />
                     <br />
-                    <RevealText
-                      text="قابلة للتوسع والنمو"
-                      immediate
-                      delay={0.65}
-                      stagger={0.09}
-                      wordClassName="text-white"
-                    />
+                    <RevealText text="قابلة للتوسع والنمو" immediate delay={0.65} stagger={0.09} wordClassName="text-white" />
                   </>
                 )}
               </h1>
 
-              {/* Hero description */}
+              {/* Sub text - VERBATIM FROM USER REQUEST IN ENGLISH */}
               <motion.p
-                initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, delay: 0.9, ease }}
-                className="text-2xl md:text-3xl text-white leading-relaxed max-w-2xl mb-12 font-medium"
+                className="text-lg md:text-2xl text-white/90 leading-[1.8] max-w-2xl mb-12 font-medium"
               >
                 {isEn
                   ? 'Natheel transforms promising ideas into structured, scalable ventures, leveraging over 30 years of experience and partners with complementary expertise.'
@@ -411,7 +329,7 @@ const Home = () => {
                       } group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]`}
                     />
                     <span className="relative z-10 group-hover:text-white transition-colors duration-300">
-                      {isEn ? 'Explore Our Ventures' : 'تعرّف على مشاريعنا'}
+                      {isEn ? 'Our Portfolio' : 'محفظة مشاريعنا'}
                     </span>
                     <svg
                       className={`relative z-10 w-4 h-4 ${
@@ -427,49 +345,16 @@ const Home = () => {
                   </a>
                 </Magnetic>
                 <Magnetic strength={0.25}>
-                  <a
-                    href="#about"
+                  <Link
+                    to={isEn ? '/about' : '/عن-نثيل'}
                     className="inline-flex items-center gap-2 text-white px-8 py-3.5 rounded-full text-[15px] font-semibold bg-white/10 border border-white/20 backdrop-blur-md hover:bg-white/20 hover:border-white/30 hover:shadow-lg transition-all duration-400"
                   >
-                    {isEn ? 'About Us' : 'من نحن؟'}
-                  </a>
+                    {isEn ? 'About Natheel' : 'عن نثيل'}
+                  </Link>
                 </Magnetic>
               </motion.div>
             </div>
 
-            {/* Stats — glass bento chips */}
-            <div className="mt-20 lg:mt-28 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4" dir={dir}>
-              {heroStats.map((stat, i) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 40, rotateX: -40 }}
-                  animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                  transition={{ duration: 1, delay: 1.2 + i * 0.1, ease }}
-                  style={{ transformOrigin: '50% 100%' }}
-                >
-                  <TiltCard
-                    max={12}
-                    className={`rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-xl p-5 md:p-6 ${
-                      isAr ? 'text-right' : 'text-left'
-                    } overflow-hidden`}
-                  >
-                    <div className="absolute -top-10 -left-10 w-28 h-28 rounded-full bg-accent/20 blur-2xl" />
-                    <p
-                      className="relative text-3xl md:text-4xl font-[800] text-white mb-1.5 font-latin"
-                      style={{ transform: 'translateZ(30px)' }}
-                    >
-                      <Counter value={stat.value} />
-                    </p>
-                    <p className="relative text-[13px] text-white/40 font-medium">{stat.label}</p>
-                    <div
-                      className={`absolute bottom-0 ${
-                        isAr ? 'right-0' : 'left-0'
-                      } h-[2px] w-1/3 bg-gradient-to-l from-accent-light to-transparent`}
-                    />
-                  </TiltCard>
-                </motion.div>
-              ))}
-            </div>
           </div>
         </motion.div>
 
@@ -491,210 +376,6 @@ const Home = () => {
       </section>
 
       {/* ═══════════════════════════════════════════════
-          ABOUT SECTION — Bento
-      ═══════════════════════════════════════════════ */}
-      <section id="about" className="relative py-28 lg:py-36 bg-white overflow-hidden">
-        <div className="dot-field" />
-        <div className="absolute top-1/2 -left-48 w-96 h-96 rounded-full bg-accent/10 blur-[120px] pointer-events-none" />
-
-        <Reveal3D className="container-premium section-padding relative">
-          {/* Section Header */}
-          <div className="text-center mb-16" dir={dir}>
-            <div className="mb-4">
-              <Eyebrow center>{isEn ? 'About Natheel' : 'عن نثيل'}</Eyebrow>
-            </div>
-          </div>
-
-          {/* Segmented Control / Modern Pills Tab */}
-          <div className="flex justify-center mb-16">
-            <div className="inline-flex p-1.5 rounded-full bg-surface-warm border border-border-light relative shadow-inner">
-              {aboutTabs.map((tab, idx) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(idx)}
-                  className={`relative px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg font-heading font-bold transition-colors duration-300 z-10 cursor-pointer ${
-                    activeTab === idx ? 'text-primary' : 'text-text-muted hover:text-text-secondary'
-                  }`}
-                >
-                  {activeTab === idx && (
-                    <motion.div
-                      layoutId="activeTabBadge"
-                      className="absolute inset-0 bg-white rounded-full shadow-[0_4px_16px_rgba(10,22,40,0.08)] border border-border-light"
-                      transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                    />
-                  )}
-                  <span className="relative z-10">{tab.label}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Tab Content Display */}
-          <AnimatePresence mode="wait">
-            {activeTab === 2 ? (
-              /* TAB 3: How We Work — Process Flow */
-              <motion.div
-                key="tab-how-we-work"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
-                transition={{ duration: 0.35, ease }}
-                className="w-full"
-                dir={dir}
-              >
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-extrabold text-primary mb-12 text-center">
-                  {isEn ? 'How We Work at Natheel' : 'كيف نعمل؟'}
-                </h2>
-
-                <div className="flex flex-col lg:flex-row items-center justify-center gap-3 lg:gap-2 max-w-6xl mx-auto px-4">
-                  {howWeWorkSteps.map((step, index) => (
-                    <div
-                      key={step.number}
-                      className="flex flex-col lg:flex-row items-center gap-3 lg:gap-2 w-full lg:w-auto"
-                    >
-                      <motion.div
-                        initial={{ opacity: 0, y: 16 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.35, delay: index * 0.08, ease }}
-                        className={`w-full lg:w-48 xl:w-52 h-28 sm:h-32 rounded-2xl flex flex-col items-center justify-center p-4 transition-all duration-300 ${
-                          step.isHighlight
-                            ? 'bg-primary text-white shadow-[0_16px_36px_-10px_rgba(10,22,40,0.5)] border border-primary'
-                            : 'bg-white text-primary border border-border-light shadow-sm hover:shadow-md hover:border-accent/40'
-                        }`}
-                      >
-                        <span className="text-sm sm:text-base font-bold font-latin mb-1.5 text-accent">
-                          {step.number}
-                        </span>
-                        <span
-                          className={`text-base sm:text-lg font-heading font-bold text-center leading-snug ${
-                            step.isHighlight ? 'text-white' : 'text-primary'
-                          }`}
-                        >
-                          {step.title}
-                        </span>
-                      </motion.div>
-
-                      {index < howWeWorkSteps.length - 1 && (
-                        <div className="text-accent flex items-center justify-center py-1 lg:py-0 px-1">
-                          {/* Desktop Arrow */}
-                          <svg
-                            className={`w-6 h-6 hidden lg:block text-accent ${isEn ? '' : 'rotate-180'}`}
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <line x1="5" y1="12" x2="19" y2="12" />
-                            <polyline points="12 5 19 12 12 19" />
-                          </svg>
-                          {/* Mobile Arrow pointing down */}
-                          <svg
-                            className="w-6 h-6 lg:hidden text-accent"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <line x1="12" y1="5" x2="12" y2="19" />
-                            <polyline points="19 12 12 19 5 12" />
-                          </svg>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            ) : (
-              <motion.div
-                key={`tab-content-${activeTab}`}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
-                transition={{ duration: 0.35, ease }}
-                className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center"
-                dir={dir}
-              >
-                {/* Text Side */}
-                <div className="lg:col-span-5 min-h-[300px] flex flex-col justify-center">
-                  <div className="mb-6">
-                    <Eyebrow>{aboutTabs[activeTab].eyebrow}</Eyebrow>
-                  </div>
-
-                  <h2 className="text-4xl md:text-5xl lg:text-[56px] font-heading font-[800] text-primary leading-[1.25] mb-8">
-                    <span>{aboutTabs[activeTab].titleLine1}</span>
-                    <br />
-                    <span className="text-text-muted">{aboutTabs[activeTab].titleLine2}</span>
-                  </h2>
-
-                  <p className="text-text-secondary text-xl md:text-2xl leading-[1.8] max-w-xl">
-                    {aboutTabs[activeTab].text}
-                  </p>
-                </div>
-
-                {/* Visual Side: 3D Photo & Depth Card */}
-                <div className="lg:col-span-7">
-                  <TiltCard max={8} glare={false} className="relative rounded-[32px] overflow-visible">
-                    <div className="aspect-[16/10] rounded-[32px] overflow-hidden relative shadow-[0_30px_70px_-20px_rgba(10,22,40,0.25)] border border-border-light">
-                      <motion.img
-                        src="/office.jpg"
-                        alt="مقر نثيل"
-                        className="w-full h-full object-cover"
-                        initial={{ scale: 1.2 }}
-                        whileInView={{ scale: 1.05 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1.8, ease }}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-primary/40 via-transparent to-transparent" />
-                    </div>
-
-                    {/* Floating depth card */}
-                    <div
-                      className={`absolute -bottom-8 ${
-                        isAr ? 'right-6 left-6 md:left-auto' : 'left-6 right-6 md:right-auto'
-                      } md:w-[78%] glass-light rounded-2xl p-6`}
-                      style={{ transform: 'translateZ(70px)' }}
-                      dir={dir}
-                    >
-                      <div className="flex items-center gap-4">
-                        <div className="shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-accent to-primary-medium flex items-center justify-center text-white font-latin font-black shadow-[var(--shadow-glow)]">
-                          30
-                        </div>
-                        <p className="text-sm text-text-secondary font-medium leading-relaxed">
-                          {isEn ? (
-                            <>
-                              Over <span className="text-primary font-bold">30+ years</span> of combined experience
-                              building and scaling ventures across Saudi Arabia.
-                            </>
-                          ) : (
-                            <>
-                              خبرة <span className="text-primary font-bold">+30 عاماً</span> في تطوير الأعمال والمشاريع
-                              في المملكة العربية السعودية
-                            </>
-                          )}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Orbit ring */}
-                    <div
-                      className={`absolute -top-6 ${
-                        isAr ? '-left-6' : '-right-6'
-                      } w-28 h-28 rounded-full border border-dashed border-accent/40 hidden md:block`}
-                      style={{ transform: 'translateZ(40px)', animation: 'spin-flat 20s linear infinite' }}
-                    />
-                  </TiltCard>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </Reveal3D>
-      </section>
-
-      {/* ═══════════════════════════════════════════════
           PROJECTS SECTION — 3D Ring
       ═══════════════════════════════════════════════ */}
       <section id="projects" className="relative py-28 lg:py-36 bg-surface overflow-hidden">
@@ -704,22 +385,11 @@ const Home = () => {
         <Reveal3D className="container-premium section-padding relative">
           <div className="text-center mb-10 lg:mb-4" dir={dir}>
             <div className="mb-6">
-              <Eyebrow center>{isEn ? 'Our Portfolio' : 'محفظة المشاريع'}</Eyebrow>
+              <Eyebrow center>{isEn ? 'Our Projects' : 'مشاريعنا'}</Eyebrow>
             </div>
             <h2 className="text-3xl md:text-4xl lg:text-6xl font-heading font-[800] text-primary mb-6">
-              <RevealText text={isEn ? 'Our Ventures' : 'مشاريعنا'} wordClassName="gradient-text pb-2" />
+              <RevealText text={isEn ? 'Our Portfolio' : 'محفظة مشاريعنا'} wordClassName="gradient-text pb-2" />
             </h2>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2, ease }}
-              className="text-text-secondary text-xl md:text-2xl font-medium max-w-3xl mx-auto leading-relaxed"
-            >
-              {isEn
-                ? 'Promising ventures managed by specialized leadership in each field, backed by strategic and financial support from Natheel to achieve stable and sustainable growth.'
-                : 'مشاريع واعدة تُدار بفرق وقيادة متخصصة حسب مجالها مع دعم استراتيجي ومالي من نثيل لتحقيق نمو مستقر ومستدام.'}
-            </motion.p>
           </div>
         </Reveal3D>
 
@@ -732,6 +402,35 @@ const Home = () => {
         >
           <ProjectRing projects={projects} onOpen={openProject} />
         </motion.div>
+
+        {/* Portfolio Status */}
+        <Reveal3D className="container-premium section-padding relative mt-16 lg:mt-20">
+          <div className="max-w-4xl mx-auto" dir={dir}>
+            <h3 className="text-center text-2xl md:text-3xl font-heading font-[800] text-primary mb-8">
+              {isEn ? 'Portfolio Status' : 'حالة المشاريع'}
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {portfolioStatus.map((item) => (
+                <div
+                  key={item.label}
+                  className={`relative overflow-hidden rounded-2xl p-6 text-center border transition-shadow duration-300 ${
+                    item.isHighlight
+                      ? 'bg-primary text-white border-primary shadow-[0_16px_36px_-10px_rgba(10,22,40,0.5)]'
+                      : 'bg-white text-primary border-border-light shadow-sm hover:shadow-md'
+                  }`}
+                >
+                  <p className={`text-5xl font-[800] font-latin mb-2 ${item.isHighlight ? 'text-white' : 'text-primary'}`}>
+                    <Counter value={item.value} />
+                  </p>
+                  <p className={`text-base font-semibold ${item.isHighlight ? 'text-white/80' : 'text-text-secondary'}`}>
+                    {item.label}
+                  </p>
+                  <div className="absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-l from-transparent via-accent-light to-transparent" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </Reveal3D>
       </section>
 
       {/* ═══════════════════════════════════════════════
@@ -765,6 +464,48 @@ const Home = () => {
 
       {/* Hail Interactive Map */}
       <HailMap />
+
+      {/* ═══════════════════════════════════════════════
+          CONTACT
+      ═══════════════════════════════════════════════ */}
+      <section className="relative py-20 lg:py-28 bg-white overflow-hidden">
+        <div className="dot-field" />
+        <Reveal3D className="container-premium section-padding relative">
+          <div className="max-w-4xl mx-auto text-center" dir={dir}>
+            <div className="mb-4">
+              <Eyebrow center>{isEn ? 'Contact' : 'تواصل معنا'}</Eyebrow>
+            </div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-[800] text-primary mb-10">
+              {isEn ? 'Get in Touch' : 'يسعدنا تواصلك'}
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+              <a
+                href="mailto:info@natheelco.com"
+                className="group rounded-2xl p-6 bg-surface border border-border-light hover:border-accent/40 hover:shadow-md transition-all duration-300"
+              >
+                <p className="text-sm text-text-muted mb-2">{isEn ? 'Email' : 'البريد الإلكتروني'}</p>
+                <p className="text-lg md:text-xl font-latin font-semibold text-primary group-hover:text-accent transition-colors" dir="ltr">
+                  info@natheelco.com
+                </p>
+              </a>
+              <div className="rounded-2xl p-6 bg-surface border border-border-light">
+                <p className="text-sm text-text-muted mb-2">{isEn ? 'Location' : 'الموقع'}</p>
+                <p className="text-lg md:text-xl font-semibold text-primary">
+                  {isEn ? 'Hail, Kingdom of Saudi Arabia' : 'حائل، المملكة العربية السعودية'}
+                </p>
+              </div>
+            </div>
+            <Magnetic strength={0.25}>
+              <Link
+                to={isEn ? '/contact' : '/اتصل-بنا'}
+                className="inline-flex items-center gap-2 bg-primary text-white px-8 py-3.5 rounded-full text-[15px] font-semibold hover:shadow-[var(--shadow-glow)] transition-all duration-300"
+              >
+                {isEn ? 'Contact Us' : 'تواصل معنا'}
+              </Link>
+            </Magnetic>
+          </div>
+        </Reveal3D>
+      </section>
 
       {/* Project Modal */}
       <ProjectModal project={selectedProject} isOpen={isModalOpen} onClose={closeModal} />
