@@ -45,11 +45,10 @@ const Home = () => {
     const heroRef = useRef(null);
   const officeRef = useRef(null);
 
-  const countBy = (status) => projects.filter((p) => p.status === status).length;
   const portfolioStatus = [
-    { value: String(countBy('نشط')), label: isEn ? 'Active Projects' : 'مشاريع قائمة' },
-    { value: String(countBy('قيد التطوير')), label: isEn ? 'Projects Under Development' : 'قيد التطوير', isHighlight: true },
-    { value: String(countBy('مرحلة التوسع')), label: isEn ? 'Projects In Expansion' : 'مرحلة التوسع' },
+    { value: '1', label: isEn ? 'Active Projects' : 'مشاريع قائمة' },
+    { value: '2', label: isEn ? 'Projects Under Development' : 'قيد التطوير', isHighlight: true },
+    { value: '0', label: isEn ? 'Projects In Expansion' : 'مرحلة التوسع' },
   ];
 
   // Hero scroll exit
@@ -292,9 +291,9 @@ const Home = () => {
                   </>
                 ) : (
                   <>
-                    <RevealText text="نبني مشاريع منظمة" immediate delay={0.35} stagger={0.09} />
+                    <RevealText text="نبني مشاريع منظّمة" immediate delay={0.35} stagger={0.09} />
                     <br />
-                    <RevealText text="قابلة للتوسع والنمو" immediate delay={0.65} stagger={0.09} wordClassName="text-white" />
+                    <RevealText text="قابلة للتوسّع والنمو." immediate delay={0.65} stagger={0.09} wordClassName="text-white" />
                   </>
                 )}
               </h1>
@@ -308,7 +307,7 @@ const Home = () => {
               >
                 {isEn
                   ? 'Natheel transforms promising ideas into structured, scalable ventures, leveraging over 30 years of experience and partners with complementary expertise.'
-                  : 'تعمل نثيل على تطوير الأفكار الواعدة وتحويلها إلى مشاريع منظمة وقابلة للتوسع، مستندةً إلى خبرات تمتد لأكثر من 30 عامًا وشراكات تجمع تخصصات متكاملة.'}
+                  : 'في نثيل، نطوّر الأفكار الواعدة ونحوّلها إلى مشاريع منظّمة وقابلة للنمو والتوسّع، مستندين إلى خبرات تمتد لأكثر من ثلاثين عامًا، وشراكات تجمع تخصصات متكاملة.'}
               </motion.p>
 
               {/* CTA Row */}

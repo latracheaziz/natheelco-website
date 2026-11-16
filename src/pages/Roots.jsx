@@ -87,12 +87,12 @@ const Roots = () => {
                 <Reveal3D delay={0.2}>
                   <div>
                     <h2 className="text-[2.125rem] md:text-[2.625rem] font-heading font-bold text-primary mb-4">
-                      {isEn ? "Our Story Began in Hail" : 'حكايتنا بدأت من حائل'}
+                      {isEn ? 'Our Roots' : 'جذورنا'}
                     </h2>
                     <p className="text-xl md:text-[1.375rem] text-text-secondary leading-relaxed">
                       {isEn
-                        ? "In Hail, where heritage meets ambition, Natheel began its journey of developing modern projects that evolve in response to community needs and align with future aspirations."
-                        : 'في أرض تجمع بين الأصالة والطموح، بدأت نثيل في بناء مشاريع عصرية تنمو حسب احتياجات المجتمع وتواكب تطلعات المستقبل.'}
+                        ? 'Our story began in Hail, in a place where heritage meets ambition, and where Natheel set out to build modern projects that grow with community needs and future aspirations.'
+                        : 'حكايتنا بدأت في حائل من أرض تلتقي فيها الأصالة بالطموح، وبدأت نثيل رحلتها في تطوير مشاريع عصرية تنمو مع احتياجات المجتمع وتواكب تطلعات المستقبل.'}
                     </p>
                   </div>
                 </Reveal3D>
@@ -100,12 +100,12 @@ const Roots = () => {
                 <Reveal3D delay={0.4}>
                   <div>
                     <h2 className="text-[2.125rem] md:text-[2.625rem] font-heading font-bold text-primary mb-4">
-                      {isEn ? "Hail as We See It" : 'حائل كما نراها'}
+                      {isEn ? 'Hail as We See It' : 'حائل كما نراها'}
                     </h2>
                     <p className="text-xl md:text-[1.375rem] text-text-secondary leading-relaxed">
                       {isEn
-                        ? "Hail is a region rich in history, natural beauty, cultural heritage, and human potential. It offers a promising environment for developing projects, nurturing local talent, and delivering services that create meaningful value for the community while supporting the growth of tourism in the region."
-                        : 'حائل منطقة غنية بتاريخها، وطبيعتها، وثقافتها، وأهلها. نرى فيها بيئة واعدة لصناعة المشاريع، وتنمية المواهب، وتقديم تجارب وخدمات تضيف قيمة حقيقية للمجتمع.'}
+                        ? 'Hail is a region rich in history, nature, heritage, and human potential. It offers a promising environment for developing projects, nurturing local talent, and delivering services that create value for the community while supporting tourism growth in the region.'
+                        : 'حائل منطقة غنية بتاريخها وطبيعتها وتراثها الثقافي وطاقاتها البشرية. وهي بيئة واعدة لتطوير المشاريع وتنمية المواهب المحلية وتقديم خدمات تضيف قيمة للمجتمع وتدعم نمو السياحة في المنطقة.'}
                     </p>
                   </div>
                 </Reveal3D>
@@ -147,10 +147,10 @@ const Roots = () => {
                 <p className="mx-auto max-w-3xl text-xl leading-[2] text-text-secondary md:text-[1.375rem]">
                   {isEn
                     ? 'We believe meaningful development begins with empowering local talent and investing in the unique strengths of our community to create lasting value.'
-                    : 'نؤمن ان مشاريع ناجحة تبدا من فهم متطلبات ناس و مكان و معتمد على قدرات شبابها و كذلك نجمع بين اصلة و اسلوب العصري'}
+                    : 'نؤمن بأن التنمية الحقيقية تبدأ بتمكين الكفاءات المحلية والاستثمار في مقومات مجتمعنا لبناء قيمة مستدامة.'}
                 </p>
                 <h3 className="mt-8 text-[1.625rem] font-heading font-bold text-accent md:text-[2rem]">
-                  {isEn ? "Welcome to Hail... Welcome to Natheel" : 'ياهلا والله.....  الله يحييكم'}
+                  {isEn ? "Welcome to Hail... Welcome to Natheel" : 'ياهلا والله..... الله يحييكم'}
                 </h3>
               </div>
             </Reveal3D>
